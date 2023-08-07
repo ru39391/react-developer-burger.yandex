@@ -1,0 +1,38 @@
+.burger-constructor__tablist {
+    display: flex;
+    margin: 0 0 40px;
+}
+
+.burger-ingredients__wrapper {
+    gap: 16px 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin: 0 0 40px;
+}
+
+.burger-ingredients__main {
+    max-height: 464px;
+    margin: 0 -13px 0 0;
+    overflow: auto;
+    position: relative;
+}
+
+.burger-ingredients__container {
+    gap: 16px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.burger-ingredients__footer {
+    gap: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.burger-ingredients__meta {
+    gap: 0 8px;
+    display: flex;
+    align-items: center;
+}

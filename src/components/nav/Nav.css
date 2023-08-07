@@ -1,0 +1,17 @@
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 0 16px;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0 8px;
+    color: #8585AD;
+    text-decoration: none;
+}
+
+.nav-link_active {
+    color: #fff;
+}

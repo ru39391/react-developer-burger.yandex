@@ -1,0 +1,14 @@
+.card {
+    gap: 8px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.card__meta {
+    gap: 0 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

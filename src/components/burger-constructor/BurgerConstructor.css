@@ -1,0 +1,30 @@
+.burger-constructor {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.burger-constructor__title {
+    margin: 0 0 24px;
+}
+
+.burger-constructor__wrapper {
+    flex-grow: 1;
+    overflow: auto;
+    position: relative;
+    margin: 0 -13px 0 0;
+}
+
+.burger-constructor__container {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.burger-constructor__list {
+    padding: 0 16px;
+    margin: 0 0 40px;
+    display: grid;
+    gap: 32px 24px;
+    grid-template-columns: repeat(2,1fr);
+}

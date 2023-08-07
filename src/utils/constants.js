@@ -1,5 +1,14 @@
 const DEFAULT_DOC_TITLE = 'Stellar Burgers';
+const CONSTRUCTOR_TITLE = 'Соберите бургер';
+
+const BUN_PRODUCT_CAPTION = 'Булки';
+const MAIN_PRODUCT_CAPTION = 'Начинки';
+const SAUCE_PRODUCT_CAPTION = 'Соусы';
 
 export {
     DEFAULT_DOC_TITLE,
+    CONSTRUCTOR_TITLE,
+    BUN_PRODUCT_CAPTION,
+    MAIN_PRODUCT_CAPTION,
+    SAUCE_PRODUCT_CAPTION,
 };
