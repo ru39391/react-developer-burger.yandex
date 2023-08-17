@@ -1,7 +1,7 @@
 import React from 'react';
-import './Main.css';
+import './Wrapper.css';
 
-function Main({
+function Wrapper({
     children,
     title
 }) {
@@ -15,4 +15,4 @@ function Main({
     );
 }
 
-export default Main;
+export default Wrapper;
