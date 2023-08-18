@@ -5,11 +5,15 @@ import "./Modal.css";
 
 import ModalOverlay from "../modal-overlay/ModalOverlay";
 
-function Modal({ children }) {
+function Modal({
+  isModalOpen,
+  children,
+  closeModal
+}) {
   return (
-    <ModalOverlay>
+    <ModalOverlay isOpen={isModalOpen} closeModal={closeModal}>
       <div className="modal">
-        <button className="modal__close" type="button"><CloseIcon type="primary" /></button>
+        <button className="modal__close" type="button" onClick={closeModal}><CloseIcon type="primary" /></button>
         {children}
       </div>
     </ModalOverlay>
