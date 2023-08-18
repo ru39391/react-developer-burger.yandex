@@ -1,4 +1,4 @@
-import Main from '../pages/main/Main';
+import Home from '../pages/home/Home';
 import Orders from '../pages/orders/Orders';
 import Profile from '../pages/profile/Profile';
 
@@ -8,7 +8,7 @@ import {
 } from '../utils/constants';
 
 const routes = [
-  { path: '/', element: <Main /> },
+  { path: '/', element: <Home /> },
   { path: `/${ORDERS_URL}`, element: <Orders /> },
   { path: `/${PROFILE_URL}`, element: <Profile /> }
 ];
