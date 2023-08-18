@@ -29,11 +29,10 @@ function Nav() {
     return (
         <nav className="nav">
             {navArr.map(({
-                index,
                 url,
                 title,
                 icon,
-            }) => (
+            }, index) => (
                 <NavLink key={index} to={`/${url}`} className={({ isActive }) => `nav-link pt-4 pb-4 pl-5 pr-5 ${isActive && 'nav-link_active'}`}>
                     {icon}
                     {title}
