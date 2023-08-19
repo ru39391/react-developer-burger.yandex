@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { createPortal } from 'react-dom';
 import {
   Button,
   CurrencyIcon,
@@ -68,10 +67,7 @@ function BurgerIngredients({
           <Button htmlType="button" type="primary" size="large" onClick={() => setCheckoutVisibility(true)}>Оформить заказ</Button>
         </div>
       </div>
-      {isCheckoutVisible && createPortal(
-        <Modal isModalOpen={isCheckoutVisible} closeModal={closeModal}><OrderDetails /></Modal>,
-        document.body
-      )}
+      {isCheckoutVisible && <Modal isModalOpen={isCheckoutVisible} closeModal={closeModal}><OrderDetails /></Modal>}
     </>
   );
 }

@@ -1,32 +1,60 @@
-import React from 'react';
+import { useState } from 'react';
 import './ConstructorSection.css';
 
 import Card from '../card/Card';
+import Modal from '../modal/Modal';
+import IngredientDetails from '../ingredient-details/IngredientDetails';
 
 function ConstructorSection({
-    arr,
-    caption
+  arr,
+  caption
 }) {
-    return (
-        <>
-            <div className="burger-constructor__title text text_type_main-medium">{caption}</div>
-            <div className="burger-constructor__list">
-                {arr.map(({
-                    _id,
-                    name,
-                    price,
-                    image,
-                }) => (
-                    <Card
-                        key={_id}
-                        caption={name}
-                        price={price}
-                        image={image}
-                    />
-                ))}
-            </div>
-        </>
-    );
+  const [cardDetails, setCardDetails] = useState({});
+  const [isCardDetailsVisible, setCardDetailsVisibility] = useState(false);
+
+  function showCardDetails(data) {
+    setCardDetails(data);
+    setCardDetailsVisibility(true);
+  }
+
+  function closeModal() {
+    setCardDetailsVisibility(false);
+  }
+
+  return (
+    <>
+      <div className="burger-constructor__title text text_type_main-medium">{caption}</div>
+      <div className="burger-constructor__list">
+        {arr.map(({
+          _id,
+          name,
+          price,
+          image,
+          image_large,
+          calories,
+          proteins,
+          fat,
+          carbohydrates
+        }) => (
+          <Card
+            key={_id}
+            name={name}
+            price={price.toString()}
+            thumbnail={image}
+            image={image_large}
+            nutritional={[
+              calories,
+              proteins,
+              fat,
+              carbohydrates
+            ]}
+            showCardDetails={showCardDetails}
+          />
+        ))}
+      </div>
+      {isCardDetailsVisible && <Modal isModalOpen={isCardDetailsVisible} closeModal={closeModal}><IngredientDetails {...cardDetails} /></Modal>}
+    </>
+  );
 }
 
 export default ConstructorSection;
