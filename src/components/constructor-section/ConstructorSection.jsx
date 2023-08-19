@@ -5,10 +5,7 @@ import Card from '../card/Card';
 import Modal from '../modal/Modal';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
 
-function ConstructorSection({
-  arr,
-  caption
-}) {
+function ConstructorSection({ arr }) {
   const [cardDetails, setCardDetails] = useState({});
   const [isCardDetailsVisible, setCardDetailsVisibility] = useState(false);
 
@@ -23,7 +20,6 @@ function ConstructorSection({
 
   return (
     <>
-      <div className="burger-constructor__title text text_type_main-medium">{caption}</div>
       <div className="burger-constructor__list">
         {arr.map(({
           _id,
