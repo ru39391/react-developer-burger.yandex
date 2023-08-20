@@ -3,6 +3,7 @@ import {
   useState,
   Fragment
 } from 'react';
+import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import './BurgerIngredients.css';
 
@@ -90,5 +91,11 @@ function BurgerIngredients({
     </div>
   );
 }
+
+BurgerIngredients.propTypes = {
+  bunIngredients: PropTypes.array.isRequired,
+  mainIngredients: PropTypes.array.isRequired,
+  sauceIngredients: PropTypes.array.isRequired,
+};
 
 export default BurgerIngredients;

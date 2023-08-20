@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { createPortal } from 'react-dom';
+import PropTypes from 'prop-types';
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import "./Modal.css";
@@ -32,5 +33,11 @@ function Modal({
     document.body
   )
 }
+
+Modal.propTypes = {
+  isModalOpen: PropTypes.bool.isRequired,
+  children: PropTypes.node.isRequired,
+  closeModal: PropTypes.func.isRequired
+};
 
 export default Modal;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Counter,
   CurrencyIcon,
@@ -50,5 +51,14 @@ function Card({
     </div>
   );
 }
+
+Card.propTypes = {
+  name: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  thumbnail: PropTypes.string.isRequired,
+  price: PropTypes.string.isRequired,
+  nutritional: PropTypes.array.isRequired,
+  showCardDetails: PropTypes.func.isRequired
+};
 
 export default Card;

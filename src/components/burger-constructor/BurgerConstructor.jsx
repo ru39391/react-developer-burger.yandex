@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   Button,
   CurrencyIcon,
@@ -10,11 +11,13 @@ import Ingredient from '../ingredient/Ingredient';
 import OrderDetails from '../order-details/OrderDetails';
 
 function BurgerConstructor({
-  bunTop,
-  bunBottom,
-  ingredients,
+  bunIngredients,
+  mainIngredients,
+  sauceIngredients,
 }) {
   const [isCheckoutVisible, setCheckoutVisibility] = useState(false);
+
+  const [bunTop, bunBottom] = bunIngredients;
 
   function closeModal() {
     setCheckoutVisibility(false);
@@ -33,7 +36,7 @@ function BurgerConstructor({
           />}
           <div className="burger-constructor__main">
             <div className="burger-constructor__container">
-              {ingredients.map(({
+              {[...mainIngredients, ...sauceIngredients].map(({
                 _id,
                 type,
                 name,
@@ -71,5 +74,11 @@ function BurgerConstructor({
     </>
   );
 }
+
+BurgerConstructor.propTypes = {
+  bunIngredients: PropTypes.array.isRequired,
+  mainIngredients: PropTypes.array.isRequired,
+  sauceIngredients: PropTypes.array.isRequired
+};
 
 export default BurgerConstructor;

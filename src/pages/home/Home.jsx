@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import PropTypes from 'prop-types';
 import Wrapper from '../../components/wrapper/Wrapper';
 import BurgerConstructor from '../../components/burger-constructor/BurgerConstructor';
 import BurgerIngredients from '../../components/burger-ingredients/BurgerIngredients';
@@ -41,13 +42,19 @@ function Home({
           sauceIngredients={sauceIngredients}
         />
         <BurgerConstructor
-          bunTop={bunIngredients[0]}
-          bunBottom={bunIngredients[1]}
-          ingredients={[...mainIngredients, ...sauceIngredients]}
+          bunIngredients={bunIngredients}
+          mainIngredients={mainIngredients}
+          sauceIngredients={sauceIngredients}
         />
       </div>
     </Wrapper>
   )
+};
+
+Home.propTypes = {
+  data: PropTypes.array.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  errorMsg: PropTypes.string.isRequired,
 };
 
 export default Home;

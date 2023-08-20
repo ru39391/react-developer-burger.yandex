@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import './ConstructorSection.css';
 
 import Card from '../card/Card';
@@ -52,5 +53,9 @@ function ConstructorSection({ arr }) {
     </>
   );
 }
+
+ConstructorSection.propTypes = {
+  arr: PropTypes.array.isRequired
+};
 
 export default ConstructorSection;

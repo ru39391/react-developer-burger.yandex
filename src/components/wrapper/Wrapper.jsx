@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import Preloader from "../../components/preloader/Preloader";
 import "./Wrapper.css";
 
@@ -18,5 +19,12 @@ function Wrapper({
     </main>
   );
 }
+
+Wrapper.propTypes = {
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node,
+  isLoading: PropTypes.bool,
+  errorMsg: PropTypes.string,
+};
 
 export default Wrapper;
