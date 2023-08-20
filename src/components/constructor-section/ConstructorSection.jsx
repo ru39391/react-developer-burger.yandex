@@ -5,7 +5,9 @@ import Card from '../card/Card';
 import Modal from '../modal/Modal';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
 
-function ConstructorSection({ arr }) {
+import { productPropTypes } from '../../utils/proptypes';
+
+function ConstructorSection({ data }) {
   const [cardDetails, setCardDetails] = useState({});
   const [isCardDetailsVisible, setCardDetailsVisibility] = useState(false);
 
@@ -21,7 +23,7 @@ function ConstructorSection({ arr }) {
   return (
     <>
       <div className="burger-ingredients__list">
-        {arr.map(({
+        {data.map(({
           _id,
           name,
           price,
@@ -54,7 +56,7 @@ function ConstructorSection({ arr }) {
 }
 
 ConstructorSection.propTypes = {
-  arr: PropTypes.array.isRequired
+  data: PropTypes.arrayOf(productPropTypes.isRequired).isRequired
 };
 
 export default ConstructorSection;

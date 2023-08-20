@@ -16,6 +16,7 @@ import {
   MAIN_PRODUCT_CAPTION,
   SAUCE_PRODUCT_CAPTION,
 } from '../../utils/constants';
+import { productPropTypes } from '../../utils/proptypes';
 
 function BurgerIngredients({
   bunIngredients,
@@ -37,7 +38,7 @@ function BurgerIngredients({
   const tabsArr = [{
     value: BUN_PRODUCT_NAME,
     caption: BUN_PRODUCT_CAPTION,
-    arr: bunIngredients,
+    data: bunIngredients,
     ref: bunRef,
     handler: () => {
       setCurrent(BUN_PRODUCT_NAME);
@@ -46,7 +47,7 @@ function BurgerIngredients({
   },{
     value: SAUCE_PRODUCT_NAME,
     caption: SAUCE_PRODUCT_CAPTION,
-    arr: sauceIngredients,
+    data: sauceIngredients,
     ref: sauceRef,
     handler: () => {
       setCurrent(SAUCE_PRODUCT_NAME);
@@ -55,7 +56,7 @@ function BurgerIngredients({
   },{
     value: MAIN_PRODUCT_NAME,
     caption: MAIN_PRODUCT_CAPTION,
-    arr: mainIngredients,
+    data: mainIngredients,
     ref: mainRef,
     handler: () => {
       setCurrent(MAIN_PRODUCT_NAME);
@@ -77,13 +78,13 @@ function BurgerIngredients({
       <div className="burger-ingredients__wrapper">
         <div className="burger-ingredients__container">
           {tabsArr.map(({
-              arr,
+              data,
               caption,
               ref
             }, index) => (
               <Fragment key={index}>
                 <div className="burger-ingredients__title text text_type_main-medium" ref={ref}>{caption}</div>
-                <ConstructorSection caption={caption} arr={arr} />
+                <ConstructorSection caption={caption} data={data} />
               </Fragment>
           ))}
         </div>
@@ -93,9 +94,9 @@ function BurgerIngredients({
 }
 
 BurgerIngredients.propTypes = {
-  bunIngredients: PropTypes.array.isRequired,
-  mainIngredients: PropTypes.array.isRequired,
-  sauceIngredients: PropTypes.array.isRequired,
+  bunIngredients: PropTypes.arrayOf(productPropTypes.isRequired).isRequired,
+  mainIngredients: PropTypes.arrayOf(productPropTypes.isRequired).isRequired,
+  sauceIngredients: PropTypes.arrayOf(productPropTypes.isRequired).isRequired,
 };
 
 export default BurgerIngredients;

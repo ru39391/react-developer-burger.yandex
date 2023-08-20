@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import "./IngredientDetails.css";
 
+import { nutritionalPropTypes } from '../../utils/proptypes';
+
 function IngredientDetails({
   name,
   image,
@@ -31,7 +33,7 @@ function IngredientDetails({
 IngredientDetails.propTypes = {
   name: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
-  nutritional: PropTypes.array.isRequired
+  nutritional: PropTypes.arrayOf(nutritionalPropTypes.isRequired).isRequired
 };
 
 export default memo(IngredientDetails);

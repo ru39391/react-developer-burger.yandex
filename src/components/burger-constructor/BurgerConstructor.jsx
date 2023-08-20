@@ -10,6 +10,8 @@ import Modal from '../modal/Modal';
 import Ingredient from '../ingredient/Ingredient';
 import OrderDetails from '../order-details/OrderDetails';
 
+import { productPropTypes } from '../../utils/proptypes';
+
 function BurgerConstructor({
   bunIngredients,
   mainIngredients,
@@ -76,9 +78,9 @@ function BurgerConstructor({
 }
 
 BurgerConstructor.propTypes = {
-  bunIngredients: PropTypes.array.isRequired,
-  mainIngredients: PropTypes.array.isRequired,
-  sauceIngredients: PropTypes.array.isRequired
+  bunIngredients: PropTypes.arrayOf(productPropTypes.isRequired).isRequired,
+  mainIngredients: PropTypes.arrayOf(productPropTypes.isRequired).isRequired,
+  sauceIngredients: PropTypes.arrayOf(productPropTypes.isRequired).isRequired
 };
 
 export default BurgerConstructor;

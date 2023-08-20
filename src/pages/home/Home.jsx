@@ -10,6 +10,7 @@ import {
   MAIN_PRODUCT_NAME,
   SAUCE_PRODUCT_NAME,
 } from '../../utils/constants';
+import { productPropTypes } from '../../utils/proptypes';
 
 function Home({
   data,
@@ -52,7 +53,7 @@ function Home({
 };
 
 Home.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.arrayOf(productPropTypes.isRequired).isRequired,
   isLoading: PropTypes.bool.isRequired,
   errorMsg: PropTypes.string.isRequired,
 };

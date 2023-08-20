@@ -57,7 +57,7 @@ Card.propTypes = {
   image: PropTypes.string.isRequired,
   thumbnail: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
-  nutritional: PropTypes.array.isRequired,
+  nutritional: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
   showCardDetails: PropTypes.func.isRequired
 };
 
