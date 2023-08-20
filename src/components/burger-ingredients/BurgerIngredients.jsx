@@ -1,74 +1,93 @@
-import { useState } from 'react';
 import {
-  Button,
-  CurrencyIcon,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+  useRef,
+  useState,
+  Fragment
+} from 'react';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import './BurgerIngredients.css';
 
-import Modal from '../modal/Modal';
-import Ingredient from '../ingredient/Ingredient';
-import OrderDetails from '../order-details/OrderDetails';
+import ConstructorSection from '../constructor-section/ConstructorSection';
+import {
+  BUN_PRODUCT_NAME,
+  MAIN_PRODUCT_NAME,
+  SAUCE_PRODUCT_NAME,
+  BUN_PRODUCT_CAPTION,
+  MAIN_PRODUCT_CAPTION,
+  SAUCE_PRODUCT_CAPTION,
+} from '../../utils/constants';
 
 function BurgerIngredients({
-  bunTop,
-  bunBottom,
-  ingredients,
+  bunIngredients,
+  mainIngredients,
+  sauceIngredients
 }) {
-  const [isCheckoutVisible, setCheckoutVisibility] = useState(false);
+  const [current, setCurrent] = useState(BUN_PRODUCT_NAME);
 
-  function closeModal() {
-    setCheckoutVisibility(false);
-  }
+  const [
+    bunRef,
+    sauceRef,
+    mainRef
+   ] = [
+    useRef(null),
+    useRef(null),
+    useRef(null)
+  ];
+
+  const tabsArr = [{
+    value: BUN_PRODUCT_NAME,
+    caption: BUN_PRODUCT_CAPTION,
+    arr: bunIngredients,
+    ref: bunRef,
+    handler: () => {
+      setCurrent(BUN_PRODUCT_NAME);
+      bunRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  },{
+    value: SAUCE_PRODUCT_NAME,
+    caption: SAUCE_PRODUCT_CAPTION,
+    arr: sauceIngredients,
+    ref: sauceRef,
+    handler: () => {
+      setCurrent(SAUCE_PRODUCT_NAME);
+      sauceRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  },{
+    value: MAIN_PRODUCT_NAME,
+    caption: MAIN_PRODUCT_CAPTION,
+    arr: mainIngredients,
+    ref: mainRef,
+    handler: () => {
+      setCurrent(MAIN_PRODUCT_NAME);
+      mainRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }];
 
   return (
-    <>
-      <div className="burger-ingredients">
-        <div className="burger-ingredients__wrapper">
-          {bunTop && <Ingredient
-            type='top'
-            isLocked={true}
-            text={bunTop.name}
-            price={bunTop.price}
-            thumbnail={bunTop.image}
-          />}
-          <div className="burger-ingredients__main">
-            <div className="burger-ingredients__container">
-              {ingredients.map(({
-                _id,
-                type,
-                name,
-                price,
-                image,
-              }) => (
-                <Ingredient
-                  key={_id}
-                  type={type}
-                  isLocked={true}
-                  text={name}
-                  price={price}
-                  thumbnail={image}
-                />
-              ))}
-            </div>
-          </div>
-          {bunBottom && <Ingredient
-            type='bottom'
-            isLocked={true}
-            text={bunBottom.name}
-            price={bunBottom.price}
-            thumbnail={bunBottom.image}
-          />}
-        </div>
-        <div className="burger-ingredients__footer">
-          <div className="burger-ingredients__meta text text_type_digits-medium">
-            610
-            <CurrencyIcon type="primary" />
-          </div>
-          <Button htmlType="button" type="primary" size="large" onClick={() => setCheckoutVisibility(true)}>Оформить заказ</Button>
+    <div className="burger-ingredients">
+      <div className="burger-ingredients__tablist">
+        {tabsArr.map(({
+            value,
+            caption,
+            handler
+          }, index) => (
+            <Tab key={index} value={value} active={current === `${value}`} onClick={handler}>{caption}</Tab>
+        ))}
+      </div>
+      <div className="burger-ingredients__wrapper">
+        <div className="burger-ingredients__container">
+          {tabsArr.map(({
+              arr,
+              caption,
+              ref
+            }, index) => (
+              <Fragment key={index}>
+                <div className="burger-ingredients__title text text_type_main-medium" ref={ref}>{caption}</div>
+                <ConstructorSection caption={caption} arr={arr} />
+              </Fragment>
+          ))}
         </div>
       </div>
-      {isCheckoutVisible && <Modal isModalOpen={isCheckoutVisible} closeModal={closeModal}><OrderDetails /></Modal>}
-    </>
+    </div>
   );
 }
 

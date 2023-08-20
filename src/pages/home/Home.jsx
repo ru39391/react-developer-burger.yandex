@@ -30,12 +30,12 @@ function Home({ data }) {
 
   return (
     <Wrapper title={HOME_TITLE}>
-      <BurgerConstructor
+      <BurgerIngredients
         bunIngredients={bunIngredients}
         mainIngredients={mainIngredients}
         sauceIngredients={sauceIngredients}
       />
-      <BurgerIngredients
+      <BurgerConstructor
         bunTop={bunIngredients[0]}
         bunBottom={bunIngredients[1]}
         ingredients={[...mainIngredients, ...sauceIngredients]}

@@ -20,7 +20,7 @@ function ConstructorSection({ arr }) {
 
   return (
     <>
-      <div className="burger-constructor__list">
+      <div className="burger-ingredients__list">
         {arr.map(({
           _id,
           name,
