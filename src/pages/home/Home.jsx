@@ -10,7 +10,11 @@ import {
   SAUCE_PRODUCT_NAME,
 } from '../../utils/constants';
 
-function Home({ data }) {
+function Home({
+  data,
+  isLoading,
+  errorMsg
+}) {
   const filterByType = (
     paramsArr,
     filtredArr
@@ -29,19 +33,21 @@ function Home({ data }) {
   ], data), [data]);
 
   return (
-    <Wrapper title={HOME_TITLE}>
-      <BurgerIngredients
-        bunIngredients={bunIngredients}
-        mainIngredients={mainIngredients}
-        sauceIngredients={sauceIngredients}
-      />
-      <BurgerConstructor
-        bunTop={bunIngredients[0]}
-        bunBottom={bunIngredients[1]}
-        ingredients={[...mainIngredients, ...sauceIngredients]}
-      />
+    <Wrapper title={HOME_TITLE} isLoading={isLoading} errorMsg={errorMsg}>
+      <div className="main__wrapper">
+        <BurgerIngredients
+          bunIngredients={bunIngredients}
+          mainIngredients={mainIngredients}
+          sauceIngredients={sauceIngredients}
+        />
+        <BurgerConstructor
+          bunTop={bunIngredients[0]}
+          bunBottom={bunIngredients[1]}
+          ingredients={[...mainIngredients, ...sauceIngredients]}
+        />
+      </div>
     </Wrapper>
-  );
-}
+  )
+};
 
 export default Home;

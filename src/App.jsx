@@ -18,21 +18,27 @@ import {
 } from './utils/constants';
 
 function App() {
+  const [errorMsg, setErrorMsg] = useState('');
+  const [isLoading, setLoading] = useState(true);
   const [ingredients, setIngredients] = useState([]);
 
   function getIngredients() {
     api
       .getData()
       .then(({ data }) => {
+        setErrorMsg('');
         setIngredients(data);
       })
       .catch((err) => {
-        console.log(err);
+        setErrorMsg(err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
   const appRoutes = useRoutes([
-    { path: '/', element: <Home data={ingredients} /> },
+    { path: '/', element: <Home data={ingredients} isLoading={isLoading} errorMsg={errorMsg} /> },
     { path: `/${ORDERS_URL}`, element: <Orders /> },
     { path: `/${PROFILE_URL}`, element: <Profile /> }
   ]);
