@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import './ConstructorSection.css';
 
 import Card from '../card/Card';
 import Modal from '../modal/Modal';

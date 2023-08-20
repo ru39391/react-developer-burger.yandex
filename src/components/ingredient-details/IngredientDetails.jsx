@@ -1,4 +1,4 @@
-import React from "react";
+import { memo } from "react";
 import PropTypes from 'prop-types';
 
 import "./IngredientDetails.css";
@@ -34,4 +34,4 @@ IngredientDetails.propTypes = {
   nutritional: PropTypes.array.isRequired
 };
 
-export default IngredientDetails;
+export default memo(IngredientDetails);

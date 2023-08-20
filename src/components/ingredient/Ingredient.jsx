@@ -1,4 +1,4 @@
-import React from "react";
+import { memo } from "react";
 import PropTypes from 'prop-types';
 import {
   DragIcon,
@@ -35,4 +35,4 @@ Ingredient.propTypes = {
   thumbnail: PropTypes.string.isRequired
 };
 
-export default Ingredient;
+export default memo(Ingredient);

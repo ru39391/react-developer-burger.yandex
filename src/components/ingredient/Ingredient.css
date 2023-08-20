@@ -1,8 +1,8 @@
 .ingredient {
-    gap: 0 8px;
-    flex-grow: 1;
-    padding: 0 8px 0 24px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+  gap: 0 8px;
+  flex-grow: 1;
+  padding: 0 8px 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }

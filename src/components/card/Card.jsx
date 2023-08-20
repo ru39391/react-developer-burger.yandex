@@ -1,4 +1,4 @@
-import React from 'react';
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 import {
   Counter,
@@ -61,4 +61,4 @@ Card.propTypes = {
   showCardDetails: PropTypes.func.isRequired
 };
 
-export default Card;
+export default memo(Card);
