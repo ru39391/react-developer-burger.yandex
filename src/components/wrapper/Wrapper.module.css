@@ -1,4 +1,4 @@
-.main {
+.section {
   flex-grow: 1;
   width: 100%;
   max-width: 1280px;
@@ -7,19 +7,15 @@
   margin-right: auto;
 }
 
-.main__title {
-  margin: 0 0 20px;
-}
-
-.main__content {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.main__wrapper {
+.container {
   flex-grow: 1;
   display: grid;
   grid-column-gap: 40px;
   grid-template-columns: repeat(2, 1fr);
+}
+
+.content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }

@@ -4,7 +4,7 @@ import {
   DragIcon,
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import "./Ingredient.css";
+import styles from './Ingredient.module.css';
 
 function Ingredient({
   type,
@@ -14,7 +14,7 @@ function Ingredient({
   thumbnail
 }) {
   return (
-    <div className="ingredient">
+    <div className={styles.item}>
       {type !== "top" && type !== "bottom" && <DragIcon type="primary" />}
       <ConstructorElement
         type={type}

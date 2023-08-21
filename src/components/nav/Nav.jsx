@@ -4,7 +4,7 @@ import {
   BurgerIcon,
   ListIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import './Nav.css';
+import styles from './Nav.module.css';
 
 import {
   CONSTRUCTOR_TITLE,
@@ -27,13 +27,13 @@ function Nav() {
   ];
 
   return (
-    <nav className="nav">
+    <nav className={styles.wrapper}>
       {navArr.map(({
         url,
         title,
         icon,
       }, index) => (
-        <NavLink key={index} to={`/${url}`} className={({ isActive }) => `nav-link pt-4 pb-4 pl-5 pr-5 ${isActive && 'nav-link_active'}`}>
+        <NavLink key={index} to={`/${url}`} className={`${styles.link} text text_color_inactive pt-4 pb-4 pl-5 pr-5`} style={({ isActive }) => ({ color: isActive && '#fff' })}>
           {icon}
           {title}
         </NavLink>

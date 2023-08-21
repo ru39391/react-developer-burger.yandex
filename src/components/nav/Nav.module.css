@@ -1,17 +1,12 @@
-.nav {
+.wrapper {
   display: flex;
   align-items: center;
   gap: 0 16px;
 }
 
-.nav-link {
+.link {
   display: flex;
   align-items: center;
   gap: 0 8px;
-  color: #8585ad;
   text-decoration: none;
-}
-
-.nav-link_active {
-  color: #fff;
 }

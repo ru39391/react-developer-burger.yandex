@@ -4,7 +4,7 @@ import {
   Counter,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import './Card.css';
+import styles from './Card.module.css';
 
 import {
   CALORIES_CAPTION,
@@ -40,14 +40,14 @@ function Card({
   }
 
   return (
-    <div className="card" onClick={handleCardData}>
+    <div className={styles.item} onClick={handleCardData}>
       <Counter count={1} size="small" />
-      <img className="card__picture" src={thumbnail} alt={name} />
-      <div className="card__meta text text_type_digits-default">
+      <img src={thumbnail} alt={name} />
+      <div className={`${styles.meta} text text_type_digits-default`}>
         {price}
         <CurrencyIcon type="primary" />
       </div>
-      <div className="card__title text text_type_main-default">{name}</div>
+      <div className={`${styles.title} text text_type_main-default`}>{name}</div>
     </div>
   );
 }

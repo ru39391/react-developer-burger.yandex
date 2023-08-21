@@ -1,0 +1,22 @@
+.wrapper {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.tablist {
+  display: flex;
+}
+
+.section {
+  flex-grow: 1;
+  overflow: auto;
+  position: relative;
+  margin: 0 -13px 0 0;
+}
+
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

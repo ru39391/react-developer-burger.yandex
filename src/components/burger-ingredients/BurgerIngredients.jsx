@@ -5,7 +5,7 @@ import {
 } from 'react';
 import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import './BurgerIngredients.css';
+import styles from './BurgerIngredients.module.css';
 
 import ConstructorSection from '../constructor-section/ConstructorSection';
 import {
@@ -65,25 +65,26 @@ function BurgerIngredients({
   }];
 
   return (
-    <div className="burger-ingredients">
-      <div className="burger-ingredients__tablist">
+    <div className={styles.wrapper}>
+      <div className={`${styles.tablist} mb-10`}>
         {tabsArr.map(({
             value,
             caption,
             handler
-          }, index) => (
-            <Tab key={index} value={value} active={current === `${value}`} onClick={handler}>{caption}</Tab>
+          }) => (
+            <Tab key={value} value={value} active={current === `${value}`} onClick={handler}>{caption}</Tab>
         ))}
       </div>
-      <div className="burger-ingredients__wrapper">
-        <div className="burger-ingredients__container">
+      <div className={styles.section}>
+        <div className={styles.container}>
           {tabsArr.map(({
               data,
+              value,
               caption,
               ref
-            }, index) => (
-              <Fragment key={index}>
-                <div className="burger-ingredients__title text text_type_main-medium" ref={ref}>{caption}</div>
+            }) => (
+              <Fragment key={value}>
+                <div className="text text_type_main-medium mb-6" ref={ref}>{caption}</div>
                 <ConstructorSection caption={caption} data={data} />
               </Fragment>
           ))}

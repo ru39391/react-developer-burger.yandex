@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-import "./ModalOverlay.css";
+import styles from "./ModalOverlay.module.css";
 
 function ModalOverlay({
   isOpen,
@@ -13,7 +13,7 @@ function ModalOverlay({
   }
 
   return (
-    <div className={`modal-overlay ${isOpen && 'modal-overlay__visible'}`} onClick={handleModal}>{children}</div>
+    <div className={`${styles.overlay} ${isOpen && styles.overlay_visible}`} onClick={handleModal}>{children}</div>
   );
 }
 

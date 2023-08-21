@@ -1,4 +1,4 @@
-.modal-overlay {
+.overlay {
   overflow: hidden;
   position: fixed;
   display: none;
@@ -14,7 +14,7 @@
   background-color: rgba(0, 0, 0, 0.6);
 }
 
-.modal-overlay__visible {
+.overlay_visible {
   display: flex;
   animation: show 0.5s;
 }

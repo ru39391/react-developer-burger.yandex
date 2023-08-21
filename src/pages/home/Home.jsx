@@ -4,6 +4,8 @@ import Wrapper from '../../components/wrapper/Wrapper';
 import BurgerConstructor from '../../components/burger-constructor/BurgerConstructor';
 import BurgerIngredients from '../../components/burger-ingredients/BurgerIngredients';
 
+import styles from '../../components/wrapper/Wrapper.module.css';
+
 import {
   HOME_TITLE,
   BUN_PRODUCT_NAME,
@@ -31,7 +33,7 @@ function Home({
 
   return (
     <Wrapper title={HOME_TITLE} isLoading={isLoading} errorMsg={errorMsg}>
-      <div className="main__wrapper">
+      <div className={styles.container}>
         <BurgerIngredients
           bunIngredients={bunIngredients}
           mainIngredients={mainIngredients}

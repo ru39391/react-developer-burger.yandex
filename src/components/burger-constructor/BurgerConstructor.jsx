@@ -4,7 +4,7 @@ import {
   Button,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import './BurgerConstructor.css';
+import styles from './BurgerConstructor.module.css';
 
 import Modal from '../modal/Modal';
 import Ingredient from '../ingredient/Ingredient';
@@ -27,45 +27,43 @@ function BurgerConstructor({
 
   return (
     <>
-      <div className="burger-constructor">
-        <div className="burger-constructor__wrapper">
-          {bunTop && <Ingredient
-            type='top'
-            isLocked={true}
-            text={bunTop.name}
-            price={bunTop.price}
-            thumbnail={bunTop.image}
-          />}
-          <div className="burger-constructor__main">
-            <div className="burger-constructor__container">
-              {[...mainIngredients, ...sauceIngredients].map(({
-                _id,
-                type,
-                name,
-                price,
-                image,
-              }) => (
-                <Ingredient
-                  key={_id}
-                  type={type}
-                  isLocked={true}
-                  text={name}
-                  price={price}
-                  thumbnail={image}
-                />
-              ))}
-            </div>
+      <div className={styles.wrapper}>
+        {bunTop && <Ingredient
+          type='top'
+          isLocked={true}
+          text={bunTop.name}
+          price={bunTop.price}
+          thumbnail={bunTop.image}
+        />}
+        <div className={styles.section}>
+          <div className={styles.container}>
+            {[...mainIngredients, ...sauceIngredients].map(({
+              _id,
+              type,
+              name,
+              price,
+              image,
+            }) => (
+              <Ingredient
+                key={_id}
+                type={type}
+                isLocked={true}
+                text={name}
+                price={price}
+                thumbnail={image}
+              />
+            ))}
           </div>
-          {bunBottom && <Ingredient
-            type='bottom'
-            isLocked={true}
-            text={bunBottom.name}
-            price={bunBottom.price}
-            thumbnail={bunBottom.image}
-          />}
         </div>
-        <div className="burger-constructor__footer">
-          <div className="burger-constructor__meta text text_type_digits-medium">
+        {bunBottom && <Ingredient
+          type='bottom'
+          isLocked={true}
+          text={bunBottom.name}
+          price={bunBottom.price}
+          thumbnail={bunBottom.image}
+        />}
+        <div className={`${styles.footer} mt-4`}>
+          <div className={`${styles.meta} text text_type_digits-medium`}>
             610
             <CurrencyIcon type="primary" />
           </div>

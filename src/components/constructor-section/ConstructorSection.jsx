@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Card from '../card/Card';
 import Modal from '../modal/Modal';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
+import styles from './ConstructorSection.module.css';
 
 import { productPropTypes } from '../../utils/proptypes';
 
@@ -22,7 +23,7 @@ function ConstructorSection({ data }) {
 
   return (
     <>
-      <div className="burger-ingredients__list">
+      <div className={`${styles.wrapper} pr-4 pl-4 mb-10`}>
         {data.map(({
           _id,
           name,

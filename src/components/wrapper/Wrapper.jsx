@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import Preloader from "../../components/preloader/Preloader";
-import "./Wrapper.css";
+import styles from "./Wrapper.module.css";
 
 function Wrapper({
   title,
@@ -10,9 +10,9 @@ function Wrapper({
   errorMsg,
 }) {
   return (
-    <main className="main">
-      <section className="main__content pl-5 pr-5">
-        <h1 className="main__title text text_type_main-large">{title}</h1>
+    <main className={styles.section}>
+      <section className={`${styles.content} pl-5 pr-5`}>
+        <h1 className="text text_type_main-large mb-5">{title}</h1>
         {errorMsg && <p className="text text_type_main-default">{errorMsg}</p>}
         {isLoading ? <Preloader /> : children}
       </section>

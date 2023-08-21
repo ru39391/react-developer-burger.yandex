@@ -1,11 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import {
-    Logo,
-    ProfileIcon,
+  Logo,
+  ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import Nav from '../nav/Nav';
-import './AppHeader.css';
+import styles from './AppHeader.module.css';
+import navStyles from '../nav/Nav.module.css';
 
 import {
   PROFILE_TITLE,
@@ -14,11 +15,11 @@ import {
 
 function AppHeader() {
   return (
-    <header className="header text text_type_main-default p-4">
-      <div className="header__container">
+    <header className={`${styles.wrapper} text text_type_main-default p-4 mb-10`}>
+      <div className={styles.container}>
         <Nav />
         <Logo />
-        <NavLink to={`/${PROFILE_URL}`}  className={({ isActive }) => `nav-link pt-4 pb-4 pl-5 pr-5 ${isActive && 'nav-link_active'}`}>
+        <NavLink to={`/${PROFILE_URL}`} className={`${navStyles.link} text text_color_inactive pt-4 pb-4 pl-5 pr-5`} style={({ isActive }) => ({ color: isActive && '#fff' })}>
           <ProfileIcon />
           {PROFILE_TITLE}
         </NavLink>
