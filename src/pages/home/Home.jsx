@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Wrapper from '../../components/wrapper/Wrapper';
 import BurgerConstructor from '../../components/burger-constructor/BurgerConstructor';
@@ -17,22 +17,17 @@ function Home({
   isLoading,
   errorMsg
 }) {
-  const filterByType = (
-    paramsArr,
-    filtredArr
-  ) => paramsArr.map(
-    (param) => filtredArr.filter(({ type }) => type === param)
-  );
+  const filterByType = (param, arr) => arr.filter(({ type }) => type === param);
 
   const [
     bunIngredients,
     mainIngredients,
     sauceIngredients
-  ] = useCallback(filterByType([
-    BUN_PRODUCT_NAME,
-    MAIN_PRODUCT_NAME,
-    SAUCE_PRODUCT_NAME
-  ], data), [data]);
+  ] = [
+    useMemo(() => filterByType(BUN_PRODUCT_NAME, data), [data]),
+    useMemo(() => filterByType(MAIN_PRODUCT_NAME, data), [data]),
+    useMemo(() => filterByType(SAUCE_PRODUCT_NAME, data), [data])
+  ];
 
   return (
     <Wrapper title={HOME_TITLE} isLoading={isLoading} errorMsg={errorMsg}>
