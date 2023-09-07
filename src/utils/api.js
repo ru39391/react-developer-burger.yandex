@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   API_URL,
-  INGREDIENTS_ALIAS,
   RESPONSE_ERROR_MSG
 } from './constants';
 
@@ -31,8 +30,17 @@ class Api extends React.Component {
     })
       .then((res) => {return this._checkResponse(res, RESPONSE_ERROR_MSG)});
   }
+
+  checkout(idsArr) {
+    return fetch(`${API_URL}${this._path}`, {
+      method: 'POST',
+      headers: this._setHeaders(),
+      body: JSON.stringify({
+        ingredients: idsArr
+      })
+    })
+      .then((res) => {return this._checkResponse(res, RESPONSE_ERROR_MSG)});
+  }
 }
 
-const api = new Api(INGREDIENTS_ALIAS);
-
-export default api;
+export default Api;

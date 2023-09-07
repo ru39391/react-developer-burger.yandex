@@ -20,7 +20,9 @@ const PROFILE_URL = 'profile';
 
 const API_URL = 'https://norma.nomoreparties.space/api/';
 const INGREDIENTS_ALIAS = 'ingredients';
+const ORDERS_ALIAS = 'orders';
 
+const ACTION_ERROR_MSG = 'Передан неизвестный тип';
 const RESPONSE_ERROR_MSG = 'Ошибка при получении данных';
 
 const CALORIES_CAPTION = 'Калории,ккал';
@@ -50,7 +52,9 @@ export {
 
   API_URL,
   INGREDIENTS_ALIAS,
+  ORDERS_ALIAS,
 
+  ACTION_ERROR_MSG,
   RESPONSE_ERROR_MSG,
 
   CALORIES_CAPTION,

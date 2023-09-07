@@ -10,17 +10,22 @@ import Profile from './pages/profile/Profile';
 
 import AppHeader from './components/app-header/AppHeader';
 
-import api from './utils/api';
+import Api from './utils/api';
 import {
+  INGREDIENTS_ALIAS,
   DEFAULT_DOC_TITLE,
   ORDERS_URL,
   PROFILE_URL
 } from './utils/constants';
 
+import IngredientsContext from './services/ingredientsContext';
+
 function App() {
   const [errorMsg, setErrorMsg] = useState('');
   const [isLoading, setLoading] = useState(true);
   const [ingredients, setIngredients] = useState([]);
+
+  const api = new Api(INGREDIENTS_ALIAS);
 
   function getIngredients() {
     api
@@ -38,7 +43,7 @@ function App() {
   };
 
   const appRoutes = useRoutes([
-    { path: '/', element: <Home data={ingredients} isLoading={isLoading} errorMsg={errorMsg} /> },
+    { path: '/', element: <IngredientsContext.Provider value={ingredients}><Home isLoading={isLoading} errorMsg={errorMsg} /></IngredientsContext.Provider> },
     { path: `/${ORDERS_URL}`, element: <Orders /> },
     { path: `/${PROFILE_URL}`, element: <Profile /> }
   ]);
