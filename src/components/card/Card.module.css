@@ -1,0 +1,19 @@
+.item {
+  gap: 8px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.title {
+  text-align: center;
+}
+
+.meta {
+  gap: 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

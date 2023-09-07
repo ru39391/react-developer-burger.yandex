@@ -1,0 +1,12 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0 16px;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 0 8px;
+  text-decoration: none;
+}
