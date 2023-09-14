@@ -43,7 +43,7 @@ function App() {
   };
 
   const appRoutes = useRoutes([
-    { path: '/', element: <IngredientsContext.Provider value={ingredients}><Home isLoading={isLoading} errorMsg={errorMsg} /></IngredientsContext.Provider> },
+    { path: '/', element: <Home ingredients={ingredients} isLoading={isLoading} errorMsg={errorMsg} /> },
     { path: `/${ORDERS_URL}`, element: <Orders /> },
     { path: `/${PROFILE_URL}`, element: <Profile /> }
   ]);

@@ -1,8 +1,10 @@
-import { useMemo, useContext } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Wrapper from '../../components/wrapper/Wrapper';
 import BurgerConstructor from '../../components/burger-constructor/BurgerConstructor';
 import BurgerIngredients from '../../components/burger-ingredients/BurgerIngredients';
+import { getItems } from '../../services/actions';
 
 import styles from '../../components/wrapper/Wrapper.module.css';
 
@@ -12,14 +14,17 @@ import {
   MAIN_PRODUCT_NAME,
   SAUCE_PRODUCT_NAME,
 } from '../../utils/constants';
-import IngredientsContext from '../../services/ingredientsContext';
 
 function Home({
+  ingredients,
   isLoading,
   errorMsg
 }) {
-  const ingredients = useContext(IngredientsContext);
+  const dispatch = useDispatch();
+  const { items } = useSelector(state => state.constructor);
   const filterByType = (param, arr) => arr.filter(({ type }) => type === param);
+
+  console.log(items);
 
   const [
     bunIngredients,
@@ -35,6 +40,13 @@ function Home({
   );
 
   const bun = bunIngredients[Math.floor(Math.random() * bunIngredients.length)];
+
+  useEffect(
+    () => {
+      dispatch(getItems());
+    },
+    [dispatch]
+  );
 
   return (
     <Wrapper title={HOME_TITLE} isLoading={isLoading} errorMsg={errorMsg}>
