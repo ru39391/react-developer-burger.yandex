@@ -25,11 +25,14 @@ function Home({
     bunIngredients,
     mainIngredients,
     sauceIngredients
-  ] = [
-    useMemo(() => filterByType(BUN_PRODUCT_NAME, ingredients), [ingredients]),
-    useMemo(() => filterByType(MAIN_PRODUCT_NAME, ingredients), [ingredients]),
-    useMemo(() => filterByType(SAUCE_PRODUCT_NAME, ingredients), [ingredients])
-  ];
+  ] = useMemo(
+    () => [
+      filterByType(BUN_PRODUCT_NAME, ingredients),
+      filterByType(MAIN_PRODUCT_NAME, ingredients),
+      filterByType(SAUCE_PRODUCT_NAME, ingredients)
+    ],
+    [ingredients]
+  );
 
   const bun = bunIngredients[Math.floor(Math.random() * bunIngredients.length)];
 

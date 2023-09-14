@@ -25,15 +25,9 @@ function BurgerIngredients({
 }) {
   const [current, setCurrent] = useState(BUN_PRODUCT_NAME);
 
-  const [
-    bunRef,
-    sauceRef,
-    mainRef
-   ] = [
-    useRef(null),
-    useRef(null),
-    useRef(null)
-  ];
+  const bunRef = useRef(null);
+  const sauceRef = useRef(null);
+  const mainRef = useRef(null);
 
   const tabsArr = [{
     value: BUN_PRODUCT_NAME,
