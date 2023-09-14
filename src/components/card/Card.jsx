@@ -1,4 +1,7 @@
-import { memo } from 'react';
+import {
+  memo,
+  useCallback
+} from 'react';
 import PropTypes from 'prop-types';
 import {
   Counter,
@@ -28,16 +31,23 @@ function Card({
     CARBOHYDRATES_CAPTION
   ];
 
-  function handleCardData() {
-    showCardDetails({
+  const handleCardData = useCallback(
+    () => {
+      showCardDetails({
+        name,
+        image,
+        nutritional: nutritional.map((value, index) => ({
+          name: captionsArr[index],
+          value
+        }))
+      });
+    },
+    [
       name,
       image,
-      nutritional: nutritional.map((value, index) => ({
-        name: captionsArr[index],
-        value
-      }))
-    });
-  }
+      nutritional
+    ]
+  );
 
   return (
     <div className={styles.item} onClick={handleCardData}>

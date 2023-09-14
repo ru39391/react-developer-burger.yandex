@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Wrapper from '../../components/wrapper/Wrapper';
 import BurgerConstructor from '../../components/burger-constructor/BurgerConstructor';
@@ -12,13 +12,13 @@ import {
   MAIN_PRODUCT_NAME,
   SAUCE_PRODUCT_NAME,
 } from '../../utils/constants';
-import { productPropTypes } from '../../utils/proptypes';
+import IngredientsContext from '../../services/ingredientsContext';
 
 function Home({
-  data,
   isLoading,
   errorMsg
 }) {
+  const ingredients = useContext(IngredientsContext);
   const filterByType = (param, arr) => arr.filter(({ type }) => type === param);
 
   const [
@@ -26,10 +26,12 @@ function Home({
     mainIngredients,
     sauceIngredients
   ] = [
-    useMemo(() => filterByType(BUN_PRODUCT_NAME, data), [data]),
-    useMemo(() => filterByType(MAIN_PRODUCT_NAME, data), [data]),
-    useMemo(() => filterByType(SAUCE_PRODUCT_NAME, data), [data])
+    useMemo(() => filterByType(BUN_PRODUCT_NAME, ingredients), [ingredients]),
+    useMemo(() => filterByType(MAIN_PRODUCT_NAME, ingredients), [ingredients]),
+    useMemo(() => filterByType(SAUCE_PRODUCT_NAME, ingredients), [ingredients])
   ];
+
+  const bun = bunIngredients[Math.floor(Math.random() * bunIngredients.length)];
 
   return (
     <Wrapper title={HOME_TITLE} isLoading={isLoading} errorMsg={errorMsg}>
@@ -40,7 +42,7 @@ function Home({
           sauceIngredients={sauceIngredients}
         />
         <BurgerConstructor
-          bunIngredients={bunIngredients}
+          bunIngredients={bunIngredients.map(item => item._id === bun._id ? item : bun)}
           mainIngredients={mainIngredients}
           sauceIngredients={sauceIngredients}
         />
@@ -50,7 +52,6 @@ function Home({
 };
 
 Home.propTypes = {
-  data: PropTypes.arrayOf(productPropTypes.isRequired).isRequired,
   isLoading: PropTypes.bool.isRequired,
   errorMsg: PropTypes.string.isRequired,
 };
