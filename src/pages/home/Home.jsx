@@ -1,6 +1,5 @@
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import Wrapper from '../../components/wrapper/Wrapper';
 import BurgerConstructor from '../../components/burger-constructor/BurgerConstructor';
 import BurgerIngredients from '../../components/burger-ingredients/BurgerIngredients';
@@ -15,16 +14,10 @@ import {
   SAUCE_PRODUCT_NAME,
 } from '../../utils/constants';
 
-function Home({
-  ingredients,
-  isLoading,
-  errorMsg
-}) {
+function Home() {
   const dispatch = useDispatch();
-  const { items } = useSelector(state => state.constructor);
+  const { items: ingredients } = useSelector(state => state.productData);
   const filterByType = (param, arr) => arr.filter(({ type }) => type === param);
-
-  console.log(items);
 
   const [
     bunIngredients,
@@ -49,7 +42,7 @@ function Home({
   );
 
   return (
-    <Wrapper title={HOME_TITLE} isLoading={isLoading} errorMsg={errorMsg}>
+    <Wrapper title={HOME_TITLE}>
       <div className={styles.container}>
         <BurgerIngredients
           bunIngredients={bunIngredients}
@@ -64,11 +57,6 @@ function Home({
       </div>
     </Wrapper>
   )
-};
-
-Home.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  errorMsg: PropTypes.string.isRequired,
 };
 
 export default Home;

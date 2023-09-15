@@ -1,30 +1,47 @@
-import { INGREDIENTS_ALIAS } from '../../utils/constants';
+import {
+  INGREDIENTS_ALIAS,
+  RESPONSE_ERROR_MSG
+} from '../../utils/constants';
 import Api from '../../utils/api';
+import {
+  getItemsRequest,
+  getItemsSuccess,
+  getItemsFailed
+} from '../reducers/products-data';
 
 const api = new Api(INGREDIENTS_ALIAS);
 
-export const GET_ITEMS_REQUEST = 'GET_ITEMS_REQUEST';
-export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS';
-export const GET_ITEMS_FAILED = 'GET_ITEMS_FAILED';
-
+/*
 export function getItems() {
   return function(dispatch) {
-    dispatch({
-      type: GET_ITEMS_REQUEST
-    });
+    dispatch(getItemsRequest());
     api
       .getData()
       .then(res => {
         if (res && res.success) {
-          dispatch({
-            type: GET_ITEMS_SUCCESS,
-            items: res.data
-          });
+          dispatch(getItemsSuccess({ items: res.data }));
         } else {
-          dispatch({
-            type: GET_ITEMS_FAILED
-          });
+          dispatch(getItemsFailed());
         }
       });
   };
 }
+*/
+
+const getItems = () => async dispatch => {
+  dispatch(getItemsRequest())
+  try {
+    const res = await api.getData();
+    if (res && res.success) {
+      dispatch(getItemsSuccess({ items: res.data }))
+    } else {
+      dispatch(getItemsFailed({ errorMsg: RESPONSE_ERROR_MSG }))
+    }
+  } catch (err) {
+    dispatch(getItemsFailed({ errorMsg: err }))
+  }
+}
+
+export {
+  getItems
+};

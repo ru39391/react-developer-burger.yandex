@@ -1,8 +1,7 @@
-import { combineReducers } from 'redux';
-import constructorReducer from './constructor';
+import productDataReducer from './products-data';
 
-const rootReducer = combineReducers({
-  constructor: constructorReducer
-});
+const reducer = {
+  productData: productDataReducer
+};
 
-export default rootReducer;
+export default reducer;
