@@ -29,8 +29,16 @@ const productDataSlice = createSlice({
       state.itemsFailed = true;
       state.errorMsg = action.payload.errorMsg;
     },
+    setItemDetails(state, action) {
+      state.item = {...action.payload};
+    },
   }
 });
 
-export const { getItemsRequest, getItemsSuccess, getItemsFailed } = productDataSlice.actions
+export const {
+  getItemsRequest,
+  getItemsSuccess,
+  getItemsFailed,
+  setItemDetails
+} = productDataSlice.actions
 export default productDataSlice.reducer;

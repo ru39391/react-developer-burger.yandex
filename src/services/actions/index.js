@@ -11,23 +11,6 @@ import {
 
 const api = new Api(INGREDIENTS_ALIAS);
 
-/*
-export function getItems() {
-  return function(dispatch) {
-    dispatch(getItemsRequest());
-    api
-      .getData()
-      .then(res => {
-        if (res && res.success) {
-          dispatch(getItemsSuccess({ items: res.data }));
-        } else {
-          dispatch(getItemsFailed());
-        }
-      });
-  };
-}
-*/
-
 const getItems = () => async dispatch => {
   dispatch(getItemsRequest())
   try {

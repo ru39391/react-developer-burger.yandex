@@ -2,6 +2,7 @@ import {
   memo,
   useCallback
 } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   Counter,
@@ -15,15 +16,16 @@ import {
   FAT_CAPTION,
   CARBOHYDRATES_CAPTION
 } from '../../utils/constants';
+import { setItemDetails } from '../../services/reducers/products-data';
 
 function Card({
   name,
   image,
   thumbnail,
   price,
-  nutritional,
-  showCardDetails
+  nutritional
 }) {
+  const dispatch = useDispatch();
   const captionsArr = [
     CALORIES_CAPTION,
     PROTEINS_CAPTION,
@@ -33,14 +35,14 @@ function Card({
 
   const handleCardData = useCallback(
     () => {
-      showCardDetails({
+      dispatch(setItemDetails({
         name,
         image,
         nutritional: nutritional.map((value, index) => ({
           name: captionsArr[index],
           value
         }))
-      });
+      }));
     },
     [
       name,
@@ -67,8 +69,7 @@ Card.propTypes = {
   image: PropTypes.string.isRequired,
   thumbnail: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
-  nutritional: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
-  showCardDetails: PropTypes.func.isRequired
+  nutritional: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired
 };
 
 export default memo(Card);
