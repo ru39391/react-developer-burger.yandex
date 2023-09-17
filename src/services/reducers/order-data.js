@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { v4 as uuidv4 } from 'uuid';
 import {
   ID_KEY,
   PRICE_KEY
@@ -40,11 +41,11 @@ const orderDataSlice = createSlice({
     }),
     addItem: (state, action) => ({
       ...state,
-      mainItems: [...state.mainItems, action.payload.item]
+      mainItems: [...state.mainItems, {...action.payload.item, key: uuidv4()}]
     }),
     addBunItem: (state, action) => ({
       ...state,
-      bunItems: [...state.bunItems].map(item => action.payload.item)
+      bunItems: [...state.bunItems].map(item => ({...action.payload.item, key: uuidv4()}))
     }),
     removeItem: (state, action) => ({
       ...state,

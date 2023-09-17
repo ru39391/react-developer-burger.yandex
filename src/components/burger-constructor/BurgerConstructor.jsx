@@ -116,7 +116,7 @@ function BurgerConstructor() {
           <div className={styles.container}>
             {ingredients.map((item, idx) => (
               <Ingredient
-                key={`${idx}${item._id}`}
+                key={item.key}
                 text={item.name}
                 thumbnail={item.image}
                 ingredient={item}

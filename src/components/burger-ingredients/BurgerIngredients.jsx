@@ -23,8 +23,9 @@ import { getItems } from '../../services/actions';
 
 function BurgerIngredients() {
   const dispatch = useDispatch();
-  const { items: ingredients } = useSelector(state => state.productData);
+  const ingredients = useSelector(state => state.productData.items);
   const [current, setCurrent] = useState(BUN_PRODUCT_NAME);
+
   const filterByType = (params, arr) => params.map(item => arr.filter(({ type }) => type === item));
 
   const productNames = [
