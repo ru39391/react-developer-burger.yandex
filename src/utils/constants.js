@@ -30,6 +30,9 @@ const PROTEINS_CAPTION = 'Белки, г';
 const FAT_CAPTION = 'Жиры, г';
 const CARBOHYDRATES_CAPTION = 'Углеводы, г';
 
+const ID_KEY = '_id';
+const PRICE_KEY = 'price';
+
 export {
   DEFAULT_DOC_TITLE,
   HOME_TITLE,
@@ -60,5 +63,8 @@ export {
   CALORIES_CAPTION,
   PROTEINS_CAPTION,
   FAT_CAPTION,
-  CARBOHYDRATES_CAPTION
+  CARBOHYDRATES_CAPTION,
+
+  ID_KEY,
+  PRICE_KEY
 };

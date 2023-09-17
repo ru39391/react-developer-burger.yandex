@@ -9,6 +9,8 @@ const initialState = {
   orderRequest: false,
   orderFailed: false,
 
+  summ: 0,
+
   errorMsg: '',
 };
 
@@ -22,7 +24,7 @@ const orderDataSlice = createSlice({
     }),
     getOrderSuccess: (state, action) => ({
       ...state,
-      order: {...action.payload},
+      order: {...action.payload.data},
       orderRequest: false,
       orderFailed: false
     }),
@@ -39,7 +41,17 @@ const orderDataSlice = createSlice({
     addBunItem: (state, action) => ({
       ...state,
       bunItems: state.bunItems.map(item => action.payload.item)
-    })
+    }),
+    setOrderData(state, action) {
+      const { idKey, priceKey } = action.payload;
+      const addedItems = state.bunItems.filter(item => Boolean(item)).length ? [...state.bunItems, ...state.mainItems] : [...state.mainItems];
+
+      return {
+        ...state,
+        orderList: addedItems.map(item => item[idKey]),
+        summ: addedItems.map(item => item[priceKey]).reduce((summ, value) => summ + value, 0)
+      };
+    },
   }
 });
 
@@ -48,6 +60,7 @@ export const {
   getOrderSuccess,
   getOrderFailed,
   addItem,
-  addBunItem
+  addBunItem,
+  setOrderData
 } = orderDataSlice.actions
 export default orderDataSlice.reducer;

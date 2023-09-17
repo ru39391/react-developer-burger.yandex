@@ -23,7 +23,7 @@ const getItems = () => async dispatch => {
   try {
     const res = await dataApi.getData();
     if (res && res.success) {
-      dispatch(getItemsSuccess({ items: res.data }))
+      dispatch(getItemsSuccess({ data: res.data }))
     } else {
       dispatch(getItemsFailed({ errorMsg: RESPONSE_ERROR_MSG }))
     }
@@ -37,7 +37,8 @@ const checkout = (arr) => async dispatch => {
   try {
     const res = await orderApi.checkout(arr);
     if (res && res.success) {
-      dispatch(getOrderSuccess({ items: res.data }))
+      const { name, order } = res;
+      dispatch(getOrderSuccess({ data: { name, id: order.number } }))
     } else {
       dispatch(getOrderFailed({ errorMsg: ACTION_ERROR_MSG }))
     }

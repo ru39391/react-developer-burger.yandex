@@ -16,35 +16,28 @@ import OrderDetails from '../order-details/OrderDetails';
 
 import styles from './BurgerConstructor.module.css';
 
-import { BUN_PRODUCT_NAME } from '../../utils/constants';
+import {
+  ID_KEY,
+  PRICE_KEY,
+  BUN_PRODUCT_NAME
+} from '../../utils/constants';
 
 import { checkout } from '../../services/actions';
-import { addItem, addBunItem } from '../../services/reducers/order-data';
+import {
+  addItem,
+  addBunItem,
+  setOrderData
+} from '../../services/reducers/order-data';
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
-  const { mainItems: ingredients } = useSelector(state => state.orderData);
-
-  const [summ, setSumm] = useState(0);
-  const [buns, setBuns] = useState([]);
-  const [orderList, setOrderList] = useState([]);
+  const {
+    bunItems: buns,
+    mainItems: ingredients,
+    orderList,
+    summ
+  } = useSelector(state => state.orderData);
   const [isCheckoutVisible, setCheckoutVisibility] = useState(false);
-
-  function setOrderDetails() {
-    /*
-    const currIngredients = ingredients.filter(({ _id }) => currItems.map(({ id }) => id).includes(_id));
-    const bunIngredient = currIngredients.find(product => product.type === BUN_PRODUCT_NAME);
-    const mainIngredients = currIngredients.filter(product => product.type !== BUN_PRODUCT_NAME);
-
-    const buns = [...Array(2)].map((_) => bun);
-
-    currIngredients.splice(currIngredients.indexOf(bun), 1);
-    //const prices = products.map(({ price }) => price);
-    //setSumm(prices.reduce((summ, item) => summ + item, 0));
-    setBuns(buns);
-    setOrderList([...buns, ...mainIngredients].map(({ _id }) => _id));
-    */
-  }
 
   function closeModal() {
     setCheckoutVisibility(false);
@@ -55,7 +48,10 @@ function BurgerConstructor() {
       setCheckoutVisibility(true);
       dispatch(checkout(orderList));
     },
-    [dispatch, orderList]
+    [
+      orderList,
+      dispatch
+    ]
   );
 
   const [{ isHover }, wrapperRef] = useDrop({
@@ -69,23 +65,26 @@ function BurgerConstructor() {
   });
 
   useEffect(() => {
-    setOrderDetails();
-  }, [ingredients]);
+    dispatch(setOrderData({ idKey: ID_KEY, priceKey: PRICE_KEY }));
+  }, [
+    buns,
+    ingredients,
+    dispatch
+  ]);
 
   return (
     <>
       <div className={`${styles.wrapper} ${isHover && styles.wrapper_hovered}`} ref={wrapperRef}>
-        {/*buns[0] && <Ingredient
+        {buns[0] && <Ingredient
           type='top'
           isLocked={true}
           text={buns[0].name}
           price={buns[0].price}
           thumbnail={buns[0].image}
-        />*/}
+        />}
         <div className={styles.section}>
           <div className={styles.container}>
-            {/*
-            {[...mainIngredients, ...sauceIngredients].map(({
+            {ingredients.map(({
               _id,
               type,
               name,
@@ -101,17 +100,16 @@ function BurgerConstructor() {
                 thumbnail={image}
               />
             ))}
-            */}
           </div>
         </div>
-        {/*buns[1] && <Ingredient
+        {buns[1] && <Ingredient
           type='bottom'
           isLocked={true}
           text={buns[1].name}
           price={buns[1].price}
           thumbnail={buns[1].image}
-        />*/}
-        {Boolean(ingredients.length) && (
+        />}
+        {Boolean(summ) && (
           <div className={`${styles.footer} mt-4`}>
             <div className={`${styles.meta} text text_type_digits-medium`}>
               {summ}

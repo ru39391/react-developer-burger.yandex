@@ -20,7 +20,7 @@ const productDataSlice = createSlice({
     }),
     getItemsSuccess: (state, action) => ({
       ...state,
-      items: action.payload.items,
+      items: action.payload.data,
       itemsRequest: false,
       itemsFailed: false
     }),

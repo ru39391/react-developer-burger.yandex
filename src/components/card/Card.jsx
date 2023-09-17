@@ -51,7 +51,8 @@ function Card({
     [
       name,
       picture,
-      nutritional
+      nutritional,
+      dispatch
     ]
   );
 
