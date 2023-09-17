@@ -14,22 +14,26 @@ const productDataSlice = createSlice({
   name: 'productData',
   initialState,
   reducers: {
-    getItemsRequest(state, action) {
-      state.itemsRequest = true
-    },
-    getItemsSuccess(state, action) {
-      state.items = action.payload.items;
-      state.itemsRequest = false;
-      state.itemsFailed = false;
-    },
-    getItemsFailed(state, action) {
-      state.itemsRequest = false;
-      state.itemsFailed = true;
-      state.errorMsg = action.payload.errorMsg;
-    },
-    setItemDetails(state, action) {
-      state.item = {...action.payload};
-    }
+    getItemsRequest: (state, action) => ({
+      ...state,
+      itemsRequest: true
+    }),
+    getItemsSuccess: (state, action) => ({
+      ...state,
+      items: action.payload.items,
+      itemsRequest: false,
+      itemsFailed: false
+    }),
+    getItemsFailed: (state, action) => ({
+      ...state,
+      itemsRequest: false,
+      itemsFailed: true,
+      errorMsg: action.payload.errorMsg
+    }),
+    setItemDetails: (state, action) => ({
+      ...state,
+      item: {...action.payload}
+    })
   }
 });
 

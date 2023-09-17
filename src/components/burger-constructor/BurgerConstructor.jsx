@@ -19,11 +19,11 @@ import styles from './BurgerConstructor.module.css';
 import { BUN_PRODUCT_NAME } from '../../utils/constants';
 
 import { checkout } from '../../services/actions';
-import { addItem, replaceItem } from '../../services/reducers/order-data';
+import { addItem, addBunItem } from '../../services/reducers/order-data';
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
-  const { items: ingredients } = useSelector(state => state.orderData);
+  const { mainItems: ingredients } = useSelector(state => state.orderData);
 
   const [summ, setSumm] = useState(0);
   const [buns, setBuns] = useState([]);
@@ -64,7 +64,7 @@ function BurgerConstructor() {
       isHover: monitor.isOver()
     }),
     drop(item) {
-      item.type === BUN_PRODUCT_NAME ? dispatch(replaceItem({ item })) : dispatch(addItem({ item }));
+      item.type === BUN_PRODUCT_NAME ? dispatch(addBunItem({ item })) : dispatch(addItem({ item }));
     },
   });
 

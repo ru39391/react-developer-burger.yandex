@@ -24,7 +24,7 @@ import { setItemDetails } from '../../services/reducers/products-data';
 function Card({
   data,
   name,
-  image,
+  picture,
   thumbnail,
   price,
   nutritional
@@ -41,7 +41,7 @@ function Card({
     () => {
       dispatch(setItemDetails({
         name,
-        image,
+        image: picture,
         nutritional: nutritional.map((value, index) => ({
           name: captionsArr[index],
           value
@@ -50,7 +50,7 @@ function Card({
     },
     [
       name,
-      image,
+      picture,
       nutritional
     ]
   );
@@ -78,7 +78,7 @@ function Card({
 
 Card.propTypes = {
   name: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
+  picture: PropTypes.string.isRequired,
   thumbnail: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   nutritional: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,

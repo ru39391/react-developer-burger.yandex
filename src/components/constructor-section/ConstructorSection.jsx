@@ -35,7 +35,7 @@ function ConstructorSection({ data }) {
             key={item._id}
             data={item}
             thumbnail={item.image}
-            image={item.image_large}
+            picture={item.image_large}
             nutritional={[
               item.calories,
               item.proteins,
