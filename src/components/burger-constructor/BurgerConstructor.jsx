@@ -22,7 +22,8 @@ import {
   addItem,
   addBunItem,
   removeItem,
-  setOrderData
+  setOrderData,
+  updateOrderList
 } from '../../services/reducers/order-data';
 
 function BurgerConstructor() {
@@ -41,9 +42,32 @@ function BurgerConstructor() {
 
   const removeIngredient = useCallback(
     (item) => {
-      dispatch(removeItem({ item }));
+      dispatch(removeItem({ index: ingredients.indexOf(item) }));
     },
-    [dispatch]
+    [
+      ingredients,
+      dispatch
+    ]
+  );
+
+  const handleDrop = useCallback(
+    (data) => {
+      const isBunItemsArr = Object.values(data).map(({ type }) => type === BUN_PRODUCT_NAME);
+      const getIndex = (value) => ({
+        product: Object.values(data)[value],
+        index: ingredients.indexOf(Object.values(data)[value])
+      });
+
+      if(isBunItemsArr.some(item => item)) {
+        return;
+      } else {
+        dispatch(updateOrderList({ draggedItem: getIndex(0), targetItem: getIndex(1) }));
+      }
+    },
+    [
+      ingredients,
+      dispatch
+    ]
   );
 
   const checkoutCart = useCallback(
@@ -58,7 +82,8 @@ function BurgerConstructor() {
   );
 
   const [{ isHover }, wrapperRef] = useDrop({
-    accept: 'order',
+    type: 'order',
+    accept: 'card',
     collect: monitor => ({
       isHover: monitor.isOver()
     }),
@@ -84,6 +109,7 @@ function BurgerConstructor() {
           price={buns[0].price}
           thumbnail={buns[0].image}
           ingredient={buns[0]}
+          handleDrop={handleDrop}
           removeIngredient={removeIngredient}
         />}
         <div className={styles.section}>
@@ -94,6 +120,7 @@ function BurgerConstructor() {
                 text={item.name}
                 thumbnail={item.image}
                 ingredient={item}
+                handleDrop={handleDrop}
                 removeIngredient={removeIngredient}
                 {...item}
               />
@@ -106,6 +133,7 @@ function BurgerConstructor() {
           price={buns[1].price}
           thumbnail={buns[1].image}
           ingredient={buns[1]}
+          handleDrop={handleDrop}
           removeIngredient={removeIngredient}
         />}
         {Boolean(summ) && (

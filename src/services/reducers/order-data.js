@@ -40,16 +40,28 @@ const orderDataSlice = createSlice({
     }),
     addItem: (state, action) => ({
       ...state,
-      mainItems: [...state.mainItems, {...action.payload.item, idx: state.mainItems.length + 1}]
+      mainItems: [...state.mainItems, action.payload.item]
     }),
     addBunItem: (state, action) => ({
       ...state,
-      bunItems: state.bunItems.map(item => action.payload.item)
+      bunItems: [...state.bunItems].map(item => action.payload.item)
     }),
     removeItem: (state, action) => ({
       ...state,
-      mainItems: state.mainItems.filter(({ idx }) => idx !== action.payload.item.idx)
+      mainItems: [...state.mainItems].filter((_, index) => index !== action.payload.index)
     }),
+    updateOrderList(state, action) {
+      const { draggedItem, targetItem } = action.payload;
+
+      const updatedItems = [...state.mainItems];
+      updatedItems[draggedItem.index] = targetItem.product;
+      updatedItems[targetItem.index] = draggedItem.product;
+
+      return {
+        ...state,
+        mainItems: [...updatedItems]
+      }
+    },
     setOrderData(state, action) {
       const addedItems = state.bunItems.filter(item => Boolean(item)).length ? [...state.bunItems, ...state.mainItems] : [...state.mainItems];
 
@@ -69,6 +81,7 @@ export const {
   addItem,
   addBunItem,
   removeItem,
+  updateOrderList,
   setOrderData
 } = orderDataSlice.actions
 export default orderDataSlice.reducer;

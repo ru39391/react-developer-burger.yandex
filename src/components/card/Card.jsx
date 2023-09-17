@@ -63,7 +63,7 @@ function Card({
   );
 
   const [{ isClassMod }, cardRef] = useDrag({
-    type: 'order',
+    type: 'card',
     item: data,
     collect: monitor => ({
       isClassMod: monitor.isDragging()
@@ -88,12 +88,12 @@ function Card({
 }
 
 Card.propTypes = {
+  data: productPropTypes.isRequired,
   name: PropTypes.string.isRequired,
   picture: PropTypes.string.isRequired,
   thumbnail: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  nutritional: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
-  data: productPropTypes.isRequired
+  nutritional: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired
 };
 
 export default memo(Card);

@@ -5,3 +5,13 @@
   align-items: center;
   justify-content: flex-end;
 }
+
+.active {
+  transition: all .3s ease;
+  background-color: rgba(0,0,0,0);
+}
+
+.hover {
+  transition: all .3s ease;
+  background-color: rgba(0,0,0,.5);
+}
