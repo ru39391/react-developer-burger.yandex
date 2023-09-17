@@ -1,8 +1,10 @@
 import {
   memo,
+  useState,
+  useEffect,
   useCallback
 } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import PropTypes from 'prop-types';
 import {
@@ -14,6 +16,7 @@ import styles from './Card.module.css';
 
 import { productPropTypes } from '../../utils/proptypes';
 import {
+  ID_KEY,
   CALORIES_CAPTION,
   PROTEINS_CAPTION,
   FAT_CAPTION,
@@ -30,6 +33,9 @@ function Card({
   nutritional
 }) {
   const dispatch = useDispatch();
+  const { orderList } = useSelector(state => state.orderData);
+  const [counter, setCounter] = useState(0);
+
   const captionsArr = [
     CALORIES_CAPTION,
     PROTEINS_CAPTION,
@@ -64,9 +70,13 @@ function Card({
     })
   });
 
+  useEffect(() => {
+    setCounter(orderList.filter(value => value === data[ID_KEY]).length);
+  }, [orderList]);
+
   return (
     <div className={`${styles.item} ${isClassMod && styles.item_dragged}`} ref={cardRef} onClick={handleCardData}>
-      <Counter count={1} size="small" />
+      {Boolean(counter) && <Counter count={counter} size="small" />}
       <img src={thumbnail} alt={name} />
       <div className={`${styles.meta} text text_type_digits-default`}>
         {price.toString()}

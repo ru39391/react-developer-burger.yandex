@@ -12,9 +12,10 @@
 }
 
 .section {
+  flex-grow: 1;
   max-height: 464px;
   margin: 0 -13px 0 0;
-  overflow: auto;
+  overflow-y: scroll;
   position: relative;
 }
 

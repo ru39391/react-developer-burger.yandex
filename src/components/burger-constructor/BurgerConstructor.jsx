@@ -3,7 +3,7 @@ import {
   useEffect,
   useCallback
 } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import {
   Button,
@@ -16,16 +16,12 @@ import OrderDetails from '../order-details/OrderDetails';
 
 import styles from './BurgerConstructor.module.css';
 
-import {
-  ID_KEY,
-  PRICE_KEY,
-  BUN_PRODUCT_NAME
-} from '../../utils/constants';
-
+import { BUN_PRODUCT_NAME } from '../../utils/constants';
 import { checkout } from '../../services/actions';
 import {
   addItem,
   addBunItem,
+  removeItem,
   setOrderData
 } from '../../services/reducers/order-data';
 
@@ -42,6 +38,13 @@ function BurgerConstructor() {
   function closeModal() {
     setCheckoutVisibility(false);
   }
+
+  const removeIngredient = useCallback(
+    (item) => {
+      dispatch(removeItem({ item }));
+    },
+    [dispatch]
+  );
 
   const checkoutCart = useCallback(
     () => {
@@ -65,7 +68,7 @@ function BurgerConstructor() {
   });
 
   useEffect(() => {
-    dispatch(setOrderData({ idKey: ID_KEY, priceKey: PRICE_KEY }));
+    dispatch(setOrderData());
   }, [
     buns,
     ingredients,
@@ -77,37 +80,33 @@ function BurgerConstructor() {
       <div className={`${styles.wrapper} ${isHover && styles.wrapper_hovered}`} ref={wrapperRef}>
         {buns[0] && <Ingredient
           type='top'
-          isLocked={true}
           text={buns[0].name}
           price={buns[0].price}
           thumbnail={buns[0].image}
+          ingredient={buns[0]}
+          removeIngredient={removeIngredient}
         />}
         <div className={styles.section}>
           <div className={styles.container}>
-            {ingredients.map(({
-              _id,
-              type,
-              name,
-              price,
-              image,
-            }) => (
+            {ingredients.map((item, idx) => (
               <Ingredient
-                key={_id}
-                type={type}
-                isLocked={true}
-                text={name}
-                price={price}
-                thumbnail={image}
+                key={`${idx}${item._id}`}
+                text={item.name}
+                thumbnail={item.image}
+                ingredient={item}
+                removeIngredient={removeIngredient}
+                {...item}
               />
             ))}
           </div>
         </div>
         {buns[1] && <Ingredient
           type='bottom'
-          isLocked={true}
           text={buns[1].name}
           price={buns[1].price}
           thumbnail={buns[1].image}
+          ingredient={buns[1]}
+          removeIngredient={removeIngredient}
         />}
         {Boolean(summ) && (
           <div className={`${styles.footer} mt-4`}>

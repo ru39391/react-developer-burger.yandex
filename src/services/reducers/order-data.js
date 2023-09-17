@@ -1,4 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
+import {
+  ID_KEY,
+  PRICE_KEY
+} from '../../utils/constants';
 
 const initialState = {
   bunItems: [...Array(2)],
@@ -36,20 +40,23 @@ const orderDataSlice = createSlice({
     }),
     addItem: (state, action) => ({
       ...state,
-      mainItems: [...state.mainItems, action.payload.item]
+      mainItems: [...state.mainItems, {...action.payload.item, idx: state.mainItems.length + 1}]
     }),
     addBunItem: (state, action) => ({
       ...state,
       bunItems: state.bunItems.map(item => action.payload.item)
     }),
+    removeItem: (state, action) => ({
+      ...state,
+      mainItems: state.mainItems.filter(({ idx }) => idx !== action.payload.item.idx)
+    }),
     setOrderData(state, action) {
-      const { idKey, priceKey } = action.payload;
       const addedItems = state.bunItems.filter(item => Boolean(item)).length ? [...state.bunItems, ...state.mainItems] : [...state.mainItems];
 
       return {
         ...state,
-        orderList: addedItems.map(item => item[idKey]),
-        summ: addedItems.map(item => item[priceKey]).reduce((summ, value) => summ + value, 0)
+        orderList: addedItems.map(item => item[ID_KEY]),
+        summ: addedItems.map(item => item[PRICE_KEY]).reduce((summ, value) => summ + value, 0)
       };
     },
   }
@@ -61,6 +68,7 @@ export const {
   getOrderFailed,
   addItem,
   addBunItem,
+  removeItem,
   setOrderData
 } = orderDataSlice.actions
 export default orderDataSlice.reducer;

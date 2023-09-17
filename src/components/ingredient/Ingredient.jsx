@@ -4,24 +4,41 @@ import {
   DragIcon,
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+
 import styles from './Ingredient.module.css';
+
+import { productPropTypes } from '../../utils/proptypes';
+import {
+  TOP_KEY,
+  BOTTOM_KEY,
+  TOP_PRODUCT_CAPTION,
+  BOTTOM_PRODUCT_CAPTION,
+} from '../../utils/constants';
 
 function Ingredient({
   type,
-  isLocked,
   text,
   price,
-  thumbnail
+  thumbnail,
+  ingredient,
+  removeIngredient
 }) {
+  const bunTypeKeys = [TOP_KEY, BOTTOM_KEY];
+
+  function handleClose() {
+    removeIngredient(ingredient);
+  }
+
   return (
     <div className={styles.item}>
-      {type !== "top" && type !== "bottom" && <DragIcon type="primary" />}
+      {!bunTypeKeys.includes(type) && <DragIcon type="primary" />}
       <ConstructorElement
         type={type}
-        isLocked={isLocked}
-        text={text}
+        isLocked={bunTypeKeys.includes(type)}
+        text={bunTypeKeys.includes(type) ? `${text} (${[TOP_PRODUCT_CAPTION, BOTTOM_PRODUCT_CAPTION][bunTypeKeys.indexOf(type)]})` : text}
         price={price}
         thumbnail={thumbnail}
+        handleClose={handleClose}
       />
     </div>
   );
@@ -29,10 +46,11 @@ function Ingredient({
 
 Ingredient.propTypes = {
   type: PropTypes.string.isRequired,
-  isLocked: PropTypes.bool.isRequired,
   text: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  thumbnail: PropTypes.string.isRequired
+  thumbnail: PropTypes.string.isRequired,
+  ingredient: productPropTypes.isRequired,
+  removeIngredient: PropTypes.func.isRequired
 };
 
 export default memo(Ingredient);
