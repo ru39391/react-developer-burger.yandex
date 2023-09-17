@@ -3,6 +3,12 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  justify-content: space-between;
+  transition: all .3s ease;
+}
+
+.wrapper_hovered {
+  box-shadow: 0 0 0 4px #4C4CFF;
 }
 
 .section {

@@ -1,112 +1,90 @@
 import {
   useState,
   useEffect,
-  useCallback,
-  useReducer
+  useCallback
 } from 'react';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { useDrop } from 'react-dnd';
 import {
   Button,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './BurgerConstructor.module.css';
 
 import Modal from '../modal/Modal';
 import Ingredient from '../ingredient/Ingredient';
 import OrderDetails from '../order-details/OrderDetails';
 
-import Api from '../../utils/api';
-import {
-  ORDERS_ALIAS,
-  ACTION_ERROR_MSG
-} from '../../utils/constants';
+import styles from './BurgerConstructor.module.css';
 
-import OrderContext from '../../services/orderContext';
-import { productPropTypes } from '../../utils/proptypes';
+import { BUN_PRODUCT_NAME } from '../../utils/constants';
 
-const orderInitState = { id: 0, name: 'идентификатор заказа' };
+import { checkout } from '../../services/actions';
+import { addItem, replaceItem } from '../../services/reducers/order-data';
 
-function orderReducer(state, action) {
-  const { type, id, name } = action;
-  switch (type) {
-    case 'set':
-      return { id, name };
-    case 'reset':
-      return { name };
-    default:
-      throw new Error(`${ACTION_ERROR_MSG}: ${type}`);
-  }
-}
+function BurgerConstructor() {
+  const dispatch = useDispatch();
+  const { items: ingredients } = useSelector(state => state.orderData);
 
-function BurgerConstructor({
-  bunIngredients,
-  mainIngredients,
-  sauceIngredients,
-}) {
   const [summ, setSumm] = useState(0);
+  const [buns, setBuns] = useState([]);
   const [orderList, setOrderList] = useState([]);
   const [isCheckoutVisible, setCheckoutVisibility] = useState(false);
-  const [orderState, orderDispatcher] = useReducer(orderReducer, orderInitState, undefined);
 
-  const api = new Api(ORDERS_ALIAS);
-  const [bunTop, bunBottom] = bunIngredients;
+  function setOrderDetails() {
+    /*
+    const currIngredients = ingredients.filter(({ _id }) => currItems.map(({ id }) => id).includes(_id));
+    const bunIngredient = currIngredients.find(product => product.type === BUN_PRODUCT_NAME);
+    const mainIngredients = currIngredients.filter(product => product.type !== BUN_PRODUCT_NAME);
+
+    const buns = [...Array(2)].map((_) => bun);
+
+    currIngredients.splice(currIngredients.indexOf(bun), 1);
+    //const prices = products.map(({ price }) => price);
+    //setSumm(prices.reduce((summ, item) => summ + item, 0));
+    setBuns(buns);
+    setOrderList([...buns, ...mainIngredients].map(({ _id }) => _id));
+    */
+  }
 
   function closeModal() {
     setCheckoutVisibility(false);
   }
 
-  function setOrderDetails(products) {
-    const prices = products.map(({ price }) => price);
-    setSumm(prices.reduce((summ, item) => summ + item, 0));
-    setOrderList(products.map(({ _id }) => _id));
-  }
-
   const checkoutCart = useCallback(
     () => {
       setCheckoutVisibility(true);
-      api
-        .checkout(orderList)
-        .then(({ name, order }) => {
-          orderDispatcher({
-            type: 'set',
-            id: order.number,
-            name
-          });
-        })
-        .catch((err) => {
-          orderDispatcher({
-            type: 'reset',
-            name: err
-          });
-        });
+      dispatch(checkout(orderList));
     },
-    [orderList]
+    [dispatch, orderList]
   );
 
+  const [{ isHover }, wrapperRef] = useDrop({
+    accept: 'order',
+    collect: monitor => ({
+      isHover: monitor.isOver()
+    }),
+    drop(item) {
+      item.type === BUN_PRODUCT_NAME ? dispatch(replaceItem({ item })) : dispatch(addItem({ item }));
+    },
+  });
+
   useEffect(() => {
-    setOrderDetails([
-      ...bunIngredients,
-      ...mainIngredients,
-      ...sauceIngredients
-    ]);
-  }, [
-    bunIngredients,
-    mainIngredients,
-    sauceIngredients
-  ]);
+    setOrderDetails();
+  }, [ingredients]);
 
   return (
     <>
-      <div className={styles.wrapper}>
-        {bunTop && <Ingredient
+      <div className={`${styles.wrapper} ${isHover && styles.wrapper_hovered}`} ref={wrapperRef}>
+        {/*buns[0] && <Ingredient
           type='top'
           isLocked={true}
-          text={bunTop.name}
-          price={bunTop.price}
-          thumbnail={bunTop.image}
-        />}
+          text={buns[0].name}
+          price={buns[0].price}
+          thumbnail={buns[0].image}
+        />*/}
         <div className={styles.section}>
           <div className={styles.container}>
+            {/*
             {[...mainIngredients, ...sauceIngredients].map(({
               _id,
               type,
@@ -123,32 +101,29 @@ function BurgerConstructor({
                 thumbnail={image}
               />
             ))}
+            */}
           </div>
         </div>
-        {bunBottom && <Ingredient
+        {/*buns[1] && <Ingredient
           type='bottom'
           isLocked={true}
-          text={bunBottom.name}
-          price={bunBottom.price}
-          thumbnail={bunBottom.image}
-        />}
-        <div className={`${styles.footer} mt-4`}>
-          <div className={`${styles.meta} text text_type_digits-medium`}>
-            {summ}
-            <CurrencyIcon type="primary" />
+          text={buns[1].name}
+          price={buns[1].price}
+          thumbnail={buns[1].image}
+        />*/}
+        {Boolean(ingredients.length) && (
+          <div className={`${styles.footer} mt-4`}>
+            <div className={`${styles.meta} text text_type_digits-medium`}>
+              {summ}
+              <CurrencyIcon type="primary" />
+            </div>
+            <Button htmlType="button" type="primary" size="large" onClick={checkoutCart}>Оформить заказ</Button>
           </div>
-          <Button htmlType="button" type="primary" size="large" onClick={checkoutCart}>Оформить заказ</Button>
-        </div>
+        )}
       </div>
-      {isCheckoutVisible && <Modal isModalOpen={isCheckoutVisible} closeModal={closeModal}><OrderContext.Provider value={orderState}><OrderDetails /></OrderContext.Provider></Modal>}
+      {isCheckoutVisible && <Modal isModalOpen={isCheckoutVisible} closeModal={closeModal}><OrderDetails /></Modal>}
     </>
   );
 }
-
-BurgerConstructor.propTypes = {
-  bunIngredients: PropTypes.arrayOf(productPropTypes.isRequired).isRequired,
-  mainIngredients: PropTypes.arrayOf(productPropTypes.isRequired).isRequired,
-  sauceIngredients: PropTypes.arrayOf(productPropTypes.isRequired).isRequired
-};
 
 export default BurgerConstructor;

@@ -5,11 +5,12 @@ import {
   useEffect,
   Fragment
 } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import ConstructorSection from '../constructor-section/ConstructorSection';
+
 import styles from './BurgerIngredients.module.css';
 
-import ConstructorSection from '../constructor-section/ConstructorSection';
 import {
   BUN_PRODUCT_NAME,
   MAIN_PRODUCT_NAME,
@@ -18,8 +19,10 @@ import {
   MAIN_PRODUCT_CAPTION,
   SAUCE_PRODUCT_CAPTION,
 } from '../../utils/constants';
+import { getItems } from '../../services/actions';
 
 function BurgerIngredients() {
+  const dispatch = useDispatch();
   const { items: ingredients } = useSelector(state => state.productData);
   const [current, setCurrent] = useState(BUN_PRODUCT_NAME);
   const filterByType = (params, arr) => params.map(item => arr.filter(({ type }) => type === item));
@@ -83,7 +86,6 @@ function BurgerIngredients() {
         sauceRef.current,
         mainRef.current
       ];
-
       const roundValue = (value) => Math.round(value.getBoundingClientRect().top);
 
       sections.forEach((item, index) => {
@@ -102,6 +104,13 @@ function BurgerIngredients() {
       }
     };
   }, []);
+
+  useEffect(
+    () => {
+      if(!ingredients.length) dispatch(getItems());
+    },
+    [dispatch]
+  );
 
   return (
     <div className={styles.wrapper}>

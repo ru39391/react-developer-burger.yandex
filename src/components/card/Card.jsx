@@ -3,13 +3,16 @@ import {
   useCallback
 } from 'react';
 import { useDispatch } from 'react-redux';
+import { useDrag } from 'react-dnd';
 import PropTypes from 'prop-types';
 import {
   Counter,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+
 import styles from './Card.module.css';
 
+import { productPropTypes } from '../../utils/proptypes';
 import {
   CALORIES_CAPTION,
   PROTEINS_CAPTION,
@@ -19,6 +22,7 @@ import {
 import { setItemDetails } from '../../services/reducers/products-data';
 
 function Card({
+  data,
   name,
   image,
   thumbnail,
@@ -51,12 +55,20 @@ function Card({
     ]
   );
 
+  const [{ isClassMod }, cardRef] = useDrag({
+    type: 'order',
+    item: data,
+    collect: monitor => ({
+      isClassMod: monitor.isDragging()
+    })
+  });
+
   return (
-    <div className={styles.item} onClick={handleCardData}>
+    <div className={`${styles.item} ${isClassMod && styles.item_dragged}`} ref={cardRef} onClick={handleCardData}>
       <Counter count={1} size="small" />
       <img src={thumbnail} alt={name} />
       <div className={`${styles.meta} text text_type_digits-default`}>
-        {price}
+        {price.toString()}
         <CurrencyIcon type="primary" />
       </div>
       <div className={`${styles.title} text text_type_main-default`}>{name}</div>
@@ -68,8 +80,9 @@ Card.propTypes = {
   name: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   thumbnail: PropTypes.string.isRequired,
-  price: PropTypes.string.isRequired,
-  nutritional: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired
+  price: PropTypes.number.isRequired,
+  nutritional: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+  data: productPropTypes.isRequired
 };
 
 export default memo(Card);

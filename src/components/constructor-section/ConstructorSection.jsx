@@ -5,10 +5,11 @@ import PropTypes from 'prop-types';
 import Card from '../card/Card';
 import Modal from '../modal/Modal';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
+
 import styles from './ConstructorSection.module.css';
 
-import { setItemDetails } from '../../services/reducers/products-data';
 import { productPropTypes } from '../../utils/proptypes';
+import { setItemDetails } from '../../services/reducers/products-data';
 
 function ConstructorSection({ data }) {
   const dispatch = useDispatch();
@@ -29,29 +30,19 @@ function ConstructorSection({ data }) {
   return (
     <>
       <div className={`${styles.wrapper} pr-4 pl-4 mb-10`}>
-        {data.map(({
-          _id,
-          name,
-          price,
-          image,
-          image_large,
-          calories,
-          proteins,
-          fat,
-          carbohydrates
-        }) => (
+        {data.map((item) => (
           <Card
-            key={_id}
-            name={name}
-            price={price.toString()}
-            thumbnail={image}
-            image={image_large}
+            key={item._id}
+            data={item}
+            thumbnail={item.image}
+            image={item.image_large}
             nutritional={[
-              calories,
-              proteins,
-              fat,
-              carbohydrates
+              item.calories,
+              item.proteins,
+              item.fat,
+              item.carbohydrates
             ]}
+            {...item}
           />
         ))}
       </div>

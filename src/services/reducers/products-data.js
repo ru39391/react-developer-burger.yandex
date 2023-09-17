@@ -2,14 +2,12 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   items: [],
-  currItems: [],
-
   itemsRequest: false,
   itemsFailed: false,
-  errorMsg: '',
 
   item: {},
-  orderItem: {},
+
+  errorMsg: '',
 };
 
 const productDataSlice = createSlice({
@@ -31,7 +29,7 @@ const productDataSlice = createSlice({
     },
     setItemDetails(state, action) {
       state.item = {...action.payload};
-    },
+    }
   }
 });
 
