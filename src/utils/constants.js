@@ -20,6 +20,11 @@ const UNDER_CONSTRUCTION_TEXT = 'Раздел находится в разраб
 
 const ORDERS_URL = 'orders';
 const PROFILE_URL = 'profile';
+const LOGIN_URL = 'login';
+const REGISTER_URL = 'register';
+const FORGOT_PASSWORD_URL = 'forgot-password';
+const RESET_PASSWORD_URL = 'reset-password';
+const INGREDIENTS_URL = 'ingredients';
 
 const API_URL = 'https://norma.nomoreparties.space/api/';
 const INGREDIENTS_ALIAS = 'ingredients';
@@ -61,6 +66,11 @@ export {
 
   ORDERS_URL,
   PROFILE_URL,
+  LOGIN_URL,
+  REGISTER_URL,
+  FORGOT_PASSWORD_URL,
+  RESET_PASSWORD_URL,
+  INGREDIENTS_URL,
 
   API_URL,
   INGREDIENTS_ALIAS,

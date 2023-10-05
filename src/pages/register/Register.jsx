@@ -1,10 +1,10 @@
 import React from 'react';
 import Wrapper from '../../components/wrapper/Wrapper';
 
-function Orders() {
+function Register() {
   return (
-    <Wrapper title="Orders">Orders</Wrapper>
+    <Wrapper title="Register">Register</Wrapper>
   )
 };
 
-export default Orders;
+export default Register;

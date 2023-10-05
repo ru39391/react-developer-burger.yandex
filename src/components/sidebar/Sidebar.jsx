@@ -1,10 +1,10 @@
 import React from 'react';
 import Wrapper from '../../components/wrapper/Wrapper';
 
-function Orders() {
+function Sidebar() {
   return (
-    <Wrapper title="Orders">Orders</Wrapper>
+    <Wrapper title="Sidebar">Sidebar</Wrapper>
   )
 };
 
-export default Orders;
+export default Sidebar;
