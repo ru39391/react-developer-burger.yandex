@@ -1,59 +1,25 @@
-import { useMemo, useContext } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import Wrapper from '../../components/wrapper/Wrapper';
 import BurgerConstructor from '../../components/burger-constructor/BurgerConstructor';
 import BurgerIngredients from '../../components/burger-ingredients/BurgerIngredients';
 
 import styles from '../../components/wrapper/Wrapper.module.css';
 
-import {
-  HOME_TITLE,
-  BUN_PRODUCT_NAME,
-  MAIN_PRODUCT_NAME,
-  SAUCE_PRODUCT_NAME,
-} from '../../utils/constants';
-import IngredientsContext from '../../services/ingredientsContext';
+import { HOME_TITLE } from '../../utils/constants';
 
-function Home({
-  isLoading,
-  errorMsg
-}) {
-  const ingredients = useContext(IngredientsContext);
-  const filterByType = (param, arr) => arr.filter(({ type }) => type === param);
-
-  const [
-    bunIngredients,
-    mainIngredients,
-    sauceIngredients
-  ] = [
-    useMemo(() => filterByType(BUN_PRODUCT_NAME, ingredients), [ingredients]),
-    useMemo(() => filterByType(MAIN_PRODUCT_NAME, ingredients), [ingredients]),
-    useMemo(() => filterByType(SAUCE_PRODUCT_NAME, ingredients), [ingredients])
-  ];
-
-  const bun = bunIngredients[Math.floor(Math.random() * bunIngredients.length)];
-
+function Home() {
   return (
-    <Wrapper title={HOME_TITLE} isLoading={isLoading} errorMsg={errorMsg}>
+    <Wrapper title={HOME_TITLE}>
       <div className={styles.container}>
-        <BurgerIngredients
-          bunIngredients={bunIngredients}
-          mainIngredients={mainIngredients}
-          sauceIngredients={sauceIngredients}
-        />
-        <BurgerConstructor
-          bunIngredients={bunIngredients.map(item => item._id === bun._id ? item : bun)}
-          mainIngredients={mainIngredients}
-          sauceIngredients={sauceIngredients}
-        />
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </DndProvider>
       </div>
     </Wrapper>
   )
-};
-
-Home.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  errorMsg: PropTypes.string.isRequired,
 };
 
 export default Home;

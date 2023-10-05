@@ -1,53 +1,48 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Card from '../card/Card';
 import Modal from '../modal/Modal';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
+
 import styles from './ConstructorSection.module.css';
 
 import { productPropTypes } from '../../utils/proptypes';
+import { setItemDetails } from '../../services/reducers/products-data';
 
 function ConstructorSection({ data }) {
-  const [cardDetails, setCardDetails] = useState({});
+  const dispatch = useDispatch();
+  const { item: cardDetails } = useSelector(state => state.productData);
   const [isCardDetailsVisible, setCardDetailsVisibility] = useState(false);
 
-  function showCardDetails(data) {
-    setCardDetails(data);
-    setCardDetailsVisibility(true);
+  function closeModal() {
+    dispatch(setItemDetails({}));
   }
 
-  function closeModal() {
-    setCardDetailsVisibility(false);
-  }
+  useEffect(
+    () => {
+      setCardDetailsVisibility(Boolean(Object.values(cardDetails).length));
+    },
+    [cardDetails]
+  );
 
   return (
     <>
       <div className={`${styles.wrapper} pr-4 pl-4 mb-10`}>
-        {data.map(({
-          _id,
-          name,
-          price,
-          image,
-          image_large,
-          calories,
-          proteins,
-          fat,
-          carbohydrates
-        }) => (
+        {data.map((item) => (
           <Card
-            key={_id}
-            name={name}
-            price={price.toString()}
-            thumbnail={image}
-            image={image_large}
+            key={item._id}
+            data={item}
+            thumbnail={item.image}
+            picture={item.image_large}
             nutritional={[
-              calories,
-              proteins,
-              fat,
-              carbohydrates
+              item.calories,
+              item.proteins,
+              item.fat,
+              item.carbohydrates
             ]}
-            showCardDetails={showCardDetails}
+            {...item}
           />
         ))}
       </div>

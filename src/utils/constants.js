@@ -13,6 +13,9 @@ const BUN_PRODUCT_CAPTION = 'Булки';
 const MAIN_PRODUCT_CAPTION = 'Начинки';
 const SAUCE_PRODUCT_CAPTION = 'Соусы';
 
+const TOP_PRODUCT_CAPTION = 'верх';
+const BOTTOM_PRODUCT_CAPTION = 'низ';
+
 const UNDER_CONSTRUCTION_TEXT = 'Раздел находится в разработке';
 
 const ORDERS_URL = 'orders';
@@ -30,6 +33,12 @@ const PROTEINS_CAPTION = 'Белки, г';
 const FAT_CAPTION = 'Жиры, г';
 const CARBOHYDRATES_CAPTION = 'Углеводы, г';
 
+const ID_KEY = '_id';
+const PRICE_KEY = 'price';
+
+const TOP_KEY = 'top';
+const BOTTOM_KEY = 'bottom';
+
 export {
   DEFAULT_DOC_TITLE,
   HOME_TITLE,
@@ -44,6 +53,9 @@ export {
   BUN_PRODUCT_CAPTION,
   MAIN_PRODUCT_CAPTION,
   SAUCE_PRODUCT_CAPTION,
+
+  TOP_PRODUCT_CAPTION,
+  BOTTOM_PRODUCT_CAPTION,
 
   UNDER_CONSTRUCTION_TEXT,
 
@@ -60,5 +72,10 @@ export {
   CALORIES_CAPTION,
   PROTEINS_CAPTION,
   FAT_CAPTION,
-  CARBOHYDRATES_CAPTION
+  CARBOHYDRATES_CAPTION,
+
+  ID_KEY,
+  PRICE_KEY,
+  TOP_KEY,
+  BOTTOM_KEY
 };

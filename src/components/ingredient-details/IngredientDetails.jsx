@@ -16,7 +16,7 @@ function IngredientDetails({
       <img className="mb-4" src={image} alt={name} />
       <div className={`${styles.subtitle} text text_type_main-medium mb-8`}>{name}</div>
       <div className={`${styles.row} mb-5`}>
-        {nutritional.map(({
+        {nutritional && nutritional.map(({
           name,
           value
         }, index) => (
@@ -31,9 +31,9 @@ function IngredientDetails({
 }
 
 IngredientDetails.propTypes = {
-  name: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  nutritional: PropTypes.arrayOf(nutritionalPropTypes.isRequired).isRequired
+  name: PropTypes.string,
+  image: PropTypes.string,
+  nutritional: PropTypes.arrayOf(nutritionalPropTypes.isRequired)
 };
 
 export default memo(IngredientDetails);

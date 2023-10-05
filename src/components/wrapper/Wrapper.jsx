@@ -1,14 +1,18 @@
 import React from "react";
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Preloader from "../../components/preloader/Preloader";
 import styles from "./Wrapper.module.css";
 
 function Wrapper({
   title,
-  children,
-  isLoading,
-  errorMsg,
+  children
 }) {
+  const {
+    itemsRequest: isLoading,
+    errorMsg
+  } = useSelector(state => state.productData);
+
   return (
     <main className={styles.section}>
       <section className={`${styles.content} pl-5 pr-5`}>
@@ -22,9 +26,7 @@ function Wrapper({
 
 Wrapper.propTypes = {
   title: PropTypes.string.isRequired,
-  children: PropTypes.node,
-  isLoading: PropTypes.bool,
-  errorMsg: PropTypes.string,
+  children: PropTypes.node
 };
 
 export default Wrapper;

@@ -1,12 +1,11 @@
-import { useContext } from "react";
+import React from "react";
+import { useSelector } from 'react-redux';
 import CheckoutImg from '../../images/checkout.png';
 
 import styles from "./OrderDetails.module.css";
 
-import OrderContext from '../../services/orderContext';
-
 function OrderDetails() {
-  const { id, name } = useContext(OrderContext);
+  const { order: { id, name }, errorMsg } = useSelector(state => state.orderData);
 
   return (
     <>
@@ -24,7 +23,7 @@ function OrderDetails() {
         </div>
       ) : (
         <div className={`${styles.wrapper} pt-20 pb-20`}>
-          <div className="text text_type_main-medium">{name}</div>
+          <div className="text text_type_main-medium">{errorMsg}</div>
         </div>
       )}
     </>

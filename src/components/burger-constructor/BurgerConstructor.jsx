@@ -1,154 +1,154 @@
 import {
   useState,
   useEffect,
-  useCallback,
-  useReducer
+  useCallback
 } from 'react';
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+import { useDrop } from 'react-dnd';
 import {
   Button,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './BurgerConstructor.module.css';
 
 import Modal from '../modal/Modal';
 import Ingredient from '../ingredient/Ingredient';
 import OrderDetails from '../order-details/OrderDetails';
 
-import Api from '../../utils/api';
+import styles from './BurgerConstructor.module.css';
+
+import { BUN_PRODUCT_NAME } from '../../utils/constants';
+import { checkout } from '../../services/actions';
 import {
-  ORDERS_ALIAS,
-  ACTION_ERROR_MSG
-} from '../../utils/constants';
+  addItem,
+  addBunItem,
+  removeItem,
+  setOrderData,
+  updateOrderList
+} from '../../services/reducers/order-data';
 
-import OrderContext from '../../services/orderContext';
-import { productPropTypes } from '../../utils/proptypes';
-
-const orderInitState = { id: 0, name: 'идентификатор заказа' };
-
-function orderReducer(state, action) {
-  const { type, id, name } = action;
-  switch (type) {
-    case 'set':
-      return { id, name };
-    case 'reset':
-      return { name };
-    default:
-      throw new Error(`${ACTION_ERROR_MSG}: ${type}`);
-  }
-}
-
-function BurgerConstructor({
-  bunIngredients,
-  mainIngredients,
-  sauceIngredients,
-}) {
-  const [summ, setSumm] = useState(0);
-  const [orderList, setOrderList] = useState([]);
+function BurgerConstructor() {
+  const dispatch = useDispatch();
+  const {
+    bunItems: buns,
+    mainItems: ingredients,
+    orderList,
+    summ
+  } = useSelector(state => state.orderData);
   const [isCheckoutVisible, setCheckoutVisibility] = useState(false);
-  const [orderState, orderDispatcher] = useReducer(orderReducer, orderInitState, undefined);
-
-  const api = new Api(ORDERS_ALIAS);
-  const [bunTop, bunBottom] = bunIngredients;
 
   function closeModal() {
     setCheckoutVisibility(false);
   }
 
-  function setOrderDetails(products) {
-    const prices = products.map(({ price }) => price);
-    setSumm(prices.reduce((summ, item) => summ + item, 0));
-    setOrderList(products.map(({ _id }) => _id));
-  }
+  const removeIngredient = useCallback(
+    (item) => {
+      dispatch(removeItem({ index: ingredients.indexOf(item) }));
+    },
+    [
+      ingredients,
+      dispatch
+    ]
+  );
+
+  const handleDrop = useCallback(
+    (data) => {
+      const isBunItemsArr = Object.values(data).map(({ type }) => type === BUN_PRODUCT_NAME);
+      const getIndex = (value) => ({
+        product: Object.values(data)[value],
+        index: ingredients.indexOf(Object.values(data)[value])
+      });
+
+      if(isBunItemsArr.some(item => item)) {
+        return;
+      } else {
+        dispatch(updateOrderList({ draggedItem: getIndex(0), targetItem: getIndex(1) }));
+      }
+    },
+    [
+      ingredients,
+      dispatch
+    ]
+  );
 
   const checkoutCart = useCallback(
     () => {
       setCheckoutVisibility(true);
-      api
-        .checkout(orderList)
-        .then(({ name, order }) => {
-          orderDispatcher({
-            type: 'set',
-            id: order.number,
-            name
-          });
-        })
-        .catch((err) => {
-          orderDispatcher({
-            type: 'reset',
-            name: err
-          });
-        });
+      dispatch(checkout(orderList));
     },
-    [orderList]
+    [
+      orderList,
+      dispatch
+    ]
   );
 
+  const [{ isHover }, wrapperRef] = useDrop({
+    type: 'order',
+    accept: 'card',
+    collect: monitor => ({
+      isHover: monitor.isOver()
+    }),
+    drop(item) {
+      item.type === BUN_PRODUCT_NAME ? dispatch(addBunItem({ item })) : dispatch(addItem({ item }));
+    },
+  });
+
   useEffect(() => {
-    setOrderDetails([
-      ...bunIngredients,
-      ...mainIngredients,
-      ...sauceIngredients
-    ]);
+    dispatch(setOrderData());
   }, [
-    bunIngredients,
-    mainIngredients,
-    sauceIngredients
+    buns,
+    ingredients,
+    dispatch
   ]);
 
   return (
     <>
-      <div className={styles.wrapper}>
-        {bunTop && <Ingredient
+      <div className={`${styles.wrapper} ${isHover && styles.wrapper_hovered}`} ref={wrapperRef}>
+        {buns[0] && <Ingredient
           type='top'
-          isLocked={true}
-          text={bunTop.name}
-          price={bunTop.price}
-          thumbnail={bunTop.image}
+          text={buns[0].name}
+          price={buns[0].price}
+          thumbnail={buns[0].image}
+          ingredient={buns[0]}
+          handleDrop={handleDrop}
+          removeIngredient={removeIngredient}
         />}
         <div className={styles.section}>
           <div className={styles.container}>
-            {[...mainIngredients, ...sauceIngredients].map(({
-              _id,
-              type,
-              name,
-              price,
-              image,
-            }) => (
+            {ingredients.map((item, idx) => (
               <Ingredient
-                key={_id}
-                type={type}
-                isLocked={true}
-                text={name}
-                price={price}
-                thumbnail={image}
+                key={item.key}
+                text={item.name}
+                thumbnail={item.image}
+                ingredient={item}
+                handleDrop={handleDrop}
+                removeIngredient={removeIngredient}
+                {...item}
               />
             ))}
           </div>
         </div>
-        {bunBottom && <Ingredient
+        {buns[1] && <Ingredient
           type='bottom'
-          isLocked={true}
-          text={bunBottom.name}
-          price={bunBottom.price}
-          thumbnail={bunBottom.image}
+          text={buns[1].name}
+          price={buns[1].price}
+          thumbnail={buns[1].image}
+          ingredient={buns[1]}
+          handleDrop={handleDrop}
+          removeIngredient={removeIngredient}
         />}
-        <div className={`${styles.footer} mt-4`}>
-          <div className={`${styles.meta} text text_type_digits-medium`}>
-            {summ}
-            <CurrencyIcon type="primary" />
+        {Boolean(summ) && (
+          <div className={`${styles.footer} mt-4`}>
+            <div className={`${styles.meta} text text_type_digits-medium`}>
+              {summ}
+              <CurrencyIcon type="primary" />
+            </div>
+            <Button htmlType="button" type="primary" size="large" onClick={checkoutCart}>Оформить заказ</Button>
           </div>
-          <Button htmlType="button" type="primary" size="large" onClick={checkoutCart}>Оформить заказ</Button>
-        </div>
+        )}
       </div>
-      {isCheckoutVisible && <Modal isModalOpen={isCheckoutVisible} closeModal={closeModal}><OrderContext.Provider value={orderState}><OrderDetails /></OrderContext.Provider></Modal>}
+      {isCheckoutVisible && <Modal isModalOpen={isCheckoutVisible} closeModal={closeModal}><OrderDetails /></Modal>}
     </>
   );
 }
-
-BurgerConstructor.propTypes = {
-  bunIngredients: PropTypes.arrayOf(productPropTypes.isRequired).isRequired,
-  mainIngredients: PropTypes.arrayOf(productPropTypes.isRequired).isRequired,
-  sauceIngredients: PropTypes.arrayOf(productPropTypes.isRequired).isRequired
-};
 
 export default BurgerConstructor;

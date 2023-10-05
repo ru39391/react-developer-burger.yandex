@@ -1,13 +1,16 @@
 import {
   useRef,
+  useMemo,
   useState,
+  useEffect,
   Fragment
 } from 'react';
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import ConstructorSection from '../constructor-section/ConstructorSection';
+
 import styles from './BurgerIngredients.module.css';
 
-import ConstructorSection from '../constructor-section/ConstructorSection';
 import {
   BUN_PRODUCT_NAME,
   MAIN_PRODUCT_NAME,
@@ -16,24 +19,37 @@ import {
   MAIN_PRODUCT_CAPTION,
   SAUCE_PRODUCT_CAPTION,
 } from '../../utils/constants';
-import { productPropTypes } from '../../utils/proptypes';
+import { getItems } from '../../services/actions';
 
-function BurgerIngredients({
-  bunIngredients,
-  mainIngredients,
-  sauceIngredients
-}) {
+function BurgerIngredients() {
+  const dispatch = useDispatch();
+  const ingredients = useSelector(state => state.productData.items);
   const [current, setCurrent] = useState(BUN_PRODUCT_NAME);
 
-  const [
-    bunRef,
-    sauceRef,
-    mainRef
-   ] = [
-    useRef(null),
-    useRef(null),
-    useRef(null)
+  const filterByType = (params, arr) => params.map(item => arr.filter(({ type }) => type === item));
+
+  const productNames = [
+    BUN_PRODUCT_NAME,
+    SAUCE_PRODUCT_NAME,
+    MAIN_PRODUCT_NAME
   ];
+
+  const sectionRef = useRef(null);
+  const bunRef = useRef(null);
+  const sauceRef = useRef(null);
+  const mainRef = useRef(null);
+
+  const [
+    bunIngredients,
+    sauceIngredients,
+    mainIngredients
+  ] = useMemo(
+    () => filterByType(
+      productNames,
+      ingredients
+    ),
+    [ingredients]
+  );
 
   const tabsArr = [{
     value: BUN_PRODUCT_NAME,
@@ -64,6 +80,39 @@ function BurgerIngredients({
     }
   }];
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = [
+        bunRef.current,
+        sauceRef.current,
+        mainRef.current
+      ];
+      const roundValue = (value) => Math.round(value.getBoundingClientRect().top);
+
+      sections.forEach((item, index) => {
+        if(roundValue(item) <= roundValue(sectionRef.current)) {
+          setCurrent(productNames[index]);
+        };
+      });
+    };
+
+    if(sectionRef.current) {
+      sectionRef.current.addEventListener('scroll', handleScroll);
+    }
+    return () => {
+      if(sectionRef.current) {
+        sectionRef.current.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, []);
+
+  useEffect(
+    () => {
+      if(!ingredients.length) dispatch(getItems());
+    },
+    [dispatch]
+  );
+
   return (
     <div className={styles.wrapper}>
       <div className={`${styles.tablist} mb-10`}>
@@ -75,7 +124,7 @@ function BurgerIngredients({
             <Tab key={value} value={value} active={current === `${value}`} onClick={handler}>{caption}</Tab>
         ))}
       </div>
-      <div className={styles.section}>
+      <div className={styles.section} ref={sectionRef}>
         <div className={styles.container}>
           {tabsArr.map(({
               data,
@@ -85,7 +134,7 @@ function BurgerIngredients({
             }) => (
               <Fragment key={value}>
                 <div className="text text_type_main-medium mb-6" ref={ref}>{caption}</div>
-                <ConstructorSection caption={caption} data={data} />
+                <ConstructorSection data={data} />
               </Fragment>
           ))}
         </div>
@@ -93,11 +142,5 @@ function BurgerIngredients({
     </div>
   );
 }
-
-BurgerIngredients.propTypes = {
-  bunIngredients: PropTypes.arrayOf(productPropTypes.isRequired).isRequired,
-  mainIngredients: PropTypes.arrayOf(productPropTypes.isRequired).isRequired,
-  sauceIngredients: PropTypes.arrayOf(productPropTypes.isRequired).isRequired,
-};
 
 export default BurgerIngredients;
