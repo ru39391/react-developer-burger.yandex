@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import useInput from '../../hooks/useInput';
+import useSubmitBtn from '../../hooks/useSubmitBtn';
 import Form from '../../components/form/Form';
 
 import {
@@ -9,23 +10,21 @@ import {
 } from '../../utils/constants';
 
 function Login() {
-  const [isBtnDisabled, setBtnDisabled] = useState(true);
-
   const {
     values: formValues,
     validValues,
     errorMessages,
     handleChange
-  } = useInput({});
+  } = useInput();
 
-  const inputs = [
+  const fieldsData = [
     {
       type: 'email',
       name: 'email',
       value: formValues.email || '',
       placeholder: 'E-mail',
       error: validValues.email === undefined ? false : validValues.email,
-      errorText: errorMessages.email,
+      errorText: errorMessages.email || '',
       onChange: (e) => handleChange(e)
     },
     {
@@ -33,22 +32,15 @@ function Login() {
       value: formValues.password || '',
       placeholder: 'Пароль',
       error: validValues.password === undefined ? false : validValues.password,
-      errorText: errorMessages.password,
+      errorText: errorMessages.password || '',
       onChange: (e) => handleChange(e),
     }
   ];
 
-  useEffect(() => {
-    const validValuesArr = Object.values(validValues);
-    setBtnDisabled(
-      validValuesArr.length === inputs.length
-      ? validValuesArr.some(item => item)
-      : true
-    );
-  }, [validValues]);
+  const { isBtnDisabled } = useSubmitBtn(fieldsData, validValues);
 
   return (
-    <Form title="Вход" inputs={inputs} btnCaption="Войти" isBtnDisabled={isBtnDisabled}>
+    <Form title="Вход" fieldsData={fieldsData} btnCaption="Войти" isBtnDisabled={isBtnDisabled}>
       <p className="text text_type_main-default text_color_inactive">
         Вы — новый пользователь? <NavLink to={`/${REGISTER_URL}`} style={{ textDecoration: 'none' }}>Зарегистрироваться</NavLink>
       </p>

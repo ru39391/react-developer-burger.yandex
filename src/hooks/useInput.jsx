@@ -1,14 +1,13 @@
 import { useState } from 'react';
-
 import {
   NAME_ERROR_MSG,
   EMAIL_ERROR_MSG,
   PASSWORD_ERROR_MSG,
 } from '../utils/constants';
 
-function useInput(initialValue) {
-  const [values, setValues] = useState(initialValue);
-  const [validValues, setValidValues] = useState(initialValue);
+function useInput() {
+  const [values, setValues] = useState({});
+  const [validValues, setValidValues] = useState({});
 
   const regexPatterns = {
     name: /^[A-Za-zА-Яа-яЁё\s-]{2,30}$/,
@@ -37,15 +36,14 @@ function useInput(initialValue) {
   return {
     values,
     validValues,
-    errorMessages: Object.keys(validValues).reduce((acc, item) => {
-      if(Object.keys(acc).find(key => key === item)) {
-        return acc;
-      }
-      return {
-        ...acc,
-        [item]: errorsData[item]
-      };
-    }, {}),
+    errorMessages: Object.keys(validValues).reduce((acc, item) =>
+      Object.keys(acc).find(key => key === item)
+      ? acc
+      : ({
+          ...acc,
+          [item]: errorsData[item]
+        }),
+      {}),
     handleChange,
   };
 }

@@ -5,15 +5,16 @@ import {
   PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import Wrapper from '../../components/wrapper/Wrapper';
-import FormFooter from '../../components/form-footer/FormFooter';
 import PropTypes from 'prop-types';
 import styles from './Form.module.css';
+
+import { fieldPropTypes } from '../../utils/proptypes';
 
 function Form({
   title,
   btnCaption,
   children,
-  inputs,
+  fieldsData,
   isBtnDisabled
 }) {
   return (
@@ -21,7 +22,7 @@ function Form({
       <form className={`${styles.wrapper} mb-20`}>
         <div className={`${styles.title} text text_type_main-medium mb-6`}>{title}</div>
         <fieldset className={`${styles.fieldset} mb-4`}>
-          {inputs.map((item, index) => (
+          {fieldsData.map((item, index) => (
             item.name === 'password'
             ? <PasswordInput
               key={index}
@@ -35,7 +36,7 @@ function Form({
         </fieldset>
         <Button htmlType="submit" type="primary" size="medium" disabled={isBtnDisabled}>{btnCaption}</Button>
       </form>
-      <FormFooter children={children} />
+      <div className={styles.footer}>{children}</div>
     </Wrapper>
   )
 };
@@ -45,7 +46,7 @@ Form.propTypes = {
   btnCaption: PropTypes.string.isRequired,
   children: PropTypes.node,
   isBtnDisabled: PropTypes.bool.isRequired,
-  //inputs:
+  fieldsData: PropTypes.arrayOf(fieldPropTypes.isRequired).isRequired
 };
 
 export default Form;
