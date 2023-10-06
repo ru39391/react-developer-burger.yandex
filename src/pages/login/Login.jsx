@@ -5,6 +5,9 @@ import useSubmitBtn from '../../hooks/useSubmitBtn';
 import Form from '../../components/form/Form';
 
 import {
+  LOGIN_TITLE,
+  EMAIL_PLS,
+  PASSWORD_PLS,
   REGISTER_URL,
   FORGOT_PASSWORD_URL
 } from '../../utils/constants';
@@ -22,7 +25,7 @@ function Login() {
       type: 'email',
       name: 'email',
       value: formValues.email || '',
-      placeholder: 'E-mail',
+      placeholder: EMAIL_PLS,
       error: validValues.email === undefined ? false : validValues.email,
       errorText: errorMessages.email || '',
       onChange: (e) => handleChange(e)
@@ -30,7 +33,7 @@ function Login() {
     {
       name: 'password',
       value: formValues.password || '',
-      placeholder: 'Пароль',
+      placeholder: PASSWORD_PLS,
       error: validValues.password === undefined ? false : validValues.password,
       errorText: errorMessages.password || '',
       onChange: (e) => handleChange(e),
@@ -40,7 +43,7 @@ function Login() {
   const { isBtnDisabled } = useSubmitBtn(fieldsData, validValues);
 
   return (
-    <Form title="Вход" fieldsData={fieldsData} btnCaption="Войти" isBtnDisabled={isBtnDisabled}>
+    <Form title={LOGIN_TITLE} fieldsData={fieldsData} btnCaption="Войти" isBtnDisabled={isBtnDisabled}>
       <p className="text text_type_main-default text_color_inactive">
         Вы — новый пользователь? <NavLink to={`/${REGISTER_URL}`} style={{ textDecoration: 'none' }}>Зарегистрироваться</NavLink>
       </p>
