@@ -32,6 +32,9 @@ const ORDERS_ALIAS = 'orders';
 
 const ACTION_ERROR_MSG = 'Передан неизвестный тип';
 const RESPONSE_ERROR_MSG = 'Ошибка при получении данных';
+const NAME_ERROR_MSG = 'Имя должно состоять из букв и быть не короче 2 символов';
+const EMAIL_ERROR_MSG = 'Введите e-mail';
+const PASSWORD_ERROR_MSG = 'Пароль может включать цифры и латиницу, длина - не менее 8 символов';
 
 const CALORIES_CAPTION = 'Калории,ккал';
 const PROTEINS_CAPTION = 'Белки, г';
@@ -78,6 +81,9 @@ export {
 
   ACTION_ERROR_MSG,
   RESPONSE_ERROR_MSG,
+  NAME_ERROR_MSG,
+  EMAIL_ERROR_MSG,
+  PASSWORD_ERROR_MSG,
 
   CALORIES_CAPTION,
   PROTEINS_CAPTION,
