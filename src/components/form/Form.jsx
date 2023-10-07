@@ -4,7 +4,6 @@ import {
   Input,
   PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import Wrapper from '../../components/wrapper/Wrapper';
 import PropTypes from 'prop-types';
 import styles from './Form.module.css';
 
@@ -15,12 +14,13 @@ function Form({
   btnCaption,
   children,
   fieldsData,
-  isBtnDisabled
+  isBtnDisabled,
+  classNameMod
 }) {
   return (
-    <Wrapper title="" isFormHolder={true}>
-      <form className={`${styles.wrapper} mb-20`}>
-        <div className={`${styles.title} text text_type_main-medium mb-6`}>{title}</div>
+    <>
+      <form className={`${styles.wrapper} ${classNameMod && styles[classNameMod]} mb-20`}>
+        {title && <div className={`${styles.title} text text_type_main-medium mb-6`}>{title}</div>}
         <fieldset className={`${styles.fieldset} mb-4`}>
           {fieldsData.map((item, index) => (
             item.name === 'password'
@@ -34,10 +34,10 @@ function Form({
             />
           ))}
         </fieldset>
-        <Button htmlType="submit" type="primary" size="medium" disabled={isBtnDisabled}>{btnCaption}</Button>
+        {btnCaption && <Button htmlType="submit" type="primary" size="medium" disabled={isBtnDisabled}>{btnCaption}</Button>}
       </form>
-      <div className={styles.footer}>{children}</div>
-    </Wrapper>
+      {children && <div className={styles.footer}>{children}</div>}
+    </>
   )
 };
 
@@ -46,7 +46,8 @@ Form.propTypes = {
   btnCaption: PropTypes.string.isRequired,
   children: PropTypes.node,
   isBtnDisabled: PropTypes.bool.isRequired,
-  fieldsData: PropTypes.arrayOf(fieldPropTypes.isRequired).isRequired
+  fieldsData: PropTypes.arrayOf(fieldPropTypes.isRequired).isRequired,
+  classNameMod: PropTypes.string
 };
 
 export default Form;

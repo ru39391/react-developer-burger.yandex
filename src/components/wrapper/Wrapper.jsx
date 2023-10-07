@@ -7,7 +7,8 @@ import styles from "./Wrapper.module.css";
 function Wrapper({
   title,
   children,
-  isFormHolder
+  isFormHolder,
+  isGrid
 }) {
   const {
     itemsRequest: isLoading,
@@ -15,8 +16,8 @@ function Wrapper({
   } = useSelector(state => state.productData);
 
   return (
-    <main className={`${styles.section} ${isFormHolder && `mt-30`}`}>
-      <section className={`${styles.content} ${isFormHolder && styles.section_ai_center} pl-5 pr-5`}>
+    <main className={`${styles.section} ${isFormHolder && `mt-30`} ${isGrid && `mt-20`}`}>
+      <section className={`${styles.content} ${isFormHolder && styles.ai_center} ${isGrid && styles.type_grid} pl-5 pr-5`}>
         {title && <h1 className="text text_type_main-large mb-5">{title}</h1>}
         {errorMsg && <p className="text text_type_main-default">{errorMsg}</p>}
         {isLoading ? <Preloader /> : children}
@@ -27,8 +28,9 @@ function Wrapper({
 
 Wrapper.propTypes = {
   title: PropTypes.string.isRequired,
-  secClassMod: PropTypes.bool,
-  children: PropTypes.node
+  children: PropTypes.node,
+  isFormHolder: PropTypes.bool,
+  isGrid: PropTypes.bool
 };
 
 export default Wrapper;

@@ -8,6 +8,10 @@ const LOGIN_TITLE = 'Вход';
 const REGISTER_TITLE = 'Регистрация';
 const FORGOT_PASSWORD_TITLE = 'Восстановление пароля';
 
+const PROFILE_NAV_TITLE = 'Профиль';
+const ORDERS_NAV_TITLE = 'История заказов';
+const EXIT_NAV_TITLE = 'Выход';
+
 const BUN_PRODUCT_NAME = 'bun';
 const MAIN_PRODUCT_NAME = 'main';
 const SAUCE_PRODUCT_NAME = 'sauce';
@@ -64,6 +68,10 @@ export {
   LOGIN_TITLE,
   REGISTER_TITLE,
   FORGOT_PASSWORD_TITLE,
+
+  PROFILE_NAV_TITLE,
+  ORDERS_NAV_TITLE,
+  EXIT_NAV_TITLE,
 
   BUN_PRODUCT_NAME,
   MAIN_PRODUCT_NAME,

@@ -1,0 +1,12 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.link {
+  text-decoration: none;;
+}
+
+.footer {
+  opacity: .4;
+}

@@ -1,9 +1,12 @@
 import React from 'react';
-import Wrapper from '../../components/wrapper/Wrapper';
+import { Outlet } from 'react-router-dom';
 
 function Orders() {
   return (
-    <Wrapper title="Orders">Orders</Wrapper>
+    <div>
+      <h1 className="text text_type_main-large mb-5">История заказов</h1>
+      <Outlet />
+    </div>
   )
 };
 

@@ -1,9 +1,10 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 import Wrapper from '../../components/wrapper/Wrapper';
 
 function Ingredients() {
   return (
-    <Wrapper title="Ingredients">Ingredients</Wrapper>
+    <Wrapper title="Ингредиенты"><Outlet /></Wrapper>
   )
 };
 

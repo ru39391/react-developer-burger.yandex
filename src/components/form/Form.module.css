@@ -26,3 +26,8 @@
   text-align: center;
   gap: 16px 0;
 }
+
+
+.ai_start {
+  align-items: flex-start;
+}

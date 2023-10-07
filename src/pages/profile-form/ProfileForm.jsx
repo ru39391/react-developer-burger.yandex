@@ -1,19 +1,14 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import useInput from '../../hooks/useInput';
 import useSubmitBtn from '../../hooks/useSubmitBtn';
 import Form from '../../components/form/Form';
-import Wrapper from '../../components/wrapper/Wrapper';
 
 import {
-  REGISTER_TITLE,
   NAME_PLS,
-  EMAIL_PLS,
-  PASSWORD_PLS,
-  LOGIN_URL
+  PASSWORD_PLS
 } from '../../utils/constants';
 
-function Register() {
+function ProfileForm() {
   const {
     values: formValues,
     validValues,
@@ -23,44 +18,53 @@ function Register() {
 
   const fieldsData = [
     {
+      icon: 'EditIcon',
       type: 'text',
       name: 'name',
-      value: formValues.name || '',
+      disabled: true,
+      value: formValues.name || 'Марк',
       placeholder: NAME_PLS,
       error: validValues.name === undefined ? false : validValues.name,
       errorText: errorMessages.name || '',
-      onChange: (e) => handleChange(e)
+      onChange: (e) => handleChange(e),
+      onIconClick: (e) => {
+        console.log(e.target);
+      }
     },
     {
+      icon: 'EditIcon',
       type: 'email',
       name: 'email',
-      value: formValues.email || '',
-      placeholder: EMAIL_PLS,
+      disabled: true,
+      value: formValues.email || 'mail@stellar.burgers',
+      placeholder: 'Логин',
       error: validValues.email === undefined ? false : validValues.email,
       errorText: errorMessages.email || '',
-      onChange: (e) => handleChange(e)
+      onChange: (e) => handleChange(e),
+      onIconClick: (e) => {
+        console.log(e.target);
+      }
     },
     {
+      icon: 'EditIcon',
       name: 'password',
-      value: formValues.password || '',
+      disabled: true,
+      value: formValues.password || '******',
       placeholder: PASSWORD_PLS,
       error: validValues.password === undefined ? false : validValues.password,
       errorText: errorMessages.password || '',
       onChange: (e) => handleChange(e),
+      onIconClick: (e) => {
+        console.log(e.target);
+      }
     }
   ];
 
   const { isBtnDisabled } = useSubmitBtn(fieldsData, validValues);
 
   return (
-    <Wrapper title="" isFormHolder={true}>
-      <Form title={REGISTER_TITLE} fieldsData={fieldsData} btnCaption="Зарегистрироваться" isBtnDisabled={isBtnDisabled}>
-        <p className="text text_type_main-default text_color_inactive">
-          Уже зарегистрированы? <NavLink to={`/${LOGIN_URL}`} style={{ textDecoration: 'none' }}>Войти</NavLink>
-        </p>
-      </Form>
-    </Wrapper>
+    <Form title="" fieldsData={fieldsData} btnCaption="" isBtnDisabled={isBtnDisabled} classNameMod="ai_start" />
   )
 };
 
-export default Register;
+export default ProfileForm;
