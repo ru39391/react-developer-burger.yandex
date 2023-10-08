@@ -36,6 +36,7 @@ const INGREDIENTS_URL = 'ingredients';
 const API_URL = 'https://norma.nomoreparties.space/api/';
 const INGREDIENTS_ALIAS = 'ingredients';
 const ORDERS_ALIAS = 'orders';
+const AUTH_ALIAS = 'auth';
 
 const ACTION_ERROR_MSG = 'Передан неизвестный тип';
 const RESPONSE_ERROR_MSG = 'Ошибка при получении данных';
@@ -101,6 +102,7 @@ export {
   API_URL,
   INGREDIENTS_ALIAS,
   ORDERS_ALIAS,
+  AUTH_ALIAS,
 
   ACTION_ERROR_MSG,
   RESPONSE_ERROR_MSG,

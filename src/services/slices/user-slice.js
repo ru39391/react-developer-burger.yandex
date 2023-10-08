@@ -4,9 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 const initialState = {
   name: '',
   email: '',
-  user: {},
-
   isFailed: false,
+  isSucceed: false,
   userRequest: false,
 
   accessToken: '',
@@ -25,14 +24,17 @@ const userSlice = createSlice({
     }),
     getUserSuccess: (state, action) => ({
       ...state,
-      user: {...action.payload.data},
+      ...action.payload.data,
+      isFailed: false,
+      isSucceed: true,
       userRequest: false,
-      isFailed: false
+      errorMsg: ''
     }),
     getFailed: (state, action) => ({
       ...state,
-      userRequest: false,
       isFailed: true,
+      isSucceed: false,
+      userRequest: false,
       errorMsg: action.payload.errorMsg
     }),
 

@@ -9,12 +9,12 @@ import {
 } from '../slices/products-slice';
 import Api from '../../utils/api';
 
-const productsApi = new Api(INGREDIENTS_ALIAS);
+const api = new Api(INGREDIENTS_ALIAS);
 
 const getItems = () => async dispatch => {
   dispatch(getItemsRequest())
   try {
-    const res = await productsApi.getData();
+    const res = await api.getData();
     if (res && res.success) {
       dispatch(getItemsSuccess({ data: res.data }))
     } else {

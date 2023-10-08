@@ -10,6 +10,8 @@ import {
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import useModal from '../../hooks/useModal';
+
 import Modal from '../modal/Modal';
 import Ingredient from '../ingredient/Ingredient';
 import OrderDetails from '../order-details/OrderDetails';
@@ -34,11 +36,10 @@ function BurgerConstructor() {
     orderList,
     summ
   } = useSelector(state => state.order);
-  const [isCheckoutVisible, setCheckoutVisibility] = useState(false);
-
-  function closeModal() {
-    setCheckoutVisibility(false);
-  }
+  const {
+    isModalVisible,
+    setModalVisibility
+  } = useModal();
 
   const removeIngredient = useCallback(
     (item) => {
@@ -72,7 +73,7 @@ function BurgerConstructor() {
 
   const checkoutCart = useCallback(
     () => {
-      setCheckoutVisibility(true);
+      setModalVisibility(true);
       dispatch(checkout(orderList));
     },
     [
@@ -146,7 +147,7 @@ function BurgerConstructor() {
           </div>
         )}
       </div>
-      {isCheckoutVisible && <Modal isModalOpen={isCheckoutVisible} closeModal={closeModal}><OrderDetails /></Modal>}
+      {isModalVisible && <Modal isModalOpen={isModalVisible} closeModal={() => setModalVisibility(false)}><OrderDetails /></Modal>}
     </>
   );
 }

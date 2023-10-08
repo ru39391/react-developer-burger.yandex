@@ -35,8 +35,16 @@ const fieldPropTypes = PropTypes.shape({
   onChange: PropTypes.func.isRequired
 });
 
+const valuePropTypes = PropTypes.shape({
+  name: PropTypes.string,
+  email: PropTypes.string,
+  password: PropTypes.string,
+  code: PropTypes.string
+});
+
 export {
   productPropTypes,
   nutritionalPropTypes,
-  fieldPropTypes
+  fieldPropTypes,
+  valuePropTypes
 };

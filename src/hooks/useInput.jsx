@@ -34,7 +34,11 @@ function useInput() {
       ...validValues,
       [name]: !regexPatterns[name].test(value)
     });
-  }
+  };
+
+  const reset = () => {
+    setValues({});
+  };
 
   return {
     values,
@@ -48,6 +52,7 @@ function useInput() {
         }),
       {}),
     handleChange,
+    reset
   };
 }
 

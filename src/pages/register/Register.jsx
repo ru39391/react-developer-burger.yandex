@@ -1,24 +1,36 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+
+import useModal from '../../hooks/useModal';
 import useInput from '../../hooks/useInput';
 import useSubmitBtn from '../../hooks/useSubmitBtn';
+
 import Form from '../../components/form/Form';
 import Wrapper from '../../components/wrapper/Wrapper';
+import Modal from '../../components/modal/Modal';
 
 import {
   REGISTER_TITLE,
   NAME_PLS,
   EMAIL_PLS,
   PASSWORD_PLS,
-  LOGIN_URL
+  LOGIN_URL,
+  REGISTER_URL
 } from '../../utils/constants';
 
 function Register() {
+  const { refreshToken } = useSelector(state => state.user);
+  const {
+    isModalVisible,
+    setModalVisibility
+  } = useModal();
   const {
     values: formValues,
     validValues,
     errorMessages,
-    handleChange
+    handleChange,
+    reset
   } = useInput();
 
   const fieldsData = [
@@ -52,13 +64,39 @@ function Register() {
 
   const { isBtnDisabled } = useSubmitBtn(fieldsData, validValues);
 
+  const signUp = (isSucceed) => {
+    if(isSucceed) {
+      reset();
+      setModalVisibility(true);
+      localStorage.setItem('refreshToken', refreshToken);
+    } else {
+      localStorage.removeItem('refreshToken');
+    }
+  };
+
   return (
     <Wrapper title="" isFormHolder={true}>
-      <Form title={REGISTER_TITLE} fieldsData={fieldsData} btnCaption="Зарегистрироваться" isBtnDisabled={isBtnDisabled}>
+      <Form
+        title={REGISTER_TITLE}
+        action={REGISTER_URL}
+        values={formValues}
+        fieldsData={fieldsData}
+        isBtnDisabled={isBtnDisabled}
+        onSubmit={signUp}
+        btnCaption="Зарегистрироваться">
         <p className="text text_type_main-default text_color_inactive">
           Уже зарегистрированы? <NavLink to={`/${LOGIN_URL}`} style={{ textDecoration: 'none' }}>Войти</NavLink>
         </p>
       </Form>
+      {isModalVisible && (
+        <Modal isModalOpen={isModalVisible} closeModal={() => setModalVisibility(false)}>
+          <div className="pt-20 pb-20" style={{ textAlign: 'center' }}>
+            <p className="text text_type_main-medium">
+              Вы успешно зарегистрировались! <NavLink to={`/${LOGIN_URL}`} style={{ textDecoration: 'none' }}>Войти</NavLink>
+            </p>
+          </div>
+        </Modal>
+      )}
     </Wrapper>
   )
 };
