@@ -10,8 +10,8 @@ const initialState = {
   errorMsg: '',
 };
 
-const productDataSlice = createSlice({
-  name: 'productData',
+const productsSlice = createSlice({
+  name: 'products',
   initialState,
   reducers: {
     getItemsRequest: (state, action) => ({
@@ -42,5 +42,5 @@ export const {
   getItemsSuccess,
   getItemsFailed,
   setItemDetails
-} = productDataSlice.actions
-export default productDataSlice.reducer;
+} = productsSlice.actions
+export default productsSlice.reducer;

@@ -13,7 +13,7 @@ function Wrapper({
   const {
     itemsRequest: isLoading,
     errorMsg
-  } = useSelector(state => state.productData);
+  } = useSelector(state => state.products);
 
   return (
     <main className={`${styles.section} ${isFormHolder && `mt-30`} ${isGrid && `mt-20`}`}>

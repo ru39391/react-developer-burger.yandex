@@ -5,7 +5,7 @@ import CheckoutImg from '../../images/checkout.png';
 import styles from "./OrderDetails.module.css";
 
 function OrderDetails() {
-  const { order: { id, name }, errorMsg } = useSelector(state => state.orderData);
+  const { order: { id, name }, errorMsg } = useSelector(state => state.order);
 
   return (
     <>

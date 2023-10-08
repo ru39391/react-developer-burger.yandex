@@ -9,11 +9,11 @@ import IngredientDetails from '../ingredient-details/IngredientDetails';
 import styles from './ConstructorSection.module.css';
 
 import { productPropTypes } from '../../utils/proptypes';
-import { setItemDetails } from '../../services/reducers/products-data';
+import { setItemDetails } from '../../services/slices/products-slice';
 
 function ConstructorSection({ data }) {
   const dispatch = useDispatch();
-  const { item: cardDetails } = useSelector(state => state.productData);
+  const { item: cardDetails } = useSelector(state => state.products);
   const [isCardDetailsVisible, setCardDetailsVisibility] = useState(false);
 
   function closeModal() {

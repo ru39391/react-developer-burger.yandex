@@ -4,10 +4,10 @@ import {
   RESPONSE_ERROR_MSG
 } from './constants';
 
-class Api extends React.Component {
+class userApi extends React.Component {
   constructor(path) {
     super();
-    this._path = `${API_URL}${path}`;
+    this._path = `${API_URL}${path}/`;
   }
 
   _setHeaders() {
@@ -24,23 +24,14 @@ class Api extends React.Component {
     return Promise.reject(`${resultAlert}: ${result.status}`);
   }
 
-  getData() {
-    return fetch(this._path, {
-      headers: this._setHeaders()
-    })
-      .then((res) => {return this._checkResponse(res, RESPONSE_ERROR_MSG)});
-  }
-
-  checkout(idsArr) {
-    return fetch(this._path, {
+  fetchData(data, alias = '') {
+    return fetch(`${this._path}${alias}`, {
       method: 'POST',
       headers: this._setHeaders(),
-      body: JSON.stringify({
-        ingredients: idsArr
-      })
+      body: JSON.stringify(data)
     })
       .then((res) => {return this._checkResponse(res, RESPONSE_ERROR_MSG)});
   }
 }
 
-export default Api;
+export default userApi;

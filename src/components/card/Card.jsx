@@ -22,7 +22,7 @@ import {
   FAT_CAPTION,
   CARBOHYDRATES_CAPTION
 } from '../../utils/constants';
-import { setItemDetails } from '../../services/reducers/products-data';
+import { setItemDetails } from '../../services/slices/products-slice';
 
 function Card({
   data,
@@ -33,7 +33,7 @@ function Card({
   nutritional
 }) {
   const dispatch = useDispatch();
-  const { orderList } = useSelector(state => state.orderData);
+  const { orderList } = useSelector(state => state.order);
   const [counter, setCounter] = useState(0);
 
   const captionsArr = [

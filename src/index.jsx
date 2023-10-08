@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
-import reducer from './services/reducers';
+import reducer from './services/slices';
 
 import App from './App';
 import './index.css';

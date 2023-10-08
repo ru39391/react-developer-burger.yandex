@@ -17,14 +17,14 @@ import OrderDetails from '../order-details/OrderDetails';
 import styles from './BurgerConstructor.module.css';
 
 import { BUN_PRODUCT_NAME } from '../../utils/constants';
-import { checkout } from '../../services/actions';
+import { checkout } from '../../services/actions/order';
 import {
   addItem,
   addBunItem,
   removeItem,
   setOrderData,
   updateOrderList
-} from '../../services/reducers/order-data';
+} from '../../services/slices/order-slice';
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ function BurgerConstructor() {
     mainItems: ingredients,
     orderList,
     summ
-  } = useSelector(state => state.orderData);
+  } = useSelector(state => state.order);
   const [isCheckoutVisible, setCheckoutVisibility] = useState(false);
 
   function closeModal() {

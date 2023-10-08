@@ -19,11 +19,11 @@ import {
   MAIN_PRODUCT_CAPTION,
   SAUCE_PRODUCT_CAPTION,
 } from '../../utils/constants';
-import { getItems } from '../../services/actions';
+import { getItems } from '../../services/actions/products';
 
 function BurgerIngredients() {
   const dispatch = useDispatch();
-  const ingredients = useSelector(state => state.productData.items);
+  const ingredients = useSelector(state => state.products.items);
   const [current, setCurrent] = useState(BUN_PRODUCT_NAME);
 
   const filterByType = (params, arr) => params.map(item => arr.filter(({ type }) => type === item));
