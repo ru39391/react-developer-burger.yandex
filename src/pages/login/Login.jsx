@@ -21,10 +21,7 @@ import {
 
 function Login() {
   const navigate = useNavigate();
-  const {
-    isTokenExist,
-    setCurrTokens
-  } = useAuth();
+  const { setCurrTokens } = useAuth();
   const {
     values: formValues,
     validValues,

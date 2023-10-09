@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import React from 'react';
 import {
   NavLink,
   useLocation,
@@ -22,7 +22,6 @@ import {
   PROFILE_NAV_TITLE,
   ORDERS_NAV_TITLE,
   EXIT_NAV_TITLE,
-  LOGIN_URL,
   LOGOUT_URL,
   ACCESS_TOKEN_KEY,
   REFRESH_TOKEN_KEY,
@@ -60,7 +59,7 @@ function Sidebar() {
     if(isTokenExist(REFRESH_TOKEN_KEY)) {
       dispatch(signOut({ token }, LOGOUT_URL));
       [ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY].forEach(key => removeToken(key));
-      navigate(`/${LOGIN_URL}`);
+      navigate(`/`);
     } else {
       setModalVisibility(true);
     }

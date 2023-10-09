@@ -1,10 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import {
-  ACCESS_TOKEN_KEY,
-  REFRESH_TOKEN_KEY
-} from '../utils/constants';
+import { ACCESS_TOKEN_KEY } from '../utils/constants';
 
 function useAuth() {
   const {
@@ -41,7 +38,6 @@ function useAuth() {
       accessToken: [getCurrDate(),jwt].toString(),
       refreshToken
     };
-    //const isTokenExistArr = [ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY].map((key, index) => getToken(key).token === [jwt, refreshToken][index]);
 
     Object.keys(data).forEach((key, index) => {
       setToken(key, Object.values(data)[index])
