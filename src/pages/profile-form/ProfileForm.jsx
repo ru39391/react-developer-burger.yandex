@@ -18,17 +18,12 @@ import {
 
 function ProfileForm() {
   const dispatch = useDispatch();
-  const {
-    name,
-    email,
-    isFailed,
-    accessToken,
-    refreshToken
-  } = useSelector(state => state.user);
+  const { name, email } = useSelector(state => state.user);
   const {
     getToken,
     isTokenExist,
-    setInitTokens
+    isTokenExpired,
+    setCurrTokens
   } = useAuth();
   const {
     values: formValues,
@@ -85,26 +80,33 @@ function ProfileForm() {
 
   const editUserData = (isSucceed) => {
     if(isSucceed) {
-      console.log(isSucceed);
+      //console.log('isSucceed', isSucceed);
     }
   };
 
   const getCurrentToken = useCallback(() => {
-    console.log('refreshed');
+    console.log('refreshed', isTokenExist('refreshToken'));
+
     if(isTokenExist('refreshToken')) {
-      dispatch(getAccessToken({ token: getToken('refreshToken') }, TOKEN_URL));
-      setInitTokens(accessToken, refreshToken);
+      const token = getToken('refreshToken');
+      dispatch(getAccessToken({ token }, TOKEN_URL));
+      setCurrTokens();
     } else {
-      console.log('refreshToken fail');
+      console.error('refreshToken fail');
     }
-  }, [refreshToken]);
+  }, [
+    dispatch
+  ]);
 
   const getUserData = () => {
     if(isTokenExist('accessToken')) {
-      dispatch(getAccessToken({ jwt: getToken('accessToken') }, USER_URL));
-      //getCurrentToken();
+      const { token: jwt } = getToken('accessToken');
+      console.log(jwt, isTokenExpired());
+      isTokenExpired()
+        ? getCurrentToken()
+        : dispatch(getAccessToken({ jwt }, USER_URL));
     } else {
-      console.log('accessToken fail');
+      console.error('accessToken fail');
     }
   };
 

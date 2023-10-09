@@ -20,7 +20,7 @@ import {
 
 function Login() {
   const navigate = useNavigate();
-  const { setInitTokens } = useAuth();
+  const { setCurrTokens } = useAuth();
   const {
     values: formValues,
     validValues,
@@ -51,10 +51,10 @@ function Login() {
 
   const { isBtnDisabled } = useSubmitBtn(fieldsData, validValues);
 
-  const signIn = ({ isSucceed, accessToken, refreshToken }) => {
+  const signIn = (isSucceed) => {
     if(isSucceed) {
       reset();
-      setInitTokens(accessToken, refreshToken);
+      setCurrTokens();
       navigate(`/${PROFILE_URL}`);
     }
   };

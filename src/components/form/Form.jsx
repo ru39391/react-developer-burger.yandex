@@ -27,8 +27,6 @@ function Form({
     isFailed,
     isSucceed,
     userRequest,
-    accessToken,
-    refreshToken,
     errorMsg
   } = useSelector(state => state.user);
 
@@ -41,11 +39,7 @@ function Form({
   ]);
 
   useEffect(() => {
-    onSubmit({
-      isSucceed,
-      accessToken,
-      refreshToken
-    });
+    onSubmit(isSucceed);
   }, [isSucceed]);
 
   return (

@@ -29,7 +29,7 @@ import {
 } from './utils/constants';
 
 function App() {
-  const { getToken, removeToken } = useAuth();
+  const { getToken, removeToken, isTokenExpired } = useAuth();
   const appRoutes = useRoutes([
     { path: '/', element: <Home /> },
     {
@@ -72,8 +72,9 @@ function App() {
   useEffect(() => {
     //removeToken('accessToken');
     //removeToken('refreshToken');
-    console.log(getToken('refreshToken'));
-    console.log(getToken('accessToken'));
+    console.log('refreshToken: ', getToken('refreshToken'));
+    console.log('accessToken: ', getToken('accessToken'));
+    console.log('isTokenExpired: ', isTokenExpired());
     document.title = DEFAULT_DOC_TITLE;
   }, []);
 
