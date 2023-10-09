@@ -32,6 +32,8 @@ const REGISTER_URL = 'register';
 const FORGOT_PASSWORD_URL = 'forgot-password';
 const RESET_PASSWORD_URL = 'reset-password';
 const INGREDIENTS_URL = 'ingredients';
+const USER_URL = 'user';
+const TOKEN_URL = 'token';
 
 const API_URL = 'https://norma.nomoreparties.space/api/';
 const INGREDIENTS_ALIAS = 'ingredients';
@@ -98,6 +100,8 @@ export {
   FORGOT_PASSWORD_URL,
   RESET_PASSWORD_URL,
   INGREDIENTS_URL,
+  USER_URL,
+  TOKEN_URL,
 
   API_URL,
   INGREDIENTS_ALIAS,

@@ -10,10 +10,15 @@ class userApi extends React.Component {
     this._path = `${API_URL}${path}/`;
   }
 
-  _setHeaders() {
-    return {
-      'Content-Type': 'application/json'
-    }
+  _setHeaders(jwt = '') {
+    return jwt
+      ? {
+        'Content-Type': 'application/json',
+        'Authorization' : `Bearer ${jwt}`
+      }
+      : {
+        'Content-Type': 'application/json'
+      };
   }
 
   _checkResponse(result, resultAlert) {
@@ -24,11 +29,27 @@ class userApi extends React.Component {
     return Promise.reject(`${resultAlert}: ${result.status}`);
   }
 
+  getAccessToken(data, alias = '') {
+    const params = {
+      method: 'GET',
+      headers: this._setHeaders(data.jwt),
+    };
+    return fetch(`${this._path}${alias}`, data.jwt
+      ? params
+      : {
+        ...params,
+        method: 'POST',
+        body: JSON.stringify(data)
+      }
+    )
+      .then((res) => {return this._checkResponse(res, RESPONSE_ERROR_MSG)});
+  }
+
   fetchData(data, alias = '') {
     return fetch(`${this._path}${alias}`, {
       method: 'POST',
-      headers: this._setHeaders(),
-      body: JSON.stringify(data)
+      headers: this._setHeaders(data.jwt),
+      body: JSON.stringify(data.values)
     })
       .then((res) => {return this._checkResponse(res, RESPONSE_ERROR_MSG)});
   }

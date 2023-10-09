@@ -1,14 +1,35 @@
-import React from 'react';
+import { useCallback, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import useAuth from '../../hooks/useAuth';
 import useInput from '../../hooks/useInput';
 import useSubmitBtn from '../../hooks/useSubmitBtn';
+
 import Form from '../../components/form/Form';
+
+import { getAccessToken } from '../../services/actions/user';
 
 import {
   NAME_PLS,
-  PASSWORD_PLS
+  PASSWORD_PLS,
+  USER_URL,
+  TOKEN_URL
 } from '../../utils/constants';
 
 function ProfileForm() {
+  const dispatch = useDispatch();
+  const {
+    name,
+    email,
+    isFailed,
+    accessToken,
+    refreshToken
+  } = useSelector(state => state.user);
+  const {
+    getToken,
+    isTokenExist,
+    setInitTokens
+  } = useAuth();
   const {
     values: formValues,
     validValues,
@@ -22,7 +43,7 @@ function ProfileForm() {
       type: 'text',
       name: 'name',
       disabled: true,
-      value: formValues.name || 'Марк',
+      value: formValues.name || name,
       placeholder: NAME_PLS,
       error: validValues.name === undefined ? false : validValues.name,
       errorText: errorMessages.name || '',
@@ -36,7 +57,7 @@ function ProfileForm() {
       type: 'email',
       name: 'email',
       disabled: true,
-      value: formValues.email || 'mail@stellar.burgers',
+      value: formValues.email || email,
       placeholder: 'Логин',
       error: validValues.email === undefined ? false : validValues.email,
       errorText: errorMessages.email || '',
@@ -62,8 +83,46 @@ function ProfileForm() {
 
   const { isBtnDisabled } = useSubmitBtn(fieldsData, validValues);
 
+  const editUserData = (isSucceed) => {
+    if(isSucceed) {
+      console.log(isSucceed);
+    }
+  };
+
+  const getCurrentToken = useCallback(() => {
+    console.log('refreshed');
+    if(isTokenExist('refreshToken')) {
+      dispatch(getAccessToken({ token: getToken('refreshToken') }, TOKEN_URL));
+      setInitTokens(accessToken, refreshToken);
+    } else {
+      console.log('refreshToken fail');
+    }
+  }, [refreshToken]);
+
+  const getUserData = () => {
+    if(isTokenExist('accessToken')) {
+      dispatch(getAccessToken({ jwt: getToken('accessToken') }, USER_URL));
+      //getCurrentToken();
+    } else {
+      console.log('accessToken fail');
+    }
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
   return (
-    <Form title="" fieldsData={fieldsData} btnCaption="" isBtnDisabled={isBtnDisabled} classNameMod="ai_start" />
+    <Form
+      title=""
+      action={USER_URL}
+      values={formValues}
+      fieldsData={fieldsData}
+      btnCaption=""
+      isBtnDisabled={isBtnDisabled}
+      onSubmit={editUserData}
+      classNameMod="ai_start"
+    />
   )
 };
 

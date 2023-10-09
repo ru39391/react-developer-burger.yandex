@@ -27,11 +27,13 @@ function Form({
     isFailed,
     isSucceed,
     userRequest,
+    accessToken,
+    refreshToken,
     errorMsg
   } = useSelector(state => state.user);
 
   const handleSubmit = useCallback(() => {
-    dispatch(fetchData(values, action));
+    dispatch(fetchData({ values }, action));
   }, [
     values,
     action,
@@ -39,7 +41,11 @@ function Form({
   ]);
 
   useEffect(() => {
-    onSubmit(isSucceed);
+    onSubmit({
+      isSucceed,
+      accessToken,
+      refreshToken
+    });
   }, [isSucceed]);
 
   return (

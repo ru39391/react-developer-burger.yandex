@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useRoutes } from 'react-router-dom';
+import useAuth from './hooks/useAuth';
 
 import Home from './pages/home/Home';
 import Orders from './pages/orders/Orders';
@@ -28,6 +29,7 @@ import {
 } from './utils/constants';
 
 function App() {
+  const { getToken, removeToken } = useAuth();
   const appRoutes = useRoutes([
     { path: '/', element: <Home /> },
     {
@@ -68,6 +70,10 @@ function App() {
   ]);
 
   useEffect(() => {
+    //removeToken('accessToken');
+    //removeToken('refreshToken');
+    console.log(getToken('refreshToken'));
+    console.log(getToken('accessToken'));
     document.title = DEFAULT_DOC_TITLE;
   }, []);
 

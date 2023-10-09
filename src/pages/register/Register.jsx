@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 import useModal from '../../hooks/useModal';
@@ -20,7 +19,6 @@ import {
 } from '../../utils/constants';
 
 function Register() {
-  const { refreshToken } = useSelector(state => state.user);
   const {
     isModalVisible,
     setModalVisibility
@@ -64,13 +62,10 @@ function Register() {
 
   const { isBtnDisabled } = useSubmitBtn(fieldsData, validValues);
 
-  const signUp = (isSucceed) => {
-    if(isSucceed) {
+  const signUp = (data) => {
+    if(data.isSucceed) {
       reset();
       setModalVisibility(true);
-      localStorage.setItem('refreshToken', refreshToken);
-    } else {
-      localStorage.removeItem('refreshToken');
     }
   };
 
