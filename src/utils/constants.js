@@ -34,12 +34,14 @@ const RESET_PASSWORD_URL = 'reset-password';
 const INGREDIENTS_URL = 'ingredients';
 const USER_URL = 'user';
 const TOKEN_URL = 'token';
+const LOGOUT_URL = 'logout';
 
 const API_URL = 'https://norma.nomoreparties.space/api/';
 const INGREDIENTS_ALIAS = 'ingredients';
 const ORDERS_ALIAS = 'orders';
 const AUTH_ALIAS = 'auth';
 
+const TOKEN_ERROR_MSG = 'Невозможно обработать данные пользователя';
 const ACTION_ERROR_MSG = 'Передан неизвестный тип';
 const RESPONSE_ERROR_MSG = 'Ошибка при получении данных';
 const NAME_ERROR_MSG = 'Имя должно состоять из букв и быть не короче 2 символов';
@@ -61,6 +63,9 @@ const PRICE_KEY = 'price';
 
 const TOP_KEY = 'top';
 const BOTTOM_KEY = 'bottom';
+
+const ACCESS_TOKEN_KEY = 'accessToken';
+const REFRESH_TOKEN_KEY = 'refreshToken';
 
 export {
   DEFAULT_DOC_TITLE,
@@ -102,12 +107,14 @@ export {
   INGREDIENTS_URL,
   USER_URL,
   TOKEN_URL,
+  LOGOUT_URL,
 
   API_URL,
   INGREDIENTS_ALIAS,
   ORDERS_ALIAS,
   AUTH_ALIAS,
 
+  TOKEN_ERROR_MSG,
   ACTION_ERROR_MSG,
   RESPONSE_ERROR_MSG,
   NAME_ERROR_MSG,
@@ -123,5 +130,8 @@ export {
   ID_KEY,
   PRICE_KEY,
   TOP_KEY,
-  BOTTOM_KEY
+  BOTTOM_KEY,
+
+  ACCESS_TOKEN_KEY,
+  REFRESH_TOKEN_KEY
 };

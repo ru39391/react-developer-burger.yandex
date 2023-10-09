@@ -8,6 +8,7 @@ import useSubmitBtn from '../../hooks/useSubmitBtn';
 import Form from '../../components/form/Form';
 import Wrapper from '../../components/wrapper/Wrapper';
 import Modal from '../../components/modal/Modal';
+import ModalContent from '../../components/modal-content/ModalContent';
 
 import {
   REGISTER_TITLE,
@@ -85,11 +86,7 @@ function Register() {
       </Form>
       {isModalVisible && (
         <Modal isModalOpen={isModalVisible} closeModal={() => setModalVisibility(false)}>
-          <div className="pt-20 pb-20" style={{ textAlign: 'center' }}>
-            <p className="text text_type_main-medium">
-              Вы успешно зарегистрировались! <NavLink to={`/${LOGIN_URL}`} style={{ textDecoration: 'none' }}>Войти</NavLink>
-            </p>
-          </div>
+          <ModalContent>Вы успешно зарегистрировались! <NavLink to={`/${LOGIN_URL}`} style={{ textDecoration: 'none' }}>Войти</NavLink></ModalContent>
         </Modal>
       )}
     </Wrapper>

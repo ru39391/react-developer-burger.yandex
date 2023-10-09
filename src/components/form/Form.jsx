@@ -8,6 +8,9 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Form.module.css';
 
+//import useAuth from '../../hooks/useAuth';
+//import { REFRESH_TOKEN_KEY } from '../../utils/constants';
+
 import { fieldPropTypes, valuePropTypes } from '../../utils/proptypes';
 import { fetchData } from '../../services/actions/user';
 
@@ -29,6 +32,7 @@ function Form({
     userRequest,
     errorMsg
   } = useSelector(state => state.user);
+  //const { isTokenExist } = useAuth();
 
   const handleSubmit = useCallback(() => {
     dispatch(fetchData({ values }, action));
@@ -40,6 +44,7 @@ function Form({
 
   useEffect(() => {
     onSubmit(isSucceed);
+    //onSubmit(isSucceed && !isTokenExist(REFRESH_TOKEN_KEY));
   }, [isSucceed]);
 
   return (

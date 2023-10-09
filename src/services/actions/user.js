@@ -5,7 +5,8 @@ import {
 import {
   getUserRequest,
   getUserSuccess,
-  getFailed
+  getFailed,
+  resetUserData
 } from '../slices/user-slice';
 import userApi from '../../utils/userApi';
 
@@ -42,7 +43,22 @@ const getAccessToken = (data, alias = '') => async dispatch => {
   }
 };
 
+const signOut = (data, alias = '') => async dispatch => {
+  dispatch(getUserRequest());
+  try {
+    const res = await api.getAccessToken(data, alias);
+    if (res && res.success) {
+      dispatch(resetUserData());
+    } else {
+      dispatch(getFailed({ errorMsg: RESPONSE_ERROR_MSG }));
+    }
+  } catch (err) {
+    dispatch(getFailed({ errorMsg: err }));
+  }
+};
+
 export {
+  signOut,
   fetchData,
   getAccessToken
 };

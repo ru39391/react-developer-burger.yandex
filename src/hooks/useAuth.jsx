@@ -1,6 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
+import {
+  ACCESS_TOKEN_KEY,
+  REFRESH_TOKEN_KEY
+} from '../utils/constants';
+
 function useAuth() {
   const {
     accessToken,
@@ -18,23 +23,26 @@ function useAuth() {
 
   const getToken = (key) => {
     const value = localStorage.getItem(key);
-    return key === 'accessToken'
+    return key === ACCESS_TOKEN_KEY
       ? {
         date: value ? Number(value.split(',')[0]) : null,
         token: value ? value.split(',')[1] : null
       }
-      : value;
+      : { token: value };
   };
 
-  const isTokenExist = (key) => Boolean(getToken(key));
+  const isTokenExist = (key) => Boolean(getToken(key).token);
 
-  const isTokenExpired = () => getCurrDate() - getToken('accessToken').date > 20 * 60 * 1000;
+  const isTokenExpired = () => getCurrDate() - getToken(ACCESS_TOKEN_KEY).date > 20 * 60 * 1000;
 
   const setCurrTokens = () => {
+    const jwt = accessToken.split('Bearer ')[1];
     const data = {
-      accessToken: [getCurrDate(),accessToken.split(' ')[1]].toString(),
+      accessToken: [getCurrDate(),jwt].toString(),
       refreshToken
     };
+    //const isTokenExistArr = [ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY].map((key, index) => getToken(key).token === [jwt, refreshToken][index]);
+
     Object.keys(data).forEach((key, index) => {
       setToken(key, Object.values(data)[index])
     });

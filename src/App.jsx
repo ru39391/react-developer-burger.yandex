@@ -70,11 +70,11 @@ function App() {
   ]);
 
   useEffect(() => {
-    //removeToken('accessToken');
-    //removeToken('refreshToken');
+    //['accessToken', 'refreshToken'].forEach(key => removeToken(key));
     console.log('refreshToken: ', getToken('refreshToken'));
     console.log('accessToken: ', getToken('accessToken'));
     console.log('isTokenExpired: ', isTokenExpired());
+    console.log('_____________________________');
     document.title = DEFAULT_DOC_TITLE;
   }, []);
 

@@ -37,14 +37,14 @@ const userSlice = createSlice({
       userRequest: false,
       errorMsg: action.payload.errorMsg
     }),
-
-    //setUserData(state, action) {    },
+    resetUserData: () => ({ ...initialState }),
   }
 });
 
 export const {
   getUserRequest,
   getUserSuccess,
-  getFailed
+  getFailed,
+  resetUserData
 } = userSlice.actions
 export default userSlice.reducer;

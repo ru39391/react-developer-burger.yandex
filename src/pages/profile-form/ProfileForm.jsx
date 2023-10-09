@@ -2,10 +2,13 @@ import { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import useAuth from '../../hooks/useAuth';
+import useModal from '../../hooks/useModal';
 import useInput from '../../hooks/useInput';
 import useSubmitBtn from '../../hooks/useSubmitBtn';
 
 import Form from '../../components/form/Form';
+import Modal from '../../components/modal/Modal';
+import ModalContent from '../../components/modal-content/ModalContent';
 
 import { getAccessToken } from '../../services/actions/user';
 
@@ -13,12 +16,22 @@ import {
   NAME_PLS,
   PASSWORD_PLS,
   USER_URL,
-  TOKEN_URL
+  TOKEN_URL,
+  ACCESS_TOKEN_KEY,
+  REFRESH_TOKEN_KEY,
+  TOKEN_ERROR_MSG
 } from '../../utils/constants';
 
 function ProfileForm() {
   const dispatch = useDispatch();
-  const { name, email } = useSelector(state => state.user);
+  const {
+    name,
+    email
+  } = useSelector(state => state.user);
+  const {
+    isModalVisible,
+    setModalVisibility
+  } = useModal();
   const {
     getToken,
     isTokenExist,
@@ -85,28 +98,27 @@ function ProfileForm() {
   };
 
   const getCurrentToken = useCallback(() => {
-    console.log('refreshed', isTokenExist('refreshToken'));
+    console.log('refreshed', isTokenExist(REFRESH_TOKEN_KEY));
 
-    if(isTokenExist('refreshToken')) {
-      const token = getToken('refreshToken');
+    if(isTokenExist(REFRESH_TOKEN_KEY)) {
+      const { token } = getToken(REFRESH_TOKEN_KEY);
       dispatch(getAccessToken({ token }, TOKEN_URL));
       setCurrTokens();
     } else {
-      console.error('refreshToken fail');
+      setModalVisibility(true);
     }
   }, [
     dispatch
   ]);
 
   const getUserData = () => {
-    if(isTokenExist('accessToken')) {
-      const { token: jwt } = getToken('accessToken');
-      console.log(jwt, isTokenExpired());
+    if(isTokenExist(ACCESS_TOKEN_KEY)) {
+      const { token: jwt } = getToken(ACCESS_TOKEN_KEY);
       isTokenExpired()
         ? getCurrentToken()
         : dispatch(getAccessToken({ jwt }, USER_URL));
     } else {
-      console.error('accessToken fail');
+      setModalVisibility(true);
     }
   };
 
@@ -115,16 +127,23 @@ function ProfileForm() {
   }, []);
 
   return (
-    <Form
-      title=""
-      action={USER_URL}
-      values={formValues}
-      fieldsData={fieldsData}
-      btnCaption=""
-      isBtnDisabled={isBtnDisabled}
-      onSubmit={editUserData}
-      classNameMod="ai_start"
-    />
+    <>
+      <Form
+        title=""
+        action={USER_URL}
+        values={formValues}
+        fieldsData={fieldsData}
+        btnCaption=""
+        isBtnDisabled={isBtnDisabled}
+        onSubmit={editUserData}
+        classNameMod="ai_start"
+      />
+      {isModalVisible && (
+        <Modal isModalOpen={isModalVisible} closeModal={() => setModalVisibility(false)}>
+          <ModalContent children={TOKEN_ERROR_MSG} />
+        </Modal>
+      )}
+    </>
   )
 };
 

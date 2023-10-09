@@ -15,12 +15,16 @@ import {
   LOGIN_URL,
   REGISTER_URL,
   FORGOT_PASSWORD_URL,
-  PROFILE_URL
+  PROFILE_URL,
+  ACCESS_TOKEN_KEY
 } from '../../utils/constants';
 
 function Login() {
   const navigate = useNavigate();
-  const { setCurrTokens } = useAuth();
+  const {
+    isTokenExist,
+    setCurrTokens
+  } = useAuth();
   const {
     values: formValues,
     validValues,
