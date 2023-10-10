@@ -17,26 +17,19 @@ import {
   PASSWORD_PLS,
   USER_URL,
   TOKEN_URL,
-  ACCESS_TOKEN_KEY,
-  REFRESH_TOKEN_KEY,
   TOKEN_ERROR_MSG
 } from '../../utils/constants';
 
 function ProfileForm() {
   const dispatch = useDispatch();
+  const { name, email } = useSelector(state => state.user);
+  const { isModalVisible, setModalVisibility } = useModal();
   const {
-    name,
-    email
-  } = useSelector(state => state.user);
-  const {
-    isModalVisible,
-    setModalVisibility
-  } = useModal();
-  const {
-    getToken,
-    isTokenExist,
-    isTokenExpired,
-    setCurrTokens
+    accessToken,
+    refreshToken,
+    isRefTokExist,
+    isAccTokExist,
+    isTokenExpired
   } = useAuth();
   const {
     values: formValues,
@@ -98,29 +91,33 @@ function ProfileForm() {
   };
 
   const getCurrentToken = useCallback(() => {
-    console.log('refreshed', isTokenExist(REFRESH_TOKEN_KEY));
+    console.log('refreshed', isRefTokExist);
 
-    if(isTokenExist(REFRESH_TOKEN_KEY)) {
-      const { token } = getToken(REFRESH_TOKEN_KEY);
+    if(isRefTokExist) {
+      const { token } = refreshToken;
       dispatch(getAccessToken({ token }, TOKEN_URL));
-      setCurrTokens();
     } else {
       setModalVisibility(true);
     }
   }, [
+    isRefTokExist,
     dispatch
   ]);
 
-  const getUserData = () => {
-    if(isTokenExist(ACCESS_TOKEN_KEY)) {
-      const { token: jwt } = getToken(ACCESS_TOKEN_KEY);
-      isTokenExpired()
+  const getUserData = useCallback(() => {
+    if(isAccTokExist) {
+      const { token: jwt } = accessToken;
+      isTokenExpired
         ? getCurrentToken()
         : dispatch(getAccessToken({ jwt }, USER_URL));
     } else {
       setModalVisibility(true);
     }
-  };
+  }, [
+    isTokenExpired,
+    isAccTokExist,
+    dispatch
+  ]);
 
   useEffect(() => {
     getUserData();

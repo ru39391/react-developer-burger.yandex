@@ -1,12 +1,14 @@
-import React from 'react';
+import { useEffect, useCallback } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
-import useAuth from '../../hooks/useAuth';
 import useInput from '../../hooks/useInput';
 import useSubmitBtn from '../../hooks/useSubmitBtn';
 
 import Form from '../../components/form/Form';
 import Wrapper from '../../components/wrapper/Wrapper';
+
+import { fetchData } from '../../services/actions/user';
 
 import {
   LOGIN_TITLE,
@@ -16,12 +18,12 @@ import {
   REGISTER_URL,
   FORGOT_PASSWORD_URL,
   PROFILE_URL,
-  ACCESS_TOKEN_KEY
 } from '../../utils/constants';
 
 function Login() {
   const navigate = useNavigate();
-  const { setCurrTokens } = useAuth();
+  const dispatch = useDispatch();
+  const { email, isSucceed } = useSelector(state => state.user);
   const {
     values: formValues,
     validValues,
@@ -52,13 +54,25 @@ function Login() {
 
   const { isBtnDisabled } = useSubmitBtn(fieldsData, validValues);
 
-  const signIn = (isSucceed) => {
-    if(isSucceed) {
+  const signIn = (data) => {
+    if(data.isLogged) {
       reset();
-      setCurrTokens();
       navigate(`/${PROFILE_URL}`);
     }
   };
+
+  /*
+  const handleSubmit = useCallback(() => {
+    dispatch(fetchData({ values: formValues }, LOGIN_URL));
+  }, [
+    formValues,
+    dispatch
+  ]);
+
+  useEffect(() => {
+    signIn(isSucceed);
+  }, [isSucceed]);
+  */
 
   return (
     <Wrapper title="" isFormHolder={true}>

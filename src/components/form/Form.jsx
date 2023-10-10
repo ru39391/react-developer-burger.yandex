@@ -24,6 +24,7 @@ function Form({
 }) {
   const dispatch = useDispatch();
   const {
+    isLogged,
     isFailed,
     isSucceed,
     userRequest,
@@ -39,8 +40,11 @@ function Form({
   ]);
 
   useEffect(() => {
-    onSubmit(isSucceed);
-  }, [isSucceed]);
+    onSubmit({ isLogged, isSucceed });
+  }, [
+    isLogged,
+    isSucceed
+  ]);
 
   return (
     <>

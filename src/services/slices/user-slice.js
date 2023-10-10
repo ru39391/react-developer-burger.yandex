@@ -4,12 +4,11 @@ import { v4 as uuidv4 } from 'uuid';
 const initialState = {
   name: '',
   email: '',
+
+  isLogged: false,
   isFailed: false,
   isSucceed: false,
   userRequest: false,
-
-  accessToken: '',
-  refreshToken: '',
 
   errorMsg: '',
 };
@@ -32,6 +31,7 @@ const userSlice = createSlice({
     }),
     getFailed: (state, action) => ({
       ...state,
+      isLogged: false,
       isFailed: true,
       isSucceed: false,
       userRequest: false,

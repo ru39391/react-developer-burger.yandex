@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useRoutes } from 'react-router-dom';
-import useAuth from './hooks/useAuth';
 
 import Home from './pages/home/Home';
 import Orders from './pages/orders/Orders';
@@ -29,7 +28,6 @@ import {
 } from './utils/constants';
 
 function App() {
-  const { getToken, removeToken, isTokenExpired } = useAuth();
   const appRoutes = useRoutes([
     { path: '/', element: <Home /> },
     {
@@ -70,13 +68,16 @@ function App() {
   ]);
 
   useEffect(() => {
-    //['accessToken', 'refreshToken'].forEach(key => removeToken(key));
-    console.log('refreshToken: ', getToken('refreshToken'));
-    console.log('accessToken: ', getToken('accessToken'));
-    console.log('isTokenExpired: ', isTokenExpired());
+    //['accessToken', 'refreshToken'].forEach(key => localStorage.removeItem(key));
+
+    console.log('____________App.jsx____________');
+    console.log('refreshToken: ', localStorage.getItem('refreshToken'));
+    console.log('accessToken: ', localStorage.getItem('accessToken'));
     console.log('_____________________________');
     document.title = DEFAULT_DOC_TITLE;
-  }, []);
+  }, [
+    localStorage.getItem('refreshToken')
+  ]);
 
   return (
     <div className="page">

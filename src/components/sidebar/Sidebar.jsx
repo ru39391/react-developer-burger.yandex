@@ -17,14 +17,13 @@ import styles from './Sidebar.module.css';
 import { signOut } from '../../services/actions/user';
 
 import {
+  LOGIN_URL,
   PROFILE_URL,
   ORDERS_URL,
   PROFILE_NAV_TITLE,
   ORDERS_NAV_TITLE,
   EXIT_NAV_TITLE,
   LOGOUT_URL,
-  ACCESS_TOKEN_KEY,
-  REFRESH_TOKEN_KEY,
   TOKEN_ERROR_MSG
 } from '../../utils/constants';
 
@@ -32,16 +31,8 @@ function Sidebar() {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const {
-    isModalVisible,
-    setModalVisibility
-  } = useModal();
-  const {
-    getToken,
-    removeToken,
-    isTokenExist,
-  } = useAuth();
-
+  const { refreshToken, isRefTokExist } = useAuth();
+  const { isModalVisible, setModalVisibility } = useModal();
 
   const navArr = [
     {
@@ -55,11 +46,10 @@ function Sidebar() {
   ];
 
   const logout = () => {
-    const { token } = getToken(REFRESH_TOKEN_KEY);
-    if(isTokenExist(REFRESH_TOKEN_KEY)) {
+    const { token } = refreshToken;
+    if(isRefTokExist) {
       dispatch(signOut({ token }, LOGOUT_URL));
-      [ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY].forEach(key => removeToken(key));
-      navigate(`/`);
+      navigate(`/`);//${LOGIN_URL}
     } else {
       setModalVisibility(true);
     }

@@ -63,8 +63,8 @@ function Register() {
 
   const { isBtnDisabled } = useSubmitBtn(fieldsData, validValues);
 
-  const signUp = (isSucceed) => {
-    if(isSucceed) {
+  const signUp = (data) => {
+    if(data.isSucceed) {
       reset();
       setModalVisibility(true);
     }

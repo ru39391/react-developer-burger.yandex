@@ -1,4 +1,5 @@
 import {
+  LOGIN_URL,
   AUTH_ALIAS,
   RESPONSE_ERROR_MSG
 } from '../../utils/constants';
@@ -9,6 +10,7 @@ import {
   resetUserData
 } from '../slices/user-slice';
 import userApi from '../../utils/userApi';
+import storage from '../../utils/storage';
 
 const api = new userApi(AUTH_ALIAS);
 
@@ -18,7 +20,12 @@ const fetchData = (data, alias = '') => async dispatch => {
     const res = await api.fetchData(data, alias);
     if (res && res.success) {
       const { user, accessToken, refreshToken } = res;
-      dispatch(getUserSuccess({ data: { ...user, accessToken, refreshToken } }));
+      const data = alias === LOGIN_URL
+        ? { ...user, isLogged: true }
+        : { ...user };
+
+      dispatch(getUserSuccess({ data }));
+      if(alias === LOGIN_URL) storage.setCurrTokens({ accessToken, refreshToken });
     } else {
       dispatch(getFailed({ errorMsg: RESPONSE_ERROR_MSG }));
     }
@@ -33,8 +40,9 @@ const getAccessToken = (data, alias = '') => async dispatch => {
     const res = await api.getAccessToken(data, alias);
     if (res && res.success) {
       const { user, accessToken, refreshToken } = res;
-      const data = accessToken ? { accessToken, refreshToken } : { ...user };
-      dispatch(getUserSuccess({ data }));
+      accessToken
+        ? storage.setCurrTokens({ accessToken, refreshToken })
+        : dispatch(getUserSuccess({ data: { ...user } }));
     } else {
       dispatch(getFailed({ errorMsg: RESPONSE_ERROR_MSG }));
     }
@@ -48,6 +56,7 @@ const signOut = (data, alias = '') => async dispatch => {
   try {
     const res = await api.getAccessToken(data, alias);
     if (res && res.success) {
+      storage.clearStorage();
       dispatch(resetUserData());
     } else {
       dispatch(getFailed({ errorMsg: RESPONSE_ERROR_MSG }));
