@@ -7,6 +7,8 @@ import useInput from '../../hooks/useInput';
 import useSubmitBtn from '../../hooks/useSubmitBtn';
 
 import Form from '../../components/form/Form';
+import FormButton from '../../components/form-button/FormButton';
+import FormFooter from '../../components/form-footer/FormFooter';
 import Wrapper from '../../components/wrapper/Wrapper';
 import Modal from '../../components/modal/Modal';
 import ModalContent from '../../components/modal-content/ModalContent';
@@ -90,13 +92,16 @@ function Register() {
       <Form
         title={REGISTER_TITLE}
         fieldsData={fieldsData}
-        isBtnDisabled={isBtnDisabled}
-        onSubmit={signUp}
-        handleSubmit={handleSubmit}
-        btnCaption="Зарегистрироваться">
-        <p className="text text_type_main-default text_color_inactive">
-          Уже зарегистрированы? <NavLink to={`/${LOGIN_URL}`} style={{ textDecoration: 'none' }}>Войти</NavLink>
-        </p>
+        onSubmit={signUp}>
+        <FormButton
+          isBtnDisabled={isBtnDisabled}
+          handleSubmit={handleSubmit}
+          btnCaption="Зарегистрироваться" />
+        <FormFooter>
+          <p className="text text_type_main-default text_color_inactive">
+            Уже зарегистрированы? <NavLink to={`/${LOGIN_URL}`} style={{ textDecoration: 'none' }}>Войти</NavLink>
+          </p>
+        </FormFooter>
       </Form>
       {isModalVisible && (
         <Modal isModalOpen={isModalVisible} closeModal={() => setModalVisibility(false)}>

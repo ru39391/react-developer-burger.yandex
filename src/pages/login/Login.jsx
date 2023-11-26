@@ -6,6 +6,8 @@ import useInput from '../../hooks/useInput';
 import useSubmitBtn from '../../hooks/useSubmitBtn';
 
 import Form from '../../components/form/Form';
+import FormButton from '../../components/form-button/FormButton';
+import FormFooter from '../../components/form-footer/FormFooter';
 import Wrapper from '../../components/wrapper/Wrapper';
 
 import { fetchData } from '../../services/actions/user';
@@ -76,16 +78,19 @@ function Login() {
       <Form
         title={LOGIN_TITLE}
         fieldsData={fieldsData}
-        isBtnDisabled={isBtnDisabled}
-        onSubmit={signIn}
-        handleSubmit={handleSubmit}
-        btnCaption="Войти">
-        <p className="text text_type_main-default text_color_inactive">
-          Вы — новый пользователь? <NavLink to={`/${REGISTER_URL}`} style={{ textDecoration: 'none' }}>Зарегистрироваться</NavLink>
-        </p>
-        <p className="text text_type_main-default text_color_inactive">
-          Забыли пароль? <NavLink to={`/${FORGOT_PASSWORD_URL}`} style={{ textDecoration: 'none' }}>Восстановить пароль</NavLink>
-        </p>
+        onSubmit={signIn}>
+        <FormButton
+          isBtnDisabled={isBtnDisabled}
+          handleSubmit={handleSubmit}
+          btnCaption="Войти" />
+        <FormFooter>
+          <p className="text text_type_main-default text_color_inactive">
+            Вы — новый пользователь? <NavLink to={`/${REGISTER_URL}`} style={{ textDecoration: 'none' }}>Зарегистрироваться</NavLink>
+          </p>
+          <p className="text text_type_main-default text_color_inactive">
+            Забыли пароль? <NavLink to={`/${FORGOT_PASSWORD_URL}`} style={{ textDecoration: 'none' }}>Восстановить пароль</NavLink>
+          </p>
+        </FormFooter>
       </Form>
     </Wrapper>
   )
