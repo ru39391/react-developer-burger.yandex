@@ -1,4 +1,5 @@
-import React from 'react';
+import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 import useModal from '../../hooks/useModal';
@@ -10,6 +11,8 @@ import Wrapper from '../../components/wrapper/Wrapper';
 import Modal from '../../components/modal/Modal';
 import ModalContent from '../../components/modal-content/ModalContent';
 
+import { fetchData } from '../../services/actions/user';
+
 import {
   REGISTER_TITLE,
   NAME_PLS,
@@ -20,12 +23,13 @@ import {
 } from '../../utils/constants';
 
 function Register() {
+  const dispatch = useDispatch();
   const {
     isModalVisible,
     setModalVisibility
   } = useModal();
   const {
-    values: formValues,
+    values,
     validValues,
     errorMessages,
     handleChange,
@@ -36,7 +40,7 @@ function Register() {
     {
       type: 'text',
       name: 'name',
-      value: formValues.name || '',
+      value: values.name || '',
       placeholder: NAME_PLS,
       error: validValues.name === undefined ? false : validValues.name,
       errorText: errorMessages.name || '',
@@ -45,7 +49,7 @@ function Register() {
     {
       type: 'email',
       name: 'email',
-      value: formValues.email || '',
+      value: values.email || '',
       placeholder: EMAIL_PLS,
       error: validValues.email === undefined ? false : validValues.email,
       errorText: errorMessages.email || '',
@@ -53,7 +57,7 @@ function Register() {
     },
     {
       name: 'password',
-      value: formValues.password || '',
+      value: values.password || '',
       placeholder: PASSWORD_PLS,
       error: validValues.password === undefined ? false : validValues.password,
       errorText: errorMessages.password || '',
@@ -65,6 +69,13 @@ function Register() {
     isBtnDisabled,
     disableBtn
   } = useSubmitBtn(fieldsData, validValues);
+
+  const handleSubmit = useCallback(() => {
+    dispatch(fetchData({ values }, REGISTER_URL));
+  }, [
+    values,
+    dispatch
+  ]);
 
   const signUp = (data) => {
     if(data.isSucceed) {
@@ -78,11 +89,10 @@ function Register() {
     <Wrapper title="" isFormHolder={true}>
       <Form
         title={REGISTER_TITLE}
-        action={REGISTER_URL}
-        values={formValues}
         fieldsData={fieldsData}
         isBtnDisabled={isBtnDisabled}
         onSubmit={signUp}
+        handleSubmit={handleSubmit}
         btnCaption="Зарегистрироваться">
         <p className="text text_type_main-default text_color_inactive">
           Уже зарегистрированы? <NavLink to={`/${LOGIN_URL}`} style={{ textDecoration: 'none' }}>Войти</NavLink>

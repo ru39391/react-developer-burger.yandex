@@ -51,6 +51,7 @@ function useInput() {
           [item]: errorsData[item]
         }),
       {}),
+    setValues,
     handleChange,
     reset
   };

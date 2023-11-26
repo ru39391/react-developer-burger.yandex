@@ -35,7 +35,8 @@ function ProfileForm() {
     values: formValues,
     validValues,
     errorMessages,
-    handleChange
+    handleChange,
+    setValues
   } = useInput();
 
   const fieldsData = [
@@ -43,8 +44,8 @@ function ProfileForm() {
       icon: 'EditIcon',
       type: 'text',
       name: 'name',
-      disabled: true,
-      value: formValues.name || name,
+      //disabled: true,
+      value: formValues.name || '',
       placeholder: NAME_PLS,
       error: validValues.name === undefined ? false : validValues.name,
       errorText: errorMessages.name || '',
@@ -57,8 +58,8 @@ function ProfileForm() {
       icon: 'EditIcon',
       type: 'email',
       name: 'email',
-      disabled: true,
-      value: formValues.email || email,
+      //disabled: true,
+      value: formValues.email || '',
       placeholder: 'Логин',
       error: validValues.email === undefined ? false : validValues.email,
       errorText: errorMessages.email || '',
@@ -70,8 +71,8 @@ function ProfileForm() {
     {
       icon: 'EditIcon',
       name: 'password',
-      disabled: true,
-      value: formValues.password || '******',
+      disabled: false,
+      value: formValues.password || '',
       placeholder: PASSWORD_PLS,
       error: validValues.password === undefined ? false : validValues.password,
       errorText: errorMessages.password || '',
@@ -91,7 +92,7 @@ function ProfileForm() {
   };
 
   const getCurrentToken = useCallback(() => {
-    console.log('refreshed', isRefTokExist);
+    //console.log('refreshed', isRefTokExist);
 
     if(isRefTokExist) {
       const { token } = refreshToken;
@@ -122,6 +123,17 @@ function ProfileForm() {
   useEffect(() => {
     getUserData();
   }, []);
+
+  useEffect(() => {
+    setValues({
+      name,
+      email,
+      password: '******'
+    });
+  }, [
+    name,
+    email
+  ]);
 
   return (
     <>

@@ -20,7 +20,6 @@ import {
 
 function Login() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const {
     values: formValues,
     validValues,

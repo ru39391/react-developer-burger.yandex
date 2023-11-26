@@ -1,5 +1,5 @@
-import { useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -9,20 +9,17 @@ import {
 import styles from './Form.module.css';
 
 import { fieldPropTypes, valuePropTypes } from '../../utils/proptypes';
-import { fetchData } from '../../services/actions/user';
 
 function Form({
   title,
-  action,
-  values,
   fieldsData,
   isBtnDisabled,
   onSubmit,
+  handleSubmit,
   btnCaption,
   children,
   classNameMod
 }) {
-  const dispatch = useDispatch();
   const {
     isLogged,
     isFailed,
@@ -30,14 +27,6 @@ function Form({
     userRequest,
     errorMsg
   } = useSelector(state => state.user);
-
-  const handleSubmit = useCallback(() => {
-    dispatch(fetchData({ values }, action));
-  }, [
-    values,
-    action,
-    dispatch
-  ]);
 
   useEffect(() => {
     onSubmit({ isLogged, isSucceed });
@@ -73,11 +62,10 @@ function Form({
 
 Form.propTypes = {
   title: PropTypes.string.isRequired,
-  action: PropTypes.string.isRequired,
-  values: valuePropTypes.isRequired,
   fieldsData: PropTypes.arrayOf(fieldPropTypes.isRequired).isRequired,
   isBtnDisabled: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
   btnCaption: PropTypes.string.isRequired,
   children: PropTypes.node,
   classNameMod: PropTypes.string
