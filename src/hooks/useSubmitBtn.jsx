@@ -12,6 +12,10 @@ function useSubmitBtn(fields, validValues) {
 
   const values = useMemo(() => Object.values(validValues), [validValues]);
 
+  const disableBtn = () => {
+    setBtnDisabled(true);
+  };
+
   useEffect(() => {
     setBtnDisabled(
       values.length === fields.length
@@ -21,7 +25,8 @@ function useSubmitBtn(fields, validValues) {
   }, [validValues]);
 
   return {
-    isBtnDisabled
+    isBtnDisabled,
+    disableBtn
   };
 }
 

@@ -8,8 +8,6 @@ import useSubmitBtn from '../../hooks/useSubmitBtn';
 import Form from '../../components/form/Form';
 import Wrapper from '../../components/wrapper/Wrapper';
 
-import { fetchData } from '../../services/actions/user';
-
 import {
   LOGIN_TITLE,
   EMAIL_PLS,
@@ -23,7 +21,6 @@ import {
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { email, isSucceed } = useSelector(state => state.user);
   const {
     values: formValues,
     validValues,
@@ -52,27 +49,18 @@ function Login() {
     }
   ];
 
-  const { isBtnDisabled } = useSubmitBtn(fieldsData, validValues);
+  const {
+    isBtnDisabled,
+    disableBtn
+  } = useSubmitBtn(fieldsData, validValues);
 
   const signIn = (data) => {
     if(data.isLogged) {
       reset();
+      disableBtn();
       navigate(`/${PROFILE_URL}`);
     }
   };
-
-  /*
-  const handleSubmit = useCallback(() => {
-    dispatch(fetchData({ values: formValues }, LOGIN_URL));
-  }, [
-    formValues,
-    dispatch
-  ]);
-
-  useEffect(() => {
-    signIn(isSucceed);
-  }, [isSucceed]);
-  */
 
   return (
     <Wrapper title="" isFormHolder={true}>

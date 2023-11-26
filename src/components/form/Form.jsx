@@ -64,7 +64,7 @@ function Form({
             />
           ))}
         </fieldset>
-        {btnCaption && <Button htmlType="submit" type="primary" size="medium" disabled={isBtnDisabled || userRequest || isSucceed} onClick={handleSubmit}>{btnCaption}</Button>}
+        {btnCaption && <Button htmlType="submit" type="primary" size="medium" disabled={isBtnDisabled || userRequest} onClick={handleSubmit}>{btnCaption}</Button>}
       </form>
       {children && <div className={styles.footer}>{children}</div>}
     </>
