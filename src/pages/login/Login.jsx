@@ -1,12 +1,14 @@
-import { useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import useInput from '../../hooks/useInput';
 import useSubmitBtn from '../../hooks/useSubmitBtn';
 
 import Form from '../../components/form/Form';
 import Wrapper from '../../components/wrapper/Wrapper';
+
+import { fetchData } from '../../services/actions/user';
 
 import {
   LOGIN_TITLE,
@@ -20,8 +22,9 @@ import {
 
 function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {
-    values: formValues,
+    values,
     validValues,
     errorMessages,
     handleChange,
@@ -32,7 +35,7 @@ function Login() {
     {
       type: 'email',
       name: 'email',
-      value: formValues.email || '',
+      value: values.email || '',
       placeholder: EMAIL_PLS,
       error: validValues.email === undefined ? false : validValues.email,
       errorText: errorMessages.email || '',
@@ -40,7 +43,7 @@ function Login() {
     },
     {
       name: 'password',
-      value: formValues.password || '',
+      value: values.password || '',
       placeholder: PASSWORD_PLS,
       error: validValues.password === undefined ? false : validValues.password,
       errorText: errorMessages.password || '',
@@ -52,6 +55,13 @@ function Login() {
     isBtnDisabled,
     disableBtn
   } = useSubmitBtn(fieldsData, validValues);
+
+  const handleSubmit = useCallback(() => {
+    dispatch(fetchData({ values }, LOGIN_URL));
+  }, [
+    values,
+    dispatch
+  ]);
 
   const signIn = (data) => {
     if(data.isLogged) {
@@ -65,11 +75,10 @@ function Login() {
     <Wrapper title="" isFormHolder={true}>
       <Form
         title={LOGIN_TITLE}
-        action={LOGIN_URL}
-        values={formValues}
         fieldsData={fieldsData}
         isBtnDisabled={isBtnDisabled}
         onSubmit={signIn}
+        handleSubmit={handleSubmit}
         btnCaption="Войти">
         <p className="text text_type_main-default text_color_inactive">
           Вы — новый пользователь? <NavLink to={`/${REGISTER_URL}`} style={{ textDecoration: 'none' }}>Зарегистрироваться</NavLink>
