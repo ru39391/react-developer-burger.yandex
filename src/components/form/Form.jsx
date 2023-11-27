@@ -24,7 +24,10 @@ function Form({
   } = useSelector(state => state.user);
 
   useEffect(() => {
-    onSubmit({ isLogged, isSucceed });
+    onSubmit({
+      isLogged,
+      isSucceed
+    });
   }, [
     isLogged,
     isSucceed

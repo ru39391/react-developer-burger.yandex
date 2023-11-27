@@ -1,23 +1,24 @@
-import { useCallback, useEffect } from 'react';
+import { useMemo, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import useAuth from '../../hooks/useAuth';
 import useModal from '../../hooks/useModal';
 import useInput from '../../hooks/useInput';
-import useSubmitBtn from '../../hooks/useSubmitBtn';
 
 import Form from '../../components/form/Form';
+import FormButton from '../../components/form-button/FormButton';
 import Modal from '../../components/modal/Modal';
 import ModalContent from '../../components/modal-content/ModalContent';
 
-import { getAccessToken } from '../../services/actions/user';
+import { getAccessToken, updateData } from '../../services/actions/user';
 
 import {
   NAME_PLS,
   PASSWORD_PLS,
   USER_URL,
   TOKEN_URL,
-  TOKEN_ERROR_MSG
+  TOKEN_ERROR_MSG,
+  PASSWORD_DEFAULT_VAL
 } from '../../utils/constants';
 
 function ProfileForm() {
@@ -32,8 +33,9 @@ function ProfileForm() {
     isTokenExpired
   } = useAuth();
   const {
-    values: formValues,
+    values,
     validValues,
+    editedValues,
     errorMessages,
     handleChange,
     setValues
@@ -44,52 +46,32 @@ function ProfileForm() {
       icon: 'EditIcon',
       type: 'text',
       name: 'name',
-      //disabled: true,
-      value: formValues.name || '',
+      value: values.name || '',
       placeholder: NAME_PLS,
       error: validValues.name === undefined ? false : validValues.name,
       errorText: errorMessages.name || '',
-      onChange: (e) => handleChange(e),
-      onIconClick: (e) => {
-        console.log(e.target);
-      }
+      onChange: (e) => handleChange(e)
     },
     {
       icon: 'EditIcon',
       type: 'email',
       name: 'email',
-      //disabled: true,
-      value: formValues.email || '',
+      value: values.email || '',
       placeholder: 'Логин',
       error: validValues.email === undefined ? false : validValues.email,
       errorText: errorMessages.email || '',
       onChange: (e) => handleChange(e),
-      onIconClick: (e) => {
-        console.log(e.target);
-      }
     },
     {
       icon: 'EditIcon',
       name: 'password',
-      disabled: false,
-      value: formValues.password || '',
+      value: values.password || '',
       placeholder: PASSWORD_PLS,
       error: validValues.password === undefined ? false : validValues.password,
       errorText: errorMessages.password || '',
-      onChange: (e) => handleChange(e),
-      onIconClick: (e) => {
-        console.log(e.target);
-      }
+      onChange: (e) => handleChange(e)
     }
   ];
-
-  const { isBtnDisabled } = useSubmitBtn(fieldsData, validValues);
-
-  const editUserData = (isSucceed) => {
-    if(isSucceed) {
-      //console.log('isSucceed', isSucceed);
-    }
-  };
 
   const getCurrentToken = useCallback(() => {
     //console.log('refreshed', isRefTokExist);
@@ -120,6 +102,34 @@ function ProfileForm() {
     dispatch
   ]);
 
+  const updatedValues = useMemo(() =>
+    Object.values(editedValues).reduce((acc, item, index) =>
+      ![name, email].includes(item)
+      ? ({
+          ...acc,
+          [Object.keys(editedValues)[index]]: item
+        })
+      : ({...acc})
+    ,
+  {}), [
+    editedValues
+  ]);
+
+  const handleSubmit = useCallback(() => {
+    dispatch(updateData({ values: updatedValues }, USER_URL));
+  }, [
+    updatedValues,
+    dispatch
+  ]);
+
+  const handleSubmitOptional = () => {
+    setValues({
+      name,
+      email,
+      password: PASSWORD_DEFAULT_VAL
+    });
+  };
+
   useEffect(() => {
     getUserData();
   }, []);
@@ -128,7 +138,7 @@ function ProfileForm() {
     setValues({
       name,
       email,
-      password: '******'
+      password: PASSWORD_DEFAULT_VAL
     });
   }, [
     name,
@@ -139,14 +149,18 @@ function ProfileForm() {
     <>
       <Form
         title=""
-        action={USER_URL}
-        values={formValues}
         fieldsData={fieldsData}
-        btnCaption=""
-        isBtnDisabled={isBtnDisabled}
-        onSubmit={editUserData}
-        classNameMod="ai_start"
-      />
+        onSubmit={handleSubmitOptional}
+        classNameMod="ai_start">
+        <FormButton
+          isBtnGroup={true}
+          isBtnDisabled={!Object.values(updatedValues).length}
+          handleSubmit={handleSubmit}
+          handleSubmitOptional={handleSubmitOptional}
+          btnCaption="Сохранить"
+          btnCaptionOptional="Отмена"
+          />
+      </Form>
       {isModalVisible && (
         <Modal isModalOpen={isModalVisible} closeModal={() => setModalVisibility(false)}>
           <ModalContent children={TOKEN_ERROR_MSG} />

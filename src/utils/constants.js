@@ -43,6 +43,7 @@ const AUTH_ALIAS = 'auth';
 
 const TOKEN_ERROR_MSG = 'Невозможно обработать данные пользователя';
 const ACTION_ERROR_MSG = 'Передан неизвестный тип';
+const UPDATE_ERROR_MSG = 'Ошибка обновления данных';
 const RESPONSE_ERROR_MSG = 'Ошибка при получении данных';
 const NAME_ERROR_MSG = 'Имя должно состоять из букв и быть не короче 2 символов';
 const EMAIL_ERROR_MSG = 'Введите e-mail';
@@ -52,6 +53,8 @@ const CODE_ERROR_MSG = 'Код может включать только цифр
 const NAME_PLS = 'Имя';
 const EMAIL_PLS = 'E-mail';
 const PASSWORD_PLS = 'Пароль';
+
+const PASSWORD_DEFAULT_VAL = '12345678';
 
 const CALORIES_CAPTION = 'Калории,ккал';
 const PROTEINS_CAPTION = 'Белки, г';
@@ -98,6 +101,8 @@ export {
   EMAIL_PLS,
   PASSWORD_PLS,
 
+  PASSWORD_DEFAULT_VAL,
+
   ORDERS_URL,
   PROFILE_URL,
   LOGIN_URL,
@@ -116,6 +121,7 @@ export {
 
   TOKEN_ERROR_MSG,
   ACTION_ERROR_MSG,
+  UPDATE_ERROR_MSG,
   RESPONSE_ERROR_MSG,
   NAME_ERROR_MSG,
   EMAIL_ERROR_MSG,

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   NAME_ERROR_MSG,
   EMAIL_ERROR_MSG,
@@ -9,6 +9,7 @@ import {
 function useInput() {
   const [values, setValues] = useState({});
   const [validValues, setValidValues] = useState({});
+  const [editedValues, setEditedValues] = useState({});
 
   const regexPatterns = {
     name: /^[A-Za-zА-Яа-яЁё\s-]{2,30}$/,
@@ -40,9 +41,23 @@ function useInput() {
     setValues({});
   };
 
+  useEffect(() => {
+    setEditedValues({
+      ...Object.keys(validValues).reduce((acc, item) =>
+        validValues[item]
+        ? acc
+        : ({
+          ...acc,
+          [item]: values[item]
+        }),
+      {})
+    });
+  }, [values]);
+
   return {
     values,
     validValues,
+    editedValues,
     errorMessages: Object.keys(validValues).reduce((acc, item) =>
       Object.keys(acc).find(key => key === item)
       ? acc

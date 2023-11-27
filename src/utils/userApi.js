@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   API_URL,
+  USER_URL,
   RESPONSE_ERROR_MSG
 } from './constants';
 
@@ -47,7 +48,7 @@ class userApi extends React.Component {
 
   fetchData(data, alias = '') {
     return fetch(`${this._path}${alias}`, {
-      method: 'POST',
+      method: alias === USER_URL ? 'PATCH' : 'POST',
       headers: this._setHeaders(data.jwt),
       body: JSON.stringify(data.values)
     })

@@ -1,6 +1,8 @@
 import {
   LOGIN_URL,
   AUTH_ALIAS,
+  ACCESS_TOKEN_KEY,
+  UPDATE_ERROR_MSG,
   RESPONSE_ERROR_MSG
 } from '../../utils/constants';
 import {
@@ -51,6 +53,22 @@ const getAccessToken = (data, alias = '') => async dispatch => {
   }
 };
 
+const updateData = (data, alias = '') => async dispatch => {
+  dispatch(getUserRequest());
+  try {
+    const { token } = storage.getToken(ACCESS_TOKEN_KEY);
+    const res = await api.fetchData({ ...data, jwt: token }, alias);
+    if (res && res.success) {
+      const { user } = res;
+      dispatch(getUserSuccess({ data: { ...user } }));
+    } else {
+      dispatch(getFailed({ errorMsg: UPDATE_ERROR_MSG }));
+    }
+  } catch (err) {
+    dispatch(getFailed({ errorMsg: err }));
+  }
+};
+
 const signOut = (data, alias = '') => async dispatch => {
   dispatch(getUserRequest());
   try {
@@ -69,5 +87,6 @@ const signOut = (data, alias = '') => async dispatch => {
 export {
   signOut,
   fetchData,
+  updateData,
   getAccessToken
 };
