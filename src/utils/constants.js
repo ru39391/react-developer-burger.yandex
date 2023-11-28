@@ -35,11 +35,13 @@ const INGREDIENTS_URL = 'ingredients';
 const USER_URL = 'user';
 const TOKEN_URL = 'token';
 const LOGOUT_URL = 'logout';
+const RESET_URL = 'reset';
 
 const API_URL = 'https://norma.nomoreparties.space/api/';
 const INGREDIENTS_ALIAS = 'ingredients';
 const ORDERS_ALIAS = 'orders';
 const AUTH_ALIAS = 'auth';
+const RESET_PASSWORD_ALIAS = 'password-reset';
 
 const TOKEN_ERROR_MSG = 'Невозможно обработать данные пользователя';
 const ACTION_ERROR_MSG = 'Передан неизвестный тип';
@@ -113,11 +115,13 @@ export {
   USER_URL,
   TOKEN_URL,
   LOGOUT_URL,
+  RESET_URL,
 
   API_URL,
   INGREDIENTS_ALIAS,
   ORDERS_ALIAS,
   AUTH_ALIAS,
+  RESET_PASSWORD_ALIAS,
 
   TOKEN_ERROR_MSG,
   ACTION_ERROR_MSG,

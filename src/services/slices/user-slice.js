@@ -8,6 +8,7 @@ const initialState = {
   isLogged: false,
   isFailed: false,
   isSucceed: false,
+  isRecoverySucceed: false,
   userRequest: false,
 
   errorMsg: '',
@@ -29,11 +30,19 @@ const userSlice = createSlice({
       userRequest: false,
       errorMsg: ''
     }),
+    getRecoverySuccess: (state, action) => ({
+      ...state,
+      isFailed: false,
+      isRecoverySucceed: true,
+      userRequest: false,
+      errorMsg: ''
+    }),
     getFailed: (state, action) => ({
       ...state,
       isLogged: false,
       isFailed: true,
       isSucceed: false,
+      isRecoverySucceed: false,
       userRequest: false,
       errorMsg: action.payload.errorMsg
     }),
@@ -44,6 +53,7 @@ const userSlice = createSlice({
 export const {
   getUserRequest,
   getUserSuccess,
+  getRecoverySuccess,
   getFailed,
   resetUserData
 } = userSlice.actions

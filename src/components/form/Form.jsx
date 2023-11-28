@@ -20,17 +20,20 @@ function Form({
     isLogged,
     isFailed,
     isSucceed,
+    isRecoverySucceed,
     errorMsg
   } = useSelector(state => state.user);
 
   useEffect(() => {
     onSubmit({
       isLogged,
-      isSucceed
+      isSucceed,
+      isRecoverySucceed
     });
   }, [
     isLogged,
-    isSucceed
+    isSucceed,
+    isRecoverySucceed
   ]);
 
   return (

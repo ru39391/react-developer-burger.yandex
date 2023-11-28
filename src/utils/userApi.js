@@ -54,6 +54,15 @@ class userApi extends React.Component {
     })
       .then((res) => {return this._checkResponse(res, RESPONSE_ERROR_MSG)});
   }
+
+  recoverPassword(data, alias = '') {
+    return fetch(`${this._path}${alias}`, {
+      method: 'POST',
+      headers: this._setHeaders(),
+      body: JSON.stringify(data)
+    })
+      .then((res) => {return this._checkResponse(res, RESPONSE_ERROR_MSG)});
+  }
 }
 
 export default userApi;

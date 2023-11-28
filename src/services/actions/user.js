@@ -1,13 +1,16 @@
 import {
   LOGIN_URL,
   AUTH_ALIAS,
+  RESET_PASSWORD_ALIAS,
   ACCESS_TOKEN_KEY,
+  REFRESH_TOKEN_KEY,
   UPDATE_ERROR_MSG,
   RESPONSE_ERROR_MSG
 } from '../../utils/constants';
 import {
   getUserRequest,
   getUserSuccess,
+  getRecoverySuccess,
   getFailed,
   resetUserData
 } from '../slices/user-slice';
@@ -15,6 +18,7 @@ import userApi from '../../utils/userApi';
 import storage from '../../utils/storage';
 
 const api = new userApi(AUTH_ALIAS);
+const passwordApi = new userApi(RESET_PASSWORD_ALIAS);
 
 const fetchData = (data, alias = '') => async dispatch => {
   dispatch(getUserRequest());
@@ -69,6 +73,21 @@ const updateData = (data, alias = '') => async dispatch => {
   }
 };
 
+const recoverPassword = (data, alias = '') => async dispatch => {
+  dispatch(getUserRequest());
+  try {
+    const { token } = storage.getToken(REFRESH_TOKEN_KEY);
+    const res = await passwordApi.recoverPassword({ ...data, token }, alias);
+    if (res && res.success) {
+      dispatch(getRecoverySuccess());
+    } else {
+      dispatch(getFailed({ errorMsg: UPDATE_ERROR_MSG }));
+    }
+  } catch (err) {
+    dispatch(getFailed({ errorMsg: err }));
+  }
+};
+
 const signOut = (data, alias = '') => async dispatch => {
   dispatch(getUserRequest());
   try {
@@ -88,5 +107,6 @@ export {
   signOut,
   fetchData,
   updateData,
+  recoverPassword,
   getAccessToken
 };

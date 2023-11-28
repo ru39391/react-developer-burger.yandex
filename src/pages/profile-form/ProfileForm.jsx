@@ -83,7 +83,6 @@ function ProfileForm() {
       setModalVisibility(true);
     }
   }, [
-    isRefTokExist,
     dispatch
   ]);
 
@@ -97,7 +96,6 @@ function ProfileForm() {
       setModalVisibility(true);
     }
   }, [
-    isTokenExpired,
     isAccTokExist,
     dispatch
   ]);
@@ -116,13 +114,18 @@ function ProfileForm() {
   ]);
 
   const handleSubmit = useCallback(() => {
+    console.log(isTokenExpired);
+    if(isTokenExpired) {
+      getCurrentToken();
+    }
+
     dispatch(updateData({ values: updatedValues }, USER_URL));
   }, [
     updatedValues,
     dispatch
   ]);
 
-  const handleSubmitOptional = () => {
+  const setDefaultValues = () => {
     setValues({
       name,
       email,
@@ -135,11 +138,7 @@ function ProfileForm() {
   }, []);
 
   useEffect(() => {
-    setValues({
-      name,
-      email,
-      password: PASSWORD_DEFAULT_VAL
-    });
+    setDefaultValues();
   }, [
     name,
     email
@@ -150,13 +149,13 @@ function ProfileForm() {
       <Form
         title=""
         fieldsData={fieldsData}
-        onSubmit={handleSubmitOptional}
+        onSubmit={setDefaultValues}
         classNameMod="ai_start">
         <FormButton
           isBtnGroup={true}
           isBtnDisabled={!Object.values(updatedValues).length}
           handleSubmit={handleSubmit}
-          handleSubmitOptional={handleSubmitOptional}
+          handleSubmitOptional={setDefaultValues}
           btnCaption="Сохранить"
           btnCaptionOptional="Отмена"
           />
