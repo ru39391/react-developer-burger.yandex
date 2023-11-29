@@ -3,6 +3,7 @@ import {
   useEffect,
   useCallback
 } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import {
@@ -18,7 +19,7 @@ import OrderDetails from '../order-details/OrderDetails';
 
 import styles from './BurgerConstructor.module.css';
 
-import { BUN_PRODUCT_NAME } from '../../utils/constants';
+import { BUN_PRODUCT_NAME, LOGIN_URL } from '../../utils/constants';
 import { checkout } from '../../services/actions/order';
 import {
   addItem,
@@ -29,6 +30,7 @@ import {
 } from '../../services/slices/order-slice';
 
 function BurgerConstructor() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
     bunItems: buns,
@@ -36,6 +38,7 @@ function BurgerConstructor() {
     orderList,
     summ
   } = useSelector(state => state.order);
+  const { isLogged } = useSelector(state => state.user);
   const {
     isModalVisible,
     setModalVisibility
@@ -73,10 +76,15 @@ function BurgerConstructor() {
 
   const checkoutCart = useCallback(
     () => {
-      setModalVisibility(true);
-      dispatch(checkout(orderList));
+      if(isLogged) {
+        setModalVisibility(true);
+        dispatch(checkout(orderList));
+      } else {
+        navigate(`/${LOGIN_URL}`);
+      }
     },
     [
+      isLogged,
       orderList,
       dispatch
     ]

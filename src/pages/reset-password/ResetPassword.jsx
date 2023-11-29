@@ -1,6 +1,6 @@
-import { useCallback } from 'react';
-import { NavLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useCallback, useEffect } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useInput from '../../hooks/useInput';
 import useSubmitBtn from '../../hooks/useSubmitBtn';
@@ -14,12 +14,15 @@ import { recoverPassword } from '../../services/actions/user';
 
 import {
   FORGOT_PASSWORD_TITLE,
+  FORGOT_PASSWORD_URL,
   LOGIN_URL,
   RESET_URL
 } from '../../utils/constants';
 
 function ResetPassword() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isRecoverySucceed } = useSelector(state => state.user);
   const {
     values,
     validValues,
@@ -64,6 +67,15 @@ function ResetPassword() {
     reset();
     disableBtn();
   };
+
+  useEffect(() => {
+    // переделать
+    if(!isRecoverySucceed) {
+      navigate(`/${FORGOT_PASSWORD_URL}`);
+    }
+  }, [
+    isRecoverySucceed
+  ]);
 
   return (
     <Wrapper title="" isFormHolder={true}>

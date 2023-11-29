@@ -73,6 +73,7 @@ function ProfileForm() {
     }
   ];
 
+  // перенести в хук
   const getCurrentToken = useCallback(() => {
     if(isRefTokExist) {
       const { token } = refreshToken;

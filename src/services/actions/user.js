@@ -3,7 +3,6 @@ import {
   AUTH_ALIAS,
   RESET_PASSWORD_ALIAS,
   ACCESS_TOKEN_KEY,
-  REFRESH_TOKEN_KEY,
   UPDATE_ERROR_MSG,
   RESPONSE_ERROR_MSG
 } from '../../utils/constants';

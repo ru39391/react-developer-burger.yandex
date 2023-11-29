@@ -14,6 +14,8 @@ import Ingredients from './pages/ingredients/Ingredients';
 import IngredientsItem from './pages/ingredients-item/IngredientsItem';
 import NotFound from './pages/not-found/NotFound';
 
+import ProtectedRoute from './components/protected-route/ProtectedRoute';
+
 import AppHeader from './components/app-header/AppHeader';
 
 import {
@@ -32,7 +34,7 @@ function App() {
     { path: '/', element: <Home /> },
     {
       path: `/${PROFILE_URL}`,
-      element: <Profile />,
+      element: <ProtectedRoute><Profile /></ProtectedRoute>,
       children: [
         {
           index: true,
