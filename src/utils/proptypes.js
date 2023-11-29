@@ -39,7 +39,7 @@ const valuePropTypes = PropTypes.shape({
   name: PropTypes.string,
   email: PropTypes.string,
   password: PropTypes.string,
-  code: PropTypes.string
+  token: PropTypes.string
 });
 
 export {

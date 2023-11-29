@@ -74,8 +74,6 @@ function ProfileForm() {
   ];
 
   const getCurrentToken = useCallback(() => {
-    //console.log('refreshed', isRefTokExist);
-
     if(isRefTokExist) {
       const { token } = refreshToken;
       dispatch(getAccessToken({ token }, TOKEN_URL));
@@ -114,7 +112,6 @@ function ProfileForm() {
   ]);
 
   const handleSubmit = useCallback(() => {
-    console.log(isTokenExpired);
     if(isTokenExpired) {
       getCurrentToken();
     }

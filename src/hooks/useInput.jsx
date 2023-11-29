@@ -15,14 +15,14 @@ function useInput() {
     name: /^[A-Za-zА-Яа-яЁё\s-]{2,30}$/,
     email: /^([A-Za-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})$/,
     password: /^[A-Za-z0-9_-]{8,30}$/,
-    code: /^\d{4}$/
+    token: /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
   };
 
   const errorsData = {
     name: NAME_ERROR_MSG,
     email: EMAIL_ERROR_MSG,
     password: PASSWORD_ERROR_MSG,
-    code: CODE_ERROR_MSG
+    token: CODE_ERROR_MSG
   };
 
   const handleChange = (e) => {

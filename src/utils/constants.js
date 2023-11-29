@@ -50,7 +50,7 @@ const RESPONSE_ERROR_MSG = 'Ошибка при получении данных'
 const NAME_ERROR_MSG = 'Имя должно состоять из букв и быть не короче 2 символов';
 const EMAIL_ERROR_MSG = 'Введите e-mail';
 const PASSWORD_ERROR_MSG = 'Пароль может включать цифры и латиницу, длина - не менее 8 символов';
-const CODE_ERROR_MSG = 'Код может включать только цифры, длина - не менее 4 символов';
+const CODE_ERROR_MSG = 'Введите код в формате xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx, где x - цифра или символ латиницы';
 
 const NAME_PLS = 'Имя';
 const EMAIL_PLS = 'E-mail';

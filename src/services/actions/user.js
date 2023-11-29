@@ -76,8 +76,7 @@ const updateData = (data, alias = '') => async dispatch => {
 const recoverPassword = (data, alias = '') => async dispatch => {
   dispatch(getUserRequest());
   try {
-    const { token } = storage.getToken(REFRESH_TOKEN_KEY);
-    const res = await passwordApi.recoverPassword({ ...data, token }, alias);
+    const res = await passwordApi.recoverPassword(data, alias);
     if (res && res.success) {
       dispatch(getRecoverySuccess());
     } else {
