@@ -15,35 +15,39 @@ class Storage extends React.Component {
     return currDate.getTime();
   };
 
-  _setToken(key, value) {
-    this._storage.setItem(key, value);
+  setStorageItem(key, value) {
+    const bool = typeof value === 'boolean' && value ? 1 : '';
+    this._storage.setItem(key, typeof value !== 'boolean' ? value : bool);
   };
 
-  _removeToken(key) {
+  removeStorageItem(key) {
     this._storage.removeItem(key);
   };
 
-  getToken(key) {
+  getStorageItem(key, isTokenKey = true) {
     const value = this._storage.getItem(key);
-    return key === ACCESS_TOKEN_KEY
-      ? {
-        date: value ? Number(value.split(',')[0]) : null,
-        token: value ? value.split(',')[1] : null
-      }
-      : { token: value };
+    if(isTokenKey) {
+      return key === ACCESS_TOKEN_KEY
+        ? {
+          date: value ? Number(value.split(',')[0]) : null,
+          token: value ? value.split(',')[1] : null
+        }
+        : { token: value };
+    }
+    return value;
   };
 
-  isTokenExist(key) {
-    return Boolean(this.getToken(key).token);
+  isItemExist(key, isTokenKey = true) {
+    return isTokenKey ? Boolean(this.getStorageItem(key).token) : Boolean(this.getStorageItem(key, false));
   };
 
   isTokenExpired() {
-    return this._setCurrDate() - this.getToken(ACCESS_TOKEN_KEY).date > 20 * 60 * 1000;
+    return this._setCurrDate() - this.getStorageItem(ACCESS_TOKEN_KEY).date > 20 * 60 * 1000;
   };
 
   clearStorage() {
-    return this.isTokenExist(ACCESS_TOKEN_KEY) && this.isTokenExist(REFRESH_TOKEN_KEY)
-      ? [ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY].forEach(key => this._removeToken(key))
+    return this.isItemExist(ACCESS_TOKEN_KEY) && this.isItemExist(REFRESH_TOKEN_KEY)
+      ? [ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY].forEach(key => this.removeStorageItem(key))
       : true;
   };
 
@@ -56,7 +60,7 @@ class Storage extends React.Component {
 
     if(this.clearStorage()) {
       Object.keys(data).forEach((key, index) => {
-        this._setToken(key, Object.values(data)[index])
+        this.setStorageItem(key, Object.values(data)[index])
       });
     }
   };

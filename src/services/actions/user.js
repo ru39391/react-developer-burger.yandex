@@ -3,6 +3,7 @@ import {
   AUTH_ALIAS,
   RESET_PASSWORD_ALIAS,
   ACCESS_TOKEN_KEY,
+  IS_PASSWORD_REQ_SENT_KEY,
   UPDATE_ERROR_MSG,
   RESPONSE_ERROR_MSG
 } from '../../utils/constants';
@@ -59,7 +60,7 @@ const getAccessToken = (data, alias = '') => async dispatch => {
 const updateData = (data, alias = '') => async dispatch => {
   dispatch(getUserRequest());
   try {
-    const { token } = storage.getToken(ACCESS_TOKEN_KEY);
+    const { token } = storage.getStorageItem(ACCESS_TOKEN_KEY);
     const res = await api.fetchData({ ...data, jwt: token }, alias);
     if (res && res.success) {
       const { user } = res;
@@ -92,6 +93,7 @@ const signOut = (data, alias = '') => async dispatch => {
     const res = await api.getAccessToken(data, alias);
     if (res && res.success) {
       storage.clearStorage();
+      storage.removeStorageItem(IS_PASSWORD_REQ_SENT_KEY);
       dispatch(resetUserData());
     } else {
       dispatch(getFailed({ errorMsg: RESPONSE_ERROR_MSG }));

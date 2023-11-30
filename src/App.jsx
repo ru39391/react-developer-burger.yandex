@@ -34,7 +34,7 @@ function App() {
     { path: '/', element: <Home /> },
     {
       path: `/${PROFILE_URL}`,
-      element: <ProtectedRoute><Profile /></ProtectedRoute>,
+      element: <Profile />,
       children: [
         {
           index: true,

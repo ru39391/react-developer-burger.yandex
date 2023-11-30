@@ -8,10 +8,10 @@ import storage from '../utils/storage';
 
 function useAuth() {
   return {
-    accessToken: storage.getToken(ACCESS_TOKEN_KEY),
-    refreshToken: storage.getToken(REFRESH_TOKEN_KEY),
-    isAccTokExist: storage.isTokenExist(ACCESS_TOKEN_KEY),
-    isRefTokExist: storage.isTokenExist(REFRESH_TOKEN_KEY),
+    accessToken: storage.getStorageItem(ACCESS_TOKEN_KEY),
+    refreshToken: storage.getStorageItem(REFRESH_TOKEN_KEY),
+    isAccTokExist: storage.isItemExist(ACCESS_TOKEN_KEY),
+    isRefTokExist: storage.isItemExist(REFRESH_TOKEN_KEY),
     isTokenExpired: storage.isTokenExpired()
   };
 }

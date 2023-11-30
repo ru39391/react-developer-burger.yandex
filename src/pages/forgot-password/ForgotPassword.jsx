@@ -12,11 +12,13 @@ import Wrapper from '../../components/wrapper/Wrapper';
 
 import { recoverPassword } from '../../services/actions/user';
 
+import storage from '../../utils/storage';
 import {
   FORGOT_PASSWORD_TITLE,
   EMAIL_PLS,
   LOGIN_URL,
-  RESET_PASSWORD_URL
+  RESET_PASSWORD_URL,
+  IS_PASSWORD_REQ_SENT_KEY
 } from '../../utils/constants';
 
 function ForgotPassword() {
@@ -55,9 +57,11 @@ function ForgotPassword() {
   ]);
 
   const submitRecoveryForm = ({ isRecoverySucceed }) => {
-    if(isRecoverySucceed) {
+    const isRecoveryParamExist = storage.isItemExist(IS_PASSWORD_REQ_SENT_KEY, false) && storage.getStorageItem(IS_PASSWORD_REQ_SENT_KEY, false);
+    if(isRecoverySucceed && !isRecoveryParamExist) {
       reset();
       disableBtn();
+      storage.setStorageItem(IS_PASSWORD_REQ_SENT_KEY, isRecoverySucceed);
       navigate(`/${RESET_PASSWORD_URL}`);
     }
   };

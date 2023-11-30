@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import useInput from '../../hooks/useInput';
 import useSubmitBtn from '../../hooks/useSubmitBtn';
@@ -12,6 +12,9 @@ import Wrapper from '../../components/wrapper/Wrapper';
 
 import { recoverPassword } from '../../services/actions/user';
 
+import storage from '../../utils/storage';
+import { IS_PASSWORD_REQ_SENT_KEY } from '../../utils/constants';
+
 import {
   FORGOT_PASSWORD_TITLE,
   FORGOT_PASSWORD_URL,
@@ -22,7 +25,6 @@ import {
 function ResetPassword() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isRecoverySucceed } = useSelector(state => state.user);
   const {
     values,
     validValues,
@@ -69,13 +71,10 @@ function ResetPassword() {
   };
 
   useEffect(() => {
-    // переделать
-    if(!isRecoverySucceed) {
+    if(!(storage.isItemExist(IS_PASSWORD_REQ_SENT_KEY, false) && storage.getStorageItem(IS_PASSWORD_REQ_SENT_KEY, false))) {
       navigate(`/${FORGOT_PASSWORD_URL}`);
     }
-  }, [
-    isRecoverySucceed
-  ]);
+  }, []);
 
   return (
     <Wrapper title="" isFormHolder={true}>

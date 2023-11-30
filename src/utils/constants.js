@@ -69,6 +69,8 @@ const PRICE_KEY = 'price';
 const TOP_KEY = 'top';
 const BOTTOM_KEY = 'bottom';
 
+const IS_LOGGED_KEY = 'isLogged';
+const IS_PASSWORD_REQ_SENT_KEY = 'isPasswordReqSent';
 const ACCESS_TOKEN_KEY = 'accessToken';
 const REFRESH_TOKEN_KEY = 'refreshToken';
 
@@ -142,6 +144,8 @@ export {
   TOP_KEY,
   BOTTOM_KEY,
 
+  IS_LOGGED_KEY,
+  IS_PASSWORD_REQ_SENT_KEY,
   ACCESS_TOKEN_KEY,
   REFRESH_TOKEN_KEY
 };
