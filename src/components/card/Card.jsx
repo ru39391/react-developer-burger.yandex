@@ -4,7 +4,7 @@ import {
   useEffect,
   useCallback
 } from 'react';
-import { useLocation, useNavigate, NavLink } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import PropTypes from 'prop-types';
@@ -38,14 +38,22 @@ function Card({
 
   const handleCardData = useCallback(
     () => {
-      /*
       dispatch(setItemDetails({
         name,
         image: picture,
         nutritional: handleProdData(nutritional)
       }));
-      */
-      navigate(`/${INGREDIENTS_URL}/${data._id}`, { replace: true });
+      navigate(`/${INGREDIENTS_URL}/${data._id}`, {
+        replace: true,
+        state: {
+          layout: location,
+          item: {
+            ...data,
+            image: picture,
+            nutritional: handleProdData(nutritional)
+          }
+        }
+      });
     },
     [
       data,

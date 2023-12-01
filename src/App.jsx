@@ -1,5 +1,11 @@
-import { useEffect } from 'react';
-import { useRoutes, useLocation } from 'react-router-dom';
+import React from 'react';
+import {
+  useLocation,
+  useNavigate,
+  Outlet,
+  Routes,
+  Route
+} from 'react-router-dom';
 
 import Home from './pages/home/Home';
 import Orders from './pages/orders/Orders';
@@ -15,7 +21,9 @@ import IngredientsList from './pages/ingredients-list/IngredientsList';
 import IngredientsItem from './pages/ingredients-item/IngredientsItem';
 import NotFound from './pages/not-found/NotFound';
 
+import Modal from './components/modal/Modal';
 import ProtectedRoute from './components/protected-route/ProtectedRoute';
+import IngredientDetails from './components/ingredient-details/IngredientDetails';
 
 import AppHeader from './components/app-header/AppHeader';
 
@@ -31,62 +39,42 @@ import {
 
 function App() {
   const location = useLocation();
-  const bg = location.state && location.state.bg;
-  const appRoutes = useRoutes([
-    { path: '/', element: <Home /> },
-    {
-      path: `/${PROFILE_URL}`,
-      element: <ProtectedRoute isProfile={true}><Profile /></ProtectedRoute>,
-      children: [
-        {
-          index: true,
-          element: <ProfileForm />
-        },
-        {
-          path: ORDERS_URL,
-          element: <Orders />,
-          children: [
-            {
-              path: `:id`,
-              element: <OrderItem />
-            }
-          ]
-        }
-      ]
-    },
-    { path: `/${LOGIN_URL}`, element: <ProtectedRoute><Login /></ProtectedRoute> },
-    { path: `/${REGISTER_URL}`, element: <ProtectedRoute><Register /></ProtectedRoute> },
-    { path: `/${FORGOT_PASSWORD_URL}`, element: <ProtectedRoute><ForgotPassword /></ProtectedRoute> },
-    { path: `/${RESET_PASSWORD_URL}`, element: <ProtectedRoute><ResetPassword /></ProtectedRoute> },
-    {
-      path: `/${INGREDIENTS_URL}`,
-      element: <Ingredients />,
-      children: [
-        {
-          index: true,
-          element: <IngredientsList />
-        },
-        {
-          path: `:id`,
-          element: <IngredientsItem />
-        }
-      ]
-    },
-    { path: `*`, element: <NotFound /> }
-  ]);
-  //, { location: location || bg }
+  const navigate = useNavigate();
+  const layout = location.state && location.state.layout;
 
-  useEffect(
-    () => {
-      console.log(location);
-    },
-    [location]
-  );
+  function closeModal() {
+    navigate(`/`, { replace: true, state: null });
+  }
 
   return (
     <div className="page">
       <AppHeader />
-      {appRoutes}
+      <Routes location={layout || location}>
+        <Route path='/' element={<Home />} />
+        <Route path={`/${PROFILE_URL}`} element={<ProtectedRoute isProfile={true}><Profile /></ProtectedRoute>}>
+          <Route index element={<ProfileForm />} />
+          <Route path={ORDERS_URL} element={<Orders />}>
+            <Route path=':id' element={<OrderItem />} />
+          </Route>
+        </Route>
+        <Route path={`/${LOGIN_URL}`} element={<ProtectedRoute><Login /></ProtectedRoute>} />
+        <Route path={`/${REGISTER_URL}`} element={<ProtectedRoute><Register /></ProtectedRoute>} />
+        <Route path={`/${FORGOT_PASSWORD_URL}`} element={<ProtectedRoute><ForgotPassword /></ProtectedRoute>} />
+        <Route path={`/${RESET_PASSWORD_URL}`} element={<ProtectedRoute><ResetPassword /></ProtectedRoute>} />
+        <Route path={`/${INGREDIENTS_URL}`} element={<Ingredients />}>
+          <Route index element={<IngredientsList />} />
+          <Route path=':id' element={<IngredientsItem />} />
+        </Route>
+        <Route path='*' element={<NotFound />} />
+      </Routes>
+      {layout && (
+        <Routes>
+          <Route path={`/${INGREDIENTS_URL}`} element={<Outlet />}>
+            <Route path=':id' element={<Modal isModalOpen={Boolean(layout)} closeModal={closeModal}><IngredientDetails {...location.state.item} /></Modal>} />
+          </Route>
+        </Routes>
+        )
+      }
     </div>
   );
 }

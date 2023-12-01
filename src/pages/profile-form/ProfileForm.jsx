@@ -85,7 +85,6 @@ function ProfileForm() {
   ]);
 
   const getUserData = useCallback(() => {
-    console.log('isTokenExpired: ', isTokenExpired);
     if(isAccTokExist) {
       const { token: jwt } = accessToken;
       isTokenExpired
