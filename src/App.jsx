@@ -73,12 +73,12 @@ function App() {
       ]
     },
     { path: `*`, element: <NotFound /> }
-  ]);
+  ], { location });
 
   useEffect(() => {
     //['accessToken', 'refreshToken'].forEach(key => localStorage.removeItem(key));
 
-    console.log(location.state);
+    console.log(location);
     console.log('____________App.jsx____________');
     console.log('refreshToken: ', localStorage.getItem('refreshToken'));
     console.log('accessToken: ', localStorage.getItem('accessToken'));
@@ -92,7 +92,6 @@ function App() {
     <div className="page">
       <AppHeader />
       {appRoutes}
-      {location.state && <p>{location.state.isModalOpen && '111'}</p>}
     </div>
   );
 }

@@ -12,12 +12,7 @@ function IngredientsItem() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { item } = useSelector(state => state.products);
-  const prodData = useProdData([
-    item.calories ? item.calories : 0,
-    item.proteins ? item.proteins : 0,
-    item.fat ? item.fat : 0,
-    item.carbohydrates ? item.carbohydrates : 0
-  ]);
+  const { handleProdData } = useProdData();
 
   useEffect(
     () => {
@@ -30,7 +25,12 @@ function IngredientsItem() {
     <IngredientDetails
       {...item}
       image={item.image_large}
-      nutritional={prodData}
+      nutritional={handleProdData([
+        item ? item.calories : 0,
+        item ? item.proteins : 0,
+        item ? item.fat : 0,
+        item ? item.carbohydrates : 0
+      ])}
       isCurrentPage={true}
     />
   )

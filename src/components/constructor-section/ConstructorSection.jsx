@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import useModal from '../../hooks/useModal';
+import useProdData from '../../hooks/useProdData';
 
 import Card from '../card/Card';
 import Modal from '../modal/Modal';
@@ -14,15 +16,36 @@ import { productPropTypes } from '../../utils/proptypes';
 import { setItemDetails } from '../../services/slices/products-slice';
 
 function ConstructorSection({ data }) {
+  const { location } = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { item: cardDetails } = useSelector(state => state.products);
+  const { items, item: cardDetails } = useSelector(state => state.products);
   const {
     isModalVisible,
     setModalVisibility
   } = useModal();
+  const { handleProdData } = useProdData();
 
   function closeModal() {
     dispatch(setItemDetails({}));
+    navigate(`/`, { replace: true });
+  }
+
+  function showModal() {
+    const pathNameArr = location.pathname.split('/');
+    const item = pathNameArr.length > 2 ? items.find(({ _id }) => _id === pathNameArr[pathNameArr.length - 1]) : null;
+    if(item) {
+      dispatch(setItemDetails({
+        ...item,
+        image: item ? item.image_large : '',
+        nutritional: handleProdData([
+          item ? item.calories : 0,
+          item ? item.proteins : 0,
+          item ? item.fat : 0,
+          item ? item.carbohydrates : 0
+        ])
+      }));
+    };
   }
 
   useEffect(
@@ -30,6 +53,13 @@ function ConstructorSection({ data }) {
       setModalVisibility(Boolean(Object.values(cardDetails).length));
     },
     [cardDetails]
+  );
+
+  useEffect(
+    () => {
+      showModal();
+    },
+    [location]
   );
 
   return (
