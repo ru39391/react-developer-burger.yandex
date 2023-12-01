@@ -20,7 +20,6 @@ import ProtectedRoute from './components/protected-route/ProtectedRoute';
 import AppHeader from './components/app-header/AppHeader';
 
 import {
-  DEFAULT_DOC_TITLE,
   ORDERS_URL,
   PROFILE_URL,
   LOGIN_URL,
@@ -32,6 +31,7 @@ import {
 
 function App() {
   const location = useLocation();
+  const bg = location.state && location.state.bg;
   const appRoutes = useRoutes([
     { path: '/', element: <Home /> },
     {
@@ -73,20 +73,15 @@ function App() {
       ]
     },
     { path: `*`, element: <NotFound /> }
-  ], { location });
-
-  useEffect(() => {
-    //['accessToken', 'refreshToken'].forEach(key => localStorage.removeItem(key));
-
-    console.log(location);
-    console.log('____________App.jsx____________');
-    console.log('refreshToken: ', localStorage.getItem('refreshToken'));
-    console.log('accessToken: ', localStorage.getItem('accessToken'));
-    console.log('_____________________________');
-    document.title = DEFAULT_DOC_TITLE;
-  }, [
-    localStorage.getItem('refreshToken')
   ]);
+  //, { location: location || bg }
+
+  useEffect(
+    () => {
+      console.log(location);
+    },
+    [location]
+  );
 
   return (
     <div className="page">

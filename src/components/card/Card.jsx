@@ -45,9 +45,10 @@ function Card({
         nutritional: handleProdData(nutritional)
       }));
       */
-      //navigate(`/`, { replace: true, state: { isModalOpen: true } });
+      navigate(`/${INGREDIENTS_URL}/${data._id}`, { replace: true });
     },
     [
+      data,
       name,
       picture,
       nutritional,
@@ -68,7 +69,7 @@ function Card({
   }, [orderList]);
 
   return (
-    <NavLink to={`/${INGREDIENTS_URL}/${data._id}`} className={`${styles.item} ${isClassMod && styles.item_dragged}`} ref={cardRef} onClick={handleCardData}>
+    <div className={`${styles.item} ${isClassMod && styles.item_dragged}`} ref={cardRef} onClick={handleCardData}>
       {Boolean(counter) && <Counter count={counter} size="small" />}
       <img src={thumbnail} alt={name} />
       <div className={`${styles.meta} text text_type_digits-default`}>
@@ -76,7 +77,7 @@ function Card({
         <CurrencyIcon type="primary" />
       </div>
       <div className={`${styles.title} text text_type_main-default`}>{name}</div>
-    </NavLink>
+    </div>
   );
 }
 

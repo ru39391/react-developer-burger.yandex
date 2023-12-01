@@ -16,7 +16,7 @@ import { productPropTypes } from '../../utils/proptypes';
 import { setItemDetails } from '../../services/slices/products-slice';
 
 function ConstructorSection({ data }) {
-  const { location } = useLocation();
+  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { items, item: cardDetails } = useSelector(state => state.products);
@@ -58,6 +58,7 @@ function ConstructorSection({ data }) {
   useEffect(
     () => {
       showModal();
+      console.log(location);
     },
     [location]
   );

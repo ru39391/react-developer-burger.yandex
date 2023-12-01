@@ -26,10 +26,10 @@ function IngredientsItem() {
       {...item}
       image={item.image_large}
       nutritional={handleProdData([
-        item ? item.calories : 0,
-        item ? item.proteins : 0,
-        item ? item.fat : 0,
-        item ? item.carbohydrates : 0
+        item.calories ? item.calories : 0,
+        item.proteins ? item.proteins : 0,
+        item.fat ? item.fat : 0,
+        item.carbohydrates ? item.carbohydrates : 0
       ])}
       isCurrentPage={true}
     />
