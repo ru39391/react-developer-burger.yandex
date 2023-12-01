@@ -6,6 +6,9 @@
 
 .title {
   line-height: 1.8;
+}
+
+.title_as_fs {
   align-self: flex-start;
 }
 

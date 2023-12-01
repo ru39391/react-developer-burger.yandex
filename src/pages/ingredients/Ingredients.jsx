@@ -4,7 +4,7 @@ import Wrapper from '../../components/wrapper/Wrapper';
 
 function Ingredients() {
   return (
-    <Wrapper title="Ингредиенты"><Outlet /></Wrapper>
+    <Wrapper title=""><Outlet /></Wrapper>
   )
 };
 

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useRoutes } from 'react-router-dom';
+import { useRoutes, useLocation } from 'react-router-dom';
 
 import Home from './pages/home/Home';
 import Orders from './pages/orders/Orders';
@@ -11,6 +11,7 @@ import Register from './pages/register/Register';
 import ForgotPassword from './pages/forgot-password/ForgotPassword';
 import ResetPassword from './pages/reset-password/ResetPassword'
 import Ingredients from './pages/ingredients/Ingredients';
+import IngredientsList from './pages/ingredients-list/IngredientsList';
 import IngredientsItem from './pages/ingredients-item/IngredientsItem';
 import NotFound from './pages/not-found/NotFound';
 
@@ -30,6 +31,7 @@ import {
 } from './utils/constants';
 
 function App() {
+  const location = useLocation();
   const appRoutes = useRoutes([
     { path: '/', element: <Home /> },
     {
@@ -61,6 +63,10 @@ function App() {
       element: <Ingredients />,
       children: [
         {
+          index: true,
+          element: <IngredientsList />
+        },
+        {
           path: `:id`,
           element: <IngredientsItem />
         }
@@ -72,6 +78,7 @@ function App() {
   useEffect(() => {
     //['accessToken', 'refreshToken'].forEach(key => localStorage.removeItem(key));
 
+    console.log(location.state);
     console.log('____________App.jsx____________');
     console.log('refreshToken: ', localStorage.getItem('refreshToken'));
     console.log('accessToken: ', localStorage.getItem('accessToken'));
@@ -85,6 +92,7 @@ function App() {
     <div className="page">
       <AppHeader />
       {appRoutes}
+      {location.state && <p>{location.state.isModalOpen && '111'}</p>}
     </div>
   );
 }

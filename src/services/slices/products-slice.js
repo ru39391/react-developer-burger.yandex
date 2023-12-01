@@ -24,6 +24,12 @@ const productsSlice = createSlice({
       itemsRequest: false,
       itemsFailed: false
     }),
+    fetchItemSuccess: (state, action) => ({
+      ...state,
+      item: action.payload.item,
+      itemsRequest: false,
+      itemsFailed: false
+    }),
     getItemsFailed: (state, action) => ({
       ...state,
       itemsRequest: false,
@@ -40,6 +46,7 @@ const productsSlice = createSlice({
 export const {
   getItemsRequest,
   getItemsSuccess,
+  fetchItemSuccess,
   getItemsFailed,
   setItemDetails
 } = productsSlice.actions

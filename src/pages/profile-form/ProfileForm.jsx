@@ -73,7 +73,6 @@ function ProfileForm() {
     }
   ];
 
-  // перенести в хук
   const getCurrentToken = useCallback(() => {
     if(isRefTokExist) {
       const { token } = refreshToken;
@@ -86,6 +85,7 @@ function ProfileForm() {
   ]);
 
   const getUserData = useCallback(() => {
+    console.log('isTokenExpired: ', isTokenExpired);
     if(isAccTokExist) {
       const { token: jwt } = accessToken;
       isTokenExpired
@@ -95,6 +95,7 @@ function ProfileForm() {
       setModalVisibility(true);
     }
   }, [
+    isTokenExpired,
     isAccTokExist,
     dispatch
   ]);

@@ -5,7 +5,8 @@ import {
 import {
   getItemsRequest,
   getItemsSuccess,
-  getItemsFailed
+  getItemsFailed,
+  fetchItemSuccess
 } from '../slices/products-slice';
 import Api from '../../utils/api';
 
@@ -25,6 +26,21 @@ const getItems = () => async dispatch => {
   }
 };
 
+const fetchItem = (id) => async dispatch => {
+  dispatch(getItemsRequest())
+  try {
+    const res = await api.getData();
+    if (res && res.success) {
+      dispatch(fetchItemSuccess({ item: res.data.find(({ _id }) => _id === id) }))
+    } else {
+      dispatch(getItemsFailed({ errorMsg: RESPONSE_ERROR_MSG }))
+    }
+  } catch (err) {
+    dispatch(getItemsFailed({ errorMsg: err }))
+  }
+};
+
 export {
-  getItems
+  getItems,
+  fetchItem
 };
