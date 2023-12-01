@@ -1,20 +1,23 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+
+import useAuth from '../../hooks/useAuth';
 
 import PropTypes from 'prop-types';
+import { LOGIN_URL, PROFILE_URL } from '../../utils/constants';
 
-import { LOGIN_URL } from '../../utils/constants';
+function ProtectedRoute({ children, isProfile }) {
+  const { isLogged } = useAuth();
 
-// настроить корректное обновление компонента при перезагрузке страницы
-function ProtectedRoute({ children }) {
-  const { isLogged } = useSelector(state => state.user);
-
-  return isLogged ? children : <Navigate to={`/${LOGIN_URL}`} replace />
+  if(isProfile) {
+    return isLogged ? children : <Navigate to={`/${LOGIN_URL}`} replace />
+  }
+  return !isLogged ? children : <Navigate to={`/${PROFILE_URL}`} replace />
 };
 
 ProtectedRoute.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  isProfile: PropTypes.bool
 };
 
 export default ProtectedRoute;

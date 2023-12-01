@@ -34,7 +34,7 @@ function App() {
     { path: '/', element: <Home /> },
     {
       path: `/${PROFILE_URL}`,
-      element: <Profile />,
+      element: <ProtectedRoute isProfile={true}><Profile /></ProtectedRoute>,
       children: [
         {
           index: true,
@@ -52,10 +52,10 @@ function App() {
         }
       ]
     },
-    { path: `/${LOGIN_URL}`, element: <Login /> },
-    { path: `/${REGISTER_URL}`, element: <Register /> },
-    { path: `/${FORGOT_PASSWORD_URL}`, element: <ForgotPassword /> },
-    { path: `/${RESET_PASSWORD_URL}`, element: <ResetPassword /> },
+    { path: `/${LOGIN_URL}`, element: <ProtectedRoute><Login /></ProtectedRoute> },
+    { path: `/${REGISTER_URL}`, element: <ProtectedRoute><Register /></ProtectedRoute> },
+    { path: `/${FORGOT_PASSWORD_URL}`, element: <ProtectedRoute><ForgotPassword /></ProtectedRoute> },
+    { path: `/${RESET_PASSWORD_URL}`, element: <ProtectedRoute><ResetPassword /></ProtectedRoute> },
     {
       path: `/${INGREDIENTS_URL}`,
       element: <Ingredients />,

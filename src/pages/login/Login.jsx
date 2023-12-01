@@ -12,6 +12,7 @@ import Wrapper from '../../components/wrapper/Wrapper';
 
 import { fetchData } from '../../services/actions/user';
 
+import storage from '../../utils/storage';
 import {
   LOGIN_TITLE,
   EMAIL_PLS,
@@ -20,6 +21,7 @@ import {
   REGISTER_URL,
   FORGOT_PASSWORD_URL,
   PROFILE_URL,
+  IS_LOGGED_KEY
 } from '../../utils/constants';
 
 function Login() {
@@ -65,10 +67,11 @@ function Login() {
     dispatch
   ]);
 
-  const signIn = (data) => {
-    if(data.isLogged) {
+  const signIn = ({ isLogged }) => {
+    if(isLogged) {
       reset();
       disableBtn();
+      storage.setStorageItem(IS_LOGGED_KEY, isLogged);
       navigate(`/${PROFILE_URL}`);
     }
   };

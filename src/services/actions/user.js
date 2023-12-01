@@ -3,6 +3,7 @@ import {
   AUTH_ALIAS,
   RESET_PASSWORD_ALIAS,
   ACCESS_TOKEN_KEY,
+  IS_LOGGED_KEY,
   IS_PASSWORD_REQ_SENT_KEY,
   UPDATE_ERROR_MSG,
   RESPONSE_ERROR_MSG
@@ -93,7 +94,7 @@ const signOut = (data, alias = '') => async dispatch => {
     const res = await api.getAccessToken(data, alias);
     if (res && res.success) {
       storage.clearStorage();
-      storage.removeStorageItem(IS_PASSWORD_REQ_SENT_KEY);
+      [IS_LOGGED_KEY, IS_PASSWORD_REQ_SENT_KEY].forEach(item => storage.removeStorageItem(item));
       dispatch(resetUserData());
     } else {
       dispatch(getFailed({ errorMsg: RESPONSE_ERROR_MSG }));

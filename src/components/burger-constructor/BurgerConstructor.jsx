@@ -1,8 +1,4 @@
-import {
-  useState,
-  useEffect,
-  useCallback
-} from 'react';
+import { useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
@@ -11,6 +7,7 @@ import {
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import useAuth from '../../hooks/useAuth';
 import useModal from '../../hooks/useModal';
 
 import Modal from '../modal/Modal';
@@ -38,7 +35,7 @@ function BurgerConstructor() {
     orderList,
     summ
   } = useSelector(state => state.order);
-  const { isLogged } = useSelector(state => state.user);
+  const { isLogged } = useAuth();
   const {
     isModalVisible,
     setModalVisibility

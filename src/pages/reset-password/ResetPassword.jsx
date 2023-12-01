@@ -2,6 +2,7 @@ import { useCallback, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
+import useAuth from '../../hooks/useAuth'
 import useInput from '../../hooks/useInput';
 import useSubmitBtn from '../../hooks/useSubmitBtn';
 
@@ -11,9 +12,6 @@ import FormFooter from '../../components/form-footer/FormFooter';
 import Wrapper from '../../components/wrapper/Wrapper';
 
 import { recoverPassword } from '../../services/actions/user';
-
-import storage from '../../utils/storage';
-import { IS_PASSWORD_REQ_SENT_KEY } from '../../utils/constants';
 
 import {
   FORGOT_PASSWORD_TITLE,
@@ -32,6 +30,7 @@ function ResetPassword() {
     handleChange,
     reset
   } = useInput();
+  const { isPasswordReqSent } = useAuth();
 
   const fieldsData = [
     {
@@ -71,7 +70,7 @@ function ResetPassword() {
   };
 
   useEffect(() => {
-    if(!(storage.isItemExist(IS_PASSWORD_REQ_SENT_KEY, false) && storage.getStorageItem(IS_PASSWORD_REQ_SENT_KEY, false))) {
+    if(!isPasswordReqSent) {
       navigate(`/${FORGOT_PASSWORD_URL}`);
     }
   }, []);

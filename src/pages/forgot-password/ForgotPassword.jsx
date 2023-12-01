@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
+import useAuth from '../../hooks/useAuth';
 import useInput from '../../hooks/useInput';
 import useSubmitBtn from '../../hooks/useSubmitBtn';
 
@@ -31,6 +32,7 @@ function ForgotPassword() {
     handleChange,
     reset
   } = useInput();
+  const { isPasswordReqSent } = useAuth();
 
   const fieldsData = [
     {
@@ -57,8 +59,7 @@ function ForgotPassword() {
   ]);
 
   const submitRecoveryForm = ({ isRecoverySucceed }) => {
-    const isRecoveryParamExist = storage.isItemExist(IS_PASSWORD_REQ_SENT_KEY, false) && storage.getStorageItem(IS_PASSWORD_REQ_SENT_KEY, false);
-    if(isRecoverySucceed && !isRecoveryParamExist) {
+    if(isRecoverySucceed && !isPasswordReqSent) {
       reset();
       disableBtn();
       storage.setStorageItem(IS_PASSWORD_REQ_SENT_KEY, isRecoverySucceed);
