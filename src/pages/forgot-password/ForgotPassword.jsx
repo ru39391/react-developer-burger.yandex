@@ -63,7 +63,7 @@ function ForgotPassword() {
       reset();
       disableBtn();
       storage.setStorageItem(IS_PASSWORD_REQ_SENT_KEY, isRecoverySucceed);
-      navigate(`/${RESET_PASSWORD_URL}`);
+      navigate(`/${RESET_PASSWORD_URL}`, { replace: true });
     }
   };
 

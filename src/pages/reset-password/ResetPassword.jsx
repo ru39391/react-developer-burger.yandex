@@ -71,7 +71,7 @@ function ResetPassword() {
 
   useEffect(() => {
     if(!isPasswordReqSent) {
-      navigate(`/${FORGOT_PASSWORD_URL}`);
+      navigate(`/${FORGOT_PASSWORD_URL}`, { replace: false });
     }
   }, []);
 

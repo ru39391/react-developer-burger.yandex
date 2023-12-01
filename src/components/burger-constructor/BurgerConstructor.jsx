@@ -77,7 +77,7 @@ function BurgerConstructor() {
         setModalVisibility(true);
         dispatch(checkout(orderList));
       } else {
-        navigate(`/${LOGIN_URL}`);
+        navigate(`/${LOGIN_URL}`, { replace: false });
       }
     },
     [

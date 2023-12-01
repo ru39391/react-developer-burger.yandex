@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import useInput from '../../hooks/useInput';
@@ -20,11 +20,11 @@ import {
   LOGIN_URL,
   REGISTER_URL,
   FORGOT_PASSWORD_URL,
-  PROFILE_URL,
   IS_LOGGED_KEY
 } from '../../utils/constants';
 
 function Login() {
+  const { state } = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
@@ -34,6 +34,7 @@ function Login() {
     handleChange,
     reset
   } = useInput();
+  const targetUrl = state && state.prevUrl;
 
   const fieldsData = [
     {
@@ -72,7 +73,7 @@ function Login() {
       reset();
       disableBtn();
       storage.setStorageItem(IS_LOGGED_KEY, isLogged);
-      navigate(`/${PROFILE_URL}`);
+      navigate(`${targetUrl ? state.prevUrl : '/'}`, { replace: false });
     }
   };
 
