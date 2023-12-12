@@ -1,8 +1,5 @@
-import {
-  useState,
-  useEffect,
-  useCallback
-} from 'react';
+import { useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import {
@@ -10,35 +7,39 @@ import {
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import useAuth from '../../hooks/useAuth';
+import useModal from '../../hooks/useModal';
+
 import Modal from '../modal/Modal';
 import Ingredient from '../ingredient/Ingredient';
 import OrderDetails from '../order-details/OrderDetails';
 
 import styles from './BurgerConstructor.module.css';
 
-import { BUN_PRODUCT_NAME } from '../../utils/constants';
-import { checkout } from '../../services/actions';
+import { BUN_PRODUCT_NAME, LOGIN_URL } from '../../utils/constants';
+import { checkout } from '../../services/actions/order';
 import {
   addItem,
   addBunItem,
   removeItem,
   setOrderData,
   updateOrderList
-} from '../../services/reducers/order-data';
+} from '../../services/slices/order-slice';
 
 function BurgerConstructor() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
     bunItems: buns,
     mainItems: ingredients,
     orderList,
     summ
-  } = useSelector(state => state.orderData);
-  const [isCheckoutVisible, setCheckoutVisibility] = useState(false);
-
-  function closeModal() {
-    setCheckoutVisibility(false);
-  }
+  } = useSelector(state => state.order);
+  const { isLogged } = useAuth();
+  const {
+    isModalVisible,
+    setModalVisibility
+  } = useModal();
 
   const removeIngredient = useCallback(
     (item) => {
@@ -72,10 +73,15 @@ function BurgerConstructor() {
 
   const checkoutCart = useCallback(
     () => {
-      setCheckoutVisibility(true);
-      dispatch(checkout(orderList));
+      if(isLogged) {
+        setModalVisibility(true);
+        dispatch(checkout(orderList));
+      } else {
+        navigate(`/${LOGIN_URL}`, { replace: false });
+      }
     },
     [
+      isLogged,
       orderList,
       dispatch
     ]
@@ -146,7 +152,7 @@ function BurgerConstructor() {
           </div>
         )}
       </div>
-      {isCheckoutVisible && <Modal isModalOpen={isCheckoutVisible} closeModal={closeModal}><OrderDetails /></Modal>}
+      {isModalVisible && <Modal isModalOpen={isModalVisible} closeModal={() => setModalVisibility(false)}><OrderDetails /></Modal>}
     </>
   );
 }

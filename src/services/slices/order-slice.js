@@ -19,8 +19,8 @@ const initialState = {
   errorMsg: '',
 };
 
-const orderDataSlice = createSlice({
-  name: 'orderData',
+const orderSlice = createSlice({
+  name: 'order',
   initialState,
   reducers: {
     getOrderRequest: (state, action) => ({
@@ -84,5 +84,5 @@ export const {
   removeItem,
   updateOrderList,
   setOrderData
-} = orderDataSlice.actions
-export default orderDataSlice.reducer;
+} = orderSlice.actions
+export default orderSlice.reducer;

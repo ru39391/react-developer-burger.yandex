@@ -10,8 +10,8 @@ const initialState = {
   errorMsg: '',
 };
 
-const productDataSlice = createSlice({
-  name: 'productData',
+const productsSlice = createSlice({
+  name: 'products',
   initialState,
   reducers: {
     getItemsRequest: (state, action) => ({
@@ -21,6 +21,12 @@ const productDataSlice = createSlice({
     getItemsSuccess: (state, action) => ({
       ...state,
       items: action.payload.data,
+      itemsRequest: false,
+      itemsFailed: false
+    }),
+    fetchItemSuccess: (state, action) => ({
+      ...state,
+      item: action.payload.item,
       itemsRequest: false,
       itemsFailed: false
     }),
@@ -40,7 +46,8 @@ const productDataSlice = createSlice({
 export const {
   getItemsRequest,
   getItemsSuccess,
+  fetchItemSuccess,
   getItemsFailed,
   setItemDetails
-} = productDataSlice.actions
-export default productDataSlice.reducer;
+} = productsSlice.actions
+export default productsSlice.reducer;

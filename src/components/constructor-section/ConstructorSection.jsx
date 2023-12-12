@@ -1,28 +1,22 @@
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import useModal from '../../hooks/useModal';
+
 import Card from '../card/Card';
-import Modal from '../modal/Modal';
-import IngredientDetails from '../ingredient-details/IngredientDetails';
 
 import styles from './ConstructorSection.module.css';
 
 import { productPropTypes } from '../../utils/proptypes';
-import { setItemDetails } from '../../services/reducers/products-data';
 
 function ConstructorSection({ data }) {
-  const dispatch = useDispatch();
-  const { item: cardDetails } = useSelector(state => state.productData);
-  const [isCardDetailsVisible, setCardDetailsVisibility] = useState(false);
-
-  function closeModal() {
-    dispatch(setItemDetails({}));
-  }
+  const { item: cardDetails } = useSelector(state => state.products);
+  const { setModalVisibility } = useModal();
 
   useEffect(
     () => {
-      setCardDetailsVisibility(Boolean(Object.values(cardDetails).length));
+      setModalVisibility(Boolean(Object.values(cardDetails).length));
     },
     [cardDetails]
   );
@@ -46,7 +40,6 @@ function ConstructorSection({ data }) {
           />
         ))}
       </div>
-      {isCardDetailsVisible && <Modal isModalOpen={isCardDetailsVisible} closeModal={closeModal}><IngredientDetails {...cardDetails} /></Modal>}
     </>
   );
 }

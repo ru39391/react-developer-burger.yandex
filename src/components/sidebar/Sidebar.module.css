@@ -1,0 +1,21 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.link {
+  cursor: pointer;
+  border: 0;
+  background: none;
+  text-align: left;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #fff;
+  transition: all .3s ease;
+}
+
+.footer {
+  opacity: .4;
+}

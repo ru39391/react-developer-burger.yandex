@@ -7,7 +7,7 @@ import {
 class Api extends React.Component {
   constructor(path) {
     super();
-    this._path = path;
+    this._path = `${API_URL}${path}`;
   }
 
   _setHeaders() {
@@ -25,14 +25,14 @@ class Api extends React.Component {
   }
 
   getData() {
-    return fetch(`${API_URL}${this._path}`, {
+    return fetch(this._path, {
       headers: this._setHeaders()
     })
       .then((res) => {return this._checkResponse(res, RESPONSE_ERROR_MSG)});
   }
 
   checkout(idsArr) {
-    return fetch(`${API_URL}${this._path}`, {
+    return fetch(this._path, {
       method: 'POST',
       headers: this._setHeaders(),
       body: JSON.stringify({

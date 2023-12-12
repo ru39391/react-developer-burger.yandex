@@ -19,3 +19,13 @@
   display: flex;
   flex-direction: column;
 }
+
+.ai_center {
+  align-items: center;
+}
+
+.type_grid {
+  gap: 0 60px;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+}

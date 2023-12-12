@@ -1,12 +1,13 @@
 import React from "react";
+import { Outlet } from 'react-router-dom';
 import Wrapper from "../../components/wrapper/Wrapper";
-
-import { PROFILE_TITLE, UNDER_CONSTRUCTION_TEXT } from "../../utils/constants";
+import Sidebar from "../../components/sidebar/Sidebar";
 
 function Profile() {
   return (
-    <Wrapper title={PROFILE_TITLE}>
-      <p className="text text_type_main-default">{UNDER_CONSTRUCTION_TEXT}</p>
+    <Wrapper title="" isGrid={true}>
+      <Sidebar />
+      <Outlet />
     </Wrapper>
   );
 }

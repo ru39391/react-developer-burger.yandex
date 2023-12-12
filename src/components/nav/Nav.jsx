@@ -9,6 +9,7 @@ import styles from './Nav.module.css';
 import {
   CONSTRUCTOR_TITLE,
   ORDERS_TITLE,
+  PROFILE_URL,
   ORDERS_URL
 } from '../../utils/constants';
 
@@ -20,7 +21,7 @@ function Nav() {
       icon: <BurgerIcon />
     },
     {
-      url: ORDERS_URL,
+      url: `${PROFILE_URL}/${ORDERS_URL}`,
       title: ORDERS_TITLE,
       icon: <ListIcon />
     }

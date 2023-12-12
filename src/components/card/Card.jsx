@@ -4,6 +4,7 @@ import {
   useEffect,
   useCallback
 } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import PropTypes from 'prop-types';
@@ -14,15 +15,11 @@ import {
 
 import styles from './Card.module.css';
 
+import useProdData from '../../hooks/useProdData';
+
 import { productPropTypes } from '../../utils/proptypes';
-import {
-  ID_KEY,
-  CALORIES_CAPTION,
-  PROTEINS_CAPTION,
-  FAT_CAPTION,
-  CARBOHYDRATES_CAPTION
-} from '../../utils/constants';
-import { setItemDetails } from '../../services/reducers/products-data';
+import { INGREDIENTS_URL, ID_KEY } from '../../utils/constants';
+import { setItemDetails } from '../../services/slices/products-slice';
 
 function Card({
   data,
@@ -32,29 +29,34 @@ function Card({
   price,
   nutritional
 }) {
+  const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { orderList } = useSelector(state => state.orderData);
+  const { orderList } = useSelector(state => state.order);
   const [counter, setCounter] = useState(0);
-
-  const captionsArr = [
-    CALORIES_CAPTION,
-    PROTEINS_CAPTION,
-    FAT_CAPTION,
-    CARBOHYDRATES_CAPTION
-  ];
+  const { handleProdData } = useProdData();
 
   const handleCardData = useCallback(
     () => {
       dispatch(setItemDetails({
         name,
         image: picture,
-        nutritional: nutritional.map((value, index) => ({
-          name: captionsArr[index],
-          value
-        }))
+        nutritional: handleProdData(nutritional)
       }));
+      navigate(`/${INGREDIENTS_URL}/${data._id}`, {
+        replace: true,
+        state: {
+          layout: location,
+          item: {
+            ...data,
+            image: picture,
+            nutritional: handleProdData(nutritional)
+          }
+        }
+      });
     },
     [
+      data,
       name,
       picture,
       nutritional,

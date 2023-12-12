@@ -8,11 +8,12 @@ import { nutritionalPropTypes } from '../../utils/proptypes';
 function IngredientDetails({
   name,
   image,
-  nutritional
+  nutritional,
+  isCurrentPage
 }) {
   return (
     <div className={styles.wrapper}>
-      <div className={`${styles.title} text text_type_main-large pr-15`}>Детали ингредиента</div>
+      <div className={`${styles.title} ${isCurrentPage ? 'mb-5' : `${styles.title_as_fs} pr-15`} text text_type_main-large`}>Детали ингредиента</div>
       <img className="mb-4" src={image} alt={name} />
       <div className={`${styles.subtitle} text text_type_main-medium mb-8`}>{name}</div>
       <div className={`${styles.row} mb-5`}>
@@ -33,7 +34,8 @@ function IngredientDetails({
 IngredientDetails.propTypes = {
   name: PropTypes.string,
   image: PropTypes.string,
-  nutritional: PropTypes.arrayOf(nutritionalPropTypes.isRequired)
+  nutritional: PropTypes.arrayOf(nutritionalPropTypes.isRequired),
+  isCurrentPage: PropTypes.bool
 };
 
 export default memo(IngredientDetails);

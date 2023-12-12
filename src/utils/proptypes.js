@@ -25,7 +25,26 @@ const nutritionalPropTypes = PropTypes.shape({
   value: PropTypes.number.isRequired
 });
 
+const fieldPropTypes = PropTypes.shape({
+  type: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  error: PropTypes.bool.isRequired,
+  errorText: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired
+});
+
+const valuePropTypes = PropTypes.shape({
+  name: PropTypes.string,
+  email: PropTypes.string,
+  password: PropTypes.string,
+  token: PropTypes.string
+});
+
 export {
   productPropTypes,
-  nutritionalPropTypes
+  nutritionalPropTypes,
+  fieldPropTypes,
+  valuePropTypes
 };

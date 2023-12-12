@@ -1,14 +1,13 @@
-import React from "react";
-import Wrapper from "../../components/wrapper/Wrapper";
-
-import { ORDERS_TITLE, UNDER_CONSTRUCTION_TEXT } from "../../utils/constants";
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 
 function Orders() {
   return (
-    <Wrapper title={ORDERS_TITLE}>
-      <p className="text text_type_main-default">{UNDER_CONSTRUCTION_TEXT}</p>
-    </Wrapper>
-  );
-}
+    <div>
+      <h1 className="text text_type_main-large mb-5">История заказов</h1>
+      <Outlet />
+    </div>
+  )
+};
 
 export default Orders;
