@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Wrapper from '../../components/wrapper/Wrapper';
 
 function NotFound() {

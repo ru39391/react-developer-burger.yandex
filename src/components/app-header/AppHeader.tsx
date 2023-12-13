@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
   Logo,
@@ -13,14 +13,14 @@ import {
   PROFILE_URL
 } from '../../utils/constants';
 
-function AppHeader() {
+const AppHeader: FC = () => {
   return (
     <header className={`${styles.wrapper} text text_type_main-default p-4 mb-10`}>
       <div className={styles.container}>
         <Nav />
         <Logo />
-        <NavLink to={`/${PROFILE_URL}`} className={`${navStyles.link} text text_color_inactive pt-4 pb-4 pl-5 pr-5`} style={({ isActive }) => ({ color: isActive && '#fff' })}>
-          <ProfileIcon />
+        <NavLink to={`/${PROFILE_URL}`} className={`${navStyles.link} text text_color_inactive pt-4 pb-4 pl-5 pr-5`} style={({ isActive }: { isActive: boolean }) => ({ color: isActive ? '#fff' : 'inherit' })}>
+          <ProfileIcon type="primary" />
           {PROFILE_TITLE}
         </NavLink>
       </div>

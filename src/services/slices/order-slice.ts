@@ -5,7 +5,23 @@ import {
   PRICE_KEY
 } from '../../utils/constants';
 
-const initialState = {
+import { TProductData, TOrderData } from '../../types/data';
+
+export type TOrderState = {
+  bunItems: Array<TProductData>;
+  mainItems: Array<TProductData>;
+
+  order: TOrderData | {};
+  orderList: Array<string | ''>;
+  orderRequest: boolean;
+  orderFailed: boolean;
+
+  summ: number;
+
+  errorMsg?: string;
+};
+
+const initialState: TOrderState = {
   bunItems: [...Array(2)],
   mainItems: [],
 
@@ -23,35 +39,35 @@ const orderSlice = createSlice({
   name: 'order',
   initialState,
   reducers: {
-    getOrderRequest: (state, action) => ({
+    getOrderRequest: (state: TOrderState, action) => ({
       ...state,
       orderRequest: true
     }),
-    getOrderSuccess: (state, action) => ({
+    getOrderSuccess: (state: TOrderState, action) => ({
       ...state,
       order: {...action.payload.data},
       orderRequest: false,
       orderFailed: false
     }),
-    getOrderFailed: (state, action) => ({
+    getOrderFailed: (state: TOrderState, action) => ({
       ...state,
       orderRequest: false,
       orderFailed: true,
       errorMsg: action.payload.errorMsg
     }),
-    addItem: (state, action) => ({
+    addItem: (state: TOrderState, action) => ({
       ...state,
       mainItems: [...state.mainItems, {...action.payload.item, key: uuidv4()}]
     }),
-    addBunItem: (state, action) => ({
+    addBunItem: (state: TOrderState, action) => ({
       ...state,
       bunItems: [...state.bunItems].map(item => ({...action.payload.item, key: uuidv4()}))
     }),
-    removeItem: (state, action) => ({
+    removeItem: (state: TOrderState, action) => ({
       ...state,
       mainItems: [...state.mainItems].filter((_, index) => index !== action.payload.index)
     }),
-    updateOrderList(state, action) {
+    updateOrderList(state: TOrderState, action) {
       const { draggedItem, targetItem } = action.payload;
 
       const updatedItems = [...state.mainItems];
@@ -63,7 +79,7 @@ const orderSlice = createSlice({
         mainItems: [...updatedItems]
       }
     },
-    setOrderData(state, action) {
+    setOrderData(state: TOrderState, action) {
       const addedItems = state.bunItems.filter(item => Boolean(item)).length ? [...state.bunItems, ...state.mainItems] : [...state.mainItems];
 
       return {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {
   API_URL,
   RESPONSE_ERROR_MSG

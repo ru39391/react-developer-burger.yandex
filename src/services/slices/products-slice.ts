@@ -1,6 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
+import { TProductData } from '../../types/data';
+
+export type TProductsState = {
+  items: Array<TProductData>;
+  itemsRequest: boolean;
+  itemsFailed: boolean;
+
+  item: TProductData | {};
+
+  errorMsg?: string;
+};
+
+const initialState: TProductsState = {
   items: [],
   itemsRequest: false,
   itemsFailed: false,
@@ -14,29 +26,29 @@ const productsSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
-    getItemsRequest: (state, action) => ({
+    getItemsRequest: (state: TProductsState, action) => ({
       ...state,
       itemsRequest: true
     }),
-    getItemsSuccess: (state, action) => ({
+    getItemsSuccess: (state: TProductsState, action) => ({
       ...state,
       items: action.payload.data,
       itemsRequest: false,
       itemsFailed: false
     }),
-    fetchItemSuccess: (state, action) => ({
+    fetchItemSuccess: (state: TProductsState, action) => ({
       ...state,
       item: action.payload.item,
       itemsRequest: false,
       itemsFailed: false
     }),
-    getItemsFailed: (state, action) => ({
+    getItemsFailed: (state: TProductsState, action) => ({
       ...state,
       itemsRequest: false,
       itemsFailed: true,
       errorMsg: action.payload.errorMsg
     }),
-    setItemDetails: (state, action) => ({
+    setItemDetails: (state: TProductsState, action) => ({
       ...state,
       item: {...action.payload}
     })

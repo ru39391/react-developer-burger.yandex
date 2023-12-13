@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {
   ACCESS_TOKEN_KEY,
   REFRESH_TOKEN_KEY

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {
   useLocation,
   useNavigate,
@@ -37,7 +37,7 @@ import {
   INGREDIENTS_URL,
 } from './utils/constants';
 
-function App() {
+const App: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const layout = location.state && location.state.layout;

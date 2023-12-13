@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
@@ -26,7 +26,15 @@ import {
   updateOrderList
 } from '../../services/slices/order-slice';
 
-function BurgerConstructor() {
+import { TRootState } from '../../types';
+import { TProductData } from '../../types/data';
+
+type THandledItem = {
+  draggedItem: TProductData;
+  targetItem: TProductData;
+};
+
+const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
@@ -34,7 +42,7 @@ function BurgerConstructor() {
     mainItems: ingredients,
     orderList,
     summ
-  } = useSelector(state => state.order);
+  } = useSelector((state: TRootState) => state.order);
   const { isLogged } = useAuth();
   const {
     isModalVisible,
@@ -42,7 +50,7 @@ function BurgerConstructor() {
   } = useModal();
 
   const removeIngredient = useCallback(
-    (item) => {
+    (item: TProductData) => {
       dispatch(removeItem({ index: ingredients.indexOf(item) }));
     },
     [
@@ -52,9 +60,9 @@ function BurgerConstructor() {
   );
 
   const handleDrop = useCallback(
-    (data) => {
-      const isBunItemsArr = Object.values(data).map(({ type }) => type === BUN_PRODUCT_NAME);
-      const getIndex = (value) => ({
+    (data: THandledItem) => {
+      const isBunItemsArr = Object.values(data).map(({ type }: { type: string }) => type === BUN_PRODUCT_NAME);
+      const getIndex = (value: number) => ({
         product: Object.values(data)[value],
         index: ingredients.indexOf(Object.values(data)[value])
       });
@@ -93,7 +101,7 @@ function BurgerConstructor() {
     collect: monitor => ({
       isHover: monitor.isOver()
     }),
-    drop(item) {
+    drop(item: { type: string }) {
       item.type === BUN_PRODUCT_NAME ? dispatch(addBunItem({ item })) : dispatch(addItem({ item }));
     },
   });
