@@ -1,25 +1,16 @@
-import React, { FC } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 
 import { Provider } from 'react-redux';
-//import { configureStore } from '@reduxjs/toolkit';
-//import thunk from 'redux-thunk';
-//import reducer from './services/slices';
 import store from './services/store';
 
 import App from './App';
 import './index.css';
 
-/*
-const store = configureStore({
-  reducer,
-  middleware: [thunk],
-});
-*/
-
-const root = ReactDOM.createRoot(document.querySelector('#root'));
+const rootElement = document.querySelector('#root') as HTMLElement;
+const root = ReactDOM.createRoot(rootElement);
 root.render(
   <BrowserRouter>
     <React.StrictMode>

@@ -31,15 +31,10 @@ import {
 
 import type { TRootState } from '../../services/store';
 import type { TProductData, TDraggableData } from '../../types';
-import useStoreTool from '../../hooks/useStoreTool';
 
 const BurgerConstructor: FC = () => {
-  const {
-    useStoreDispatch,
-    useStoreSelector,
-  } = useStoreTool;
   const navigate = useNavigate();
-  const dispatch = useStoreDispatch();
+  const dispatch = useDispatch();
   const {
     bunItems: buns,
     mainItems: ingredients,
@@ -86,6 +81,7 @@ const BurgerConstructor: FC = () => {
     () => {
       if(isLogged) {
         setModalVisibility(true);
+        //@ts-ignore
         dispatch(checkout(orderList));
       } else {
         navigate(`/${LOGIN_URL}`, { replace: false });
@@ -99,7 +95,6 @@ const BurgerConstructor: FC = () => {
   );
 
   const [{ isHover }, wrapperRef] = useDrop({
-    type: 'order',
     accept: 'card',
     collect: (monitor: DropTargetMonitor) => ({
       isHover: monitor.isOver()

@@ -19,7 +19,7 @@ const AppHeader: FC = () => {
       <div className={styles.container}>
         <Nav />
         <Logo />
-        <NavLink to={`/${PROFILE_URL}`} className={`${navStyles.link} text text_color_inactive pt-4 pb-4 pl-5 pr-5`} style={({ isActive }: { isActive: boolean }) => ({ color: isActive ? '#fff' : 'inherit' })}>
+        <NavLink to={`/${PROFILE_URL}`} className={`${navStyles.link} text text_color_inactive pt-4 pb-4 pl-5 pr-5`} style={({ isActive }: { isActive: boolean }) => ({ color: isActive ? '#fff' : '#8585AD' })}>
           <ProfileIcon type="primary" />
           {PROFILE_TITLE}
         </NavLink>
