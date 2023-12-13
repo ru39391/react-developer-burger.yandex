@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Outlet } from 'react-router-dom';
 import Wrapper from '../../components/wrapper/Wrapper';
 
-function Ingredients() {
+const Ingredients: FC = () => {
   return <Wrapper title=""><Outlet /></Wrapper>;
 };
 

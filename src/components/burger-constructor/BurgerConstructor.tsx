@@ -1,4 +1,4 @@
-import { useEffect, useCallback, FC } from 'react';
+import React, { useEffect, useCallback, FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
@@ -130,7 +130,6 @@ const BurgerConstructor: FC = () => {
           <div className={styles.container}>
             {ingredients.map((item, idx) => (
               <Ingredient
-                key={item.key}
                 text={item.name}
                 thumbnail={item.image}
                 ingredient={item}

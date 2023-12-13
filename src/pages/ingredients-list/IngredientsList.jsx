@@ -11,7 +11,7 @@ function IngredientsList() {
 
   useEffect(
     () => {
-      dispatch(setItemDetails({}));
+      dispatch(setItemDetails({ item: {} }));
       if(!items.length) dispatch(getItems());
     },
     [dispatch]

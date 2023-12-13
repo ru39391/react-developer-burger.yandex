@@ -39,9 +39,11 @@ function Card({
   const handleCardData = useCallback(
     () => {
       dispatch(setItemDetails({
-        name,
-        image: picture,
-        nutritional: handleProdData(nutritional)
+        item: {
+          name,
+          image: picture,
+          nutritional: handleProdData(nutritional)
+        }
       }));
       navigate(`/${INGREDIENTS_URL}/${data._id}`, {
         replace: true,
