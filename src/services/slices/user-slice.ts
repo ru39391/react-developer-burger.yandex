@@ -1,11 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { v4 as uuidv4 } from 'uuid';
 
-import { TUserData } from '../../types/data';
+import { TUser } from '../../types/data';
 
 type TUserAction = {
   payload: {
-    data?: TUserData;
+    data?: TUser;
     name?: string;
     email?: string;
     isLogged?: boolean;
@@ -23,7 +22,7 @@ export type TUserState = {
   isRecoverySucceed: boolean;
   userRequest: boolean;
 
-  errorMsg?: string;
+  errorMsg: string;
 };
 
 const initialState: TUserState = {
@@ -69,7 +68,7 @@ const userSlice = createSlice({
       isSucceed: false,
       isRecoverySucceed: false,
       userRequest: false,
-      errorMsg: action.payload.errorMsg
+      errorMsg: action.payload.errorMsg || ''
     }),
     resetUserData: () => ({ ...initialState }),
   }

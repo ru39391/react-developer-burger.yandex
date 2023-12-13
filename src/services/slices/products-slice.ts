@@ -1,23 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { TDefaultData, TProductData } from '../../types/data';
+import { TDefaultData, TProduct } from '../../types/data';
 
 type TProductsAction = {
   payload: {
-    data?: Array<TProductData>;
-    item?: TDefaultData | TProductData;
+    data?: Array<TProduct>;
+    item?: TProduct | TDefaultData;
     errorMsg?: string;
   };
 };
 
 export type TProductsState = {
-  items?: Array<TProductData>;
+  items: Array<TProduct>;
   itemsRequest: boolean;
   itemsFailed: boolean;
 
-  item?: TProductData | TDefaultData;
+  item: TProduct | TDefaultData;
 
-  errorMsg?: string;
+  errorMsg: string;
 };
 
 const initialState: TProductsState = {
@@ -40,13 +40,13 @@ const productsSlice = createSlice({
     }),
     getItemsSuccess: (state: TProductsState, action: TProductsAction) => ({
       ...state,
-      items: action.payload.data,
+      items: action.payload.data || state.items,
       itemsRequest: false,
       itemsFailed: false
     }),
     fetchItemSuccess: (state: TProductsState, action: TProductsAction) => ({
       ...state,
-      item: action.payload.item,
+      item: action.payload.item || state.item,
       itemsRequest: false,
       itemsFailed: false
     }),
@@ -54,11 +54,11 @@ const productsSlice = createSlice({
       ...state,
       itemsRequest: false,
       itemsFailed: true,
-      errorMsg: action.payload.errorMsg
+      errorMsg: action.payload.errorMsg || ''
     }),
     setItemDetails: (state: TProductsState, action: TProductsAction) => ({
       ...state,
-      item: action.payload.item,
+      item: action.payload.item || state.item,
     })
   }
 });

@@ -1,7 +1,10 @@
 import React, { useEffect, useCallback, FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useDrop } from 'react-dnd';
+import {
+  useDrop,
+  DropTargetMonitor
+} from 'react-dnd';
 import {
   Button,
   CurrencyIcon,
@@ -25,18 +28,14 @@ import {
   setOrderData,
   updateOrderList
 } from '../../services/slices/order-slice';
+import { AppDispatch } from '../../services/store';
 
 import { TRootState } from '../../types';
-import { TProductData } from '../../types/data';
-
-type THandledItem = {
-  draggedItem: TProductData;
-  targetItem: TProductData;
-};
+import { TProductData, TDraggableData } from '../../types/data';
 
 const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const {
     bunItems: buns,
     mainItems: ingredients,
@@ -60,7 +59,7 @@ const BurgerConstructor: FC = () => {
   );
 
   const handleDrop = useCallback(
-    (data: THandledItem) => {
+    (data: TDraggableData) => {
       const isBunItemsArr = Object.values(data).map(({ type }: { type: string }) => type === BUN_PRODUCT_NAME);
       const getIndex = (value: number) => ({
         product: Object.values(data)[value],
@@ -70,7 +69,7 @@ const BurgerConstructor: FC = () => {
       if(isBunItemsArr.some(item => item)) {
         return;
       } else {
-        dispatch(updateOrderList({ draggedItem: getIndex(0), targetItem: getIndex(1) }));
+        dispatch(updateOrderList({ items: { draggedItem: getIndex(0), targetItem: getIndex(1) } }));
       }
     },
     [
@@ -96,18 +95,18 @@ const BurgerConstructor: FC = () => {
   );
 
   const [{ isHover }, wrapperRef] = useDrop({
-    type: 'order',
+    //type: 'order',
     accept: 'card',
-    collect: monitor => ({
+    collect: (monitor: DropTargetMonitor) => ({
       isHover: monitor.isOver()
     }),
-    drop(item: { type: string }) {
+    drop: (item: TProductData, monitor: DropTargetMonitor) => {
       item.type === BUN_PRODUCT_NAME ? dispatch(addBunItem({ item })) : dispatch(addItem({ item }));
     },
   });
 
   useEffect(() => {
-    dispatch(setOrderData());
+    dispatch(setOrderData({}));
   }, [
     buns,
     ingredients,

@@ -7,31 +7,35 @@ import {
 
 import {
   TDefaultData,
-  TProductData,
-  TOrderData
+  TProduct,
+  TOrder,
+  TDraggableItem
 } from '../../types/data';
 
 type TOrderAction = {
   payload: {
-    data?: TOrderData | TDefaultData;
-    draggedItem?: TProductData;
-    targetItem?: TProductData;
+    index?: number;
+    data?: TOrder;
+    item?: TProduct;
+    items?: {
+      [key: string]: TDraggableItem;
+    };
     errorMsg?: string;
   };
 };
 
 export type TOrderState = {
-  bunItems: Array<TProductData>;
-  mainItems: Array<TProductData>;
+  bunItems: Array<TProduct>;
+  mainItems: Array<TProduct>;
 
-  order: TOrderData | TDefaultData;
+  order: TOrder | TDefaultData;
   orderList: Array<string>;
   orderRequest: boolean;
   orderFailed: boolean;
 
   summ: number;
 
-  errorMsg?: string;
+  errorMsg: string;
 };
 
 const initialState: TOrderState = {
@@ -66,22 +70,26 @@ const orderSlice = createSlice({
       ...state,
       orderRequest: false,
       orderFailed: true,
-      errorMsg: action.payload.errorMsg
+      errorMsg: action.payload.errorMsg || ''
     }),
     addItem: (state: TOrderState, action: TOrderAction) => ({
       ...state,
-      mainItems: [...state.mainItems, {...action.payload.item, key: uuidv4()}]
+      mainItems: action.payload.item
+        ? [...state.mainItems, {...action.payload.item, key: uuidv4()}]
+        : [...state.mainItems]
     }),
     addBunItem: (state: TOrderState, action: TOrderAction) => ({
       ...state,
-      bunItems: [...state.bunItems].map(item => ({...action.payload.item, key: uuidv4()}))
+      bunItems: action.payload.item
+        ? [...state.bunItems].map(() => ({...action.payload.item, key: uuidv4()}))
+        : [...Array(2)]
     }),
     removeItem: (state: TOrderState, action: TOrderAction) => ({
       ...state,
       mainItems: [...state.mainItems].filter((_, index) => index !== action.payload.index)
     }),
     updateOrderList(state: TOrderState, action: TOrderAction) {
-      const { draggedItem, targetItem } = action.payload;
+      const { draggedItem, targetItem } = action.payload.items || {};
 
       const updatedItems = [...state.mainItems];
       updatedItems[draggedItem.index] = targetItem.product;

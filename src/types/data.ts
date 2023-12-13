@@ -2,7 +2,7 @@ export type TDefaultData = {
   [key: string]: string | number;
 };
 
-export type TProductData = TDefaultData & {
+export type TProductData = {
   readonly _id: string;
   readonly name: string;
   readonly type: string;
@@ -18,12 +18,28 @@ export type TProductData = TDefaultData & {
   readonly key: string;
 };
 
-export type TOrderData = TDefaultData & {
+export type TProduct = TProductData & TDefaultData;
+
+export type TOrderData = {
   readonly id: number;
   readonly name: string;
 };
 
-export type TUserData = TDefaultData & {
+export type TOrder = TOrderData & TDefaultData;
+
+export type TUserData = {
   readonly name: string;
   readonly email: string;
+};
+
+export type TUser = TUserData & TDefaultData;
+
+export type TDraggableData = {
+  draggedItem: TProductData;
+  targetItem: TProductData;
+};
+
+export type TDraggableItem = {
+  index: number;
+  product: TProductData;
 };
