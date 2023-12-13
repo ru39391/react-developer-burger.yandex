@@ -1,6 +1,4 @@
 import { Dispatch } from 'redux';
-import { ThunkAction } from 'redux-thunk';
-import { AnyAction } from '@reduxjs/toolkit';
 import {
   ORDERS_ALIAS,
   ACTION_ERROR_MSG
@@ -11,11 +9,11 @@ import {
   getOrderFailed
 } from '../slices/order-slice';
 import Api from '../../utils/api';
-import { TRootState } from '../../types';
+import type { TAppThunk } from '../../services/store';
 
 const api = new Api(ORDERS_ALIAS);
-//: ThunkAction<void, TRootState, unknown, AnyAction>
-const checkout = (arr: Array<string>) => async (dispatch: Dispatch) => {
+
+const checkout = (arr: Array<string>): TAppThunk<void> => async (dispatch: Dispatch) => {
   dispatch(getOrderRequest({}))
   try {
     const res = await api.checkout(arr);

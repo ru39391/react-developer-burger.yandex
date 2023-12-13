@@ -28,14 +28,18 @@ import {
   setOrderData,
   updateOrderList
 } from '../../services/slices/order-slice';
-import { AppDispatch } from '../../services/store';
 
-import { TRootState } from '../../types';
-import { TProductData, TDraggableData } from '../../types/data';
+import type { TRootState } from '../../services/store';
+import type { TProductData, TDraggableData } from '../../types';
+import useStoreTool from '../../hooks/useStoreTool';
 
 const BurgerConstructor: FC = () => {
+  const {
+    useStoreDispatch,
+    useStoreSelector,
+  } = useStoreTool;
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useStoreDispatch();
   const {
     bunItems: buns,
     mainItems: ingredients,
@@ -95,7 +99,7 @@ const BurgerConstructor: FC = () => {
   );
 
   const [{ isHover }, wrapperRef] = useDrop({
-    //type: 'order',
+    type: 'order',
     accept: 'card',
     collect: (monitor: DropTargetMonitor) => ({
       isHover: monitor.isOver()

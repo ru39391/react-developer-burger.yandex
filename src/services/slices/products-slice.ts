@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { TDefaultData, TProduct } from '../../types/data';
+import { TDefaultData, TProduct } from '../../types';
 
 type TProductsAction = {
   payload: {

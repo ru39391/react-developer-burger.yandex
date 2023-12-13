@@ -10,7 +10,7 @@ import {
   TProduct,
   TOrder,
   TDraggableItem
-} from '../../types/data';
+} from '../../types';
 
 type TOrderAction = {
   payload: {

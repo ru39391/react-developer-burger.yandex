@@ -1,9 +1,45 @@
-import { TProductsState } from '../services/slices/products-slice';
-import { TOrderState } from '../services/slices/order-slice';
-import { TUserState } from '../services/slices/user-slice';
+export type TDefaultData = {
+  [key: string]: string | number;
+};
 
-export type TRootState = {
-  products: TProductsState;
-  order: TOrderState;
-  user: TUserState;
+export type TProductData = {
+  readonly _id: string;
+  readonly name: string;
+  readonly type: string;
+  readonly proteins: number;
+  readonly fat: number;
+  readonly carbohydrates: number;
+  readonly calories: number;
+  readonly price: number;
+  readonly image: string;
+  readonly image_mobile: string;
+  readonly image_large: string;
+  readonly __v: number;
+  readonly key: string;
+};
+
+export type TProduct = TProductData & TDefaultData;
+
+export type TOrderData = {
+  readonly id: number;
+  readonly name: string;
+};
+
+export type TOrder = TOrderData & TDefaultData;
+
+export type TUserData = {
+  readonly name: string;
+  readonly email: string;
+};
+
+export type TUser = TUserData & TDefaultData;
+
+export type TDraggableData = {
+  draggedItem: TProductData;
+  targetItem: TProductData;
+};
+
+export type TDraggableItem = {
+  index: number;
+  product: TProductData;
 };
