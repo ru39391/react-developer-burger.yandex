@@ -1,3 +1,4 @@
+import { Dispatch } from 'redux';
 import {
   INGREDIENTS_ALIAS,
   RESPONSE_ERROR_MSG
@@ -9,11 +10,12 @@ import {
   fetchItemSuccess
 } from '../slices/products-slice';
 import Api from '../../utils/api';
+import type { TAppThunk } from '../../services/store';
 
 const api = new Api(INGREDIENTS_ALIAS);
 
-const getItems = () => async dispatch => {
-  dispatch(getItemsRequest())
+const getItems = (): TAppThunk<void> => async (dispatch: Dispatch) => {
+  dispatch(getItemsRequest({}))
   try {
     const res = await api.getData();
     if (res && res.success) {
@@ -21,22 +23,22 @@ const getItems = () => async dispatch => {
     } else {
       dispatch(getItemsFailed({ errorMsg: RESPONSE_ERROR_MSG }))
     }
-  } catch (err) {
-    dispatch(getItemsFailed({ errorMsg: err }))
+  } catch (err: unknown) {
+    dispatch(getItemsFailed({ errorMsg: err as string }))
   }
 };
 
-const fetchItem = (id) => async dispatch => {
-  dispatch(getItemsRequest())
+const fetchItem = (id: string): TAppThunk<void> => async (dispatch: Dispatch) => {
+  dispatch(getItemsRequest({}))
   try {
     const res = await api.getData();
     if (res && res.success) {
-      dispatch(fetchItemSuccess({ item: res.data.find(({ _id }) => _id === id) }))
+      dispatch(fetchItemSuccess({ item: res.data.find(({ _id }: { _id: string }) => _id === id) }))
     } else {
       dispatch(getItemsFailed({ errorMsg: RESPONSE_ERROR_MSG }))
     }
-  } catch (err) {
-    dispatch(getItemsFailed({ errorMsg: err }))
+  } catch (err: unknown) {
+    dispatch(getItemsFailed({ errorMsg: err as string }))
   }
 };
 

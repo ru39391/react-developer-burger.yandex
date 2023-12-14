@@ -13,7 +13,7 @@ import type { TAppThunk } from '../../services/store';
 
 const api = new Api(ORDERS_ALIAS);
 
-const checkout = (arr: Array<string>): TAppThunk<void> => async (dispatch: Dispatch) => {
+const checkout = (arr: string[]): TAppThunk<void> => async (dispatch: Dispatch) => {
   dispatch(getOrderRequest({}))
   try {
     const res = await api.checkout(arr);

@@ -4,14 +4,14 @@ import type { TDefaultData, TProduct } from '../../types';
 
 type TProductsAction = {
   payload: {
-    data?: Array<TProduct>;
+    data?: TProduct[];
     item?: TProduct | TDefaultData;
     errorMsg?: string;
   };
 };
 
 export type TProductsState = {
-  items: Array<TProduct>;
+  items: TProduct[];
   itemsRequest: boolean;
   itemsFailed: boolean;
 

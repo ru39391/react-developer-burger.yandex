@@ -1,4 +1,5 @@
-import {
+import React, {
+  FC,
   memo,
   useState,
   useEffect,
@@ -6,8 +7,7 @@ import {
 } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useDrag } from 'react-dnd';
-import PropTypes from 'prop-types';
+import { useDrag, DragSourceMonitor } from 'react-dnd';
 import {
   Counter,
   CurrencyIcon,
@@ -17,23 +17,34 @@ import styles from './Card.module.css';
 
 import useProdData from '../../hooks/useProdData';
 
-import { productPropTypes } from '../../utils/proptypes';
 import { INGREDIENTS_URL, ID_KEY } from '../../utils/constants';
 import { setItemDetails } from '../../services/slices/products-slice';
 
-function Card({
+import type { TRootState } from '../../services/store';
+import type { TProduct } from '../../types';
+
+interface ICardProps {
+  data: TProduct;
+  name: string;
+  picture: string;
+  thumbnail: string;
+  price: number;
+  nutritional: number[];
+};
+
+const Card: FC<ICardProps> = ({
   data,
   name,
   picture,
   thumbnail,
   price,
   nutritional
-}) {
+}) => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { orderList } = useSelector(state => state.order);
-  const [counter, setCounter] = useState(0);
+  const { orderList } = useSelector((state: TRootState) => state.order);
+  const [counter, setCounter] = useState<number>(0);
   const { handleProdData } = useProdData();
 
   const handleCardData = useCallback(
@@ -69,13 +80,13 @@ function Card({
   const [{ isClassMod }, cardRef] = useDrag({
     type: 'card',
     item: data,
-    collect: monitor => ({
+    collect: (monitor: DragSourceMonitor) => ({
       isClassMod: monitor.isDragging()
     })
   });
 
   useEffect(() => {
-    setCounter(orderList.filter(value => value === data[ID_KEY]).length);
+    setCounter(orderList.filter((value: string) => value === data[ID_KEY]).length);
   }, [orderList]);
 
   return (
@@ -90,14 +101,5 @@ function Card({
     </div>
   );
 }
-
-Card.propTypes = {
-  data: productPropTypes.isRequired,
-  name: PropTypes.string.isRequired,
-  picture: PropTypes.string.isRequired,
-  thumbnail: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  nutritional: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired
-};
 
 export default memo(Card);

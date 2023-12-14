@@ -1,5 +1,3 @@
-import React, { FC } from 'react';
-
 import {
   CALORIES_CAPTION,
   PROTEINS_CAPTION,
@@ -7,15 +5,21 @@ import {
   CARBOHYDRATES_CAPTION
 } from '../utils/constants';
 
-function useProdData() {
-  const captionsArr = [
+import type { TProdData } from '../types';
+
+type TProdDataHook = {
+  handleProdData: (arr: number[]) => TProdData[];
+}
+
+const useProdData = (): TProdDataHook => {
+  const captionsArr: string[] = [
     CALORIES_CAPTION,
     PROTEINS_CAPTION,
     FAT_CAPTION,
     CARBOHYDRATES_CAPTION
   ];
 
-  const handleProdData = (arr) => {
+  const handleProdData = (arr: number[]): TProdData[] => {
     return arr.map((value, index) => ({
       name: captionsArr[index],
       value

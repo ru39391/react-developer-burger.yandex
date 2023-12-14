@@ -1,4 +1,5 @@
-import {
+import React, {
+  FC,
   useRef,
   useMemo,
   useState,
@@ -21,12 +22,15 @@ import {
 } from '../../utils/constants';
 import { getItems } from '../../services/actions/products';
 
-function BurgerIngredients() {
-  const dispatch = useDispatch();
-  const ingredients = useSelector(state => state.products.items);
-  const [current, setCurrent] = useState(BUN_PRODUCT_NAME);
+import type { TRootState } from '../../services/store';
+import type { TProduct } from '../../types';
 
-  const filterByType = (params, arr) => params.map(item => arr.filter(({ type }) => type === item));
+const BurgerIngredients: FC = () => {
+  const dispatch = useDispatch();
+  const ingredients = useSelector((state: TRootState) => state.products.items);
+  const [current, setCurrent] = useState<string>(BUN_PRODUCT_NAME);
+
+  const filterByType = (params: string[], arr: TProduct[]) => params.map((item: string) => arr.filter(({ type }) => type === item));
 
   const productNames = [
     BUN_PRODUCT_NAME,
@@ -34,10 +38,10 @@ function BurgerIngredients() {
     MAIN_PRODUCT_NAME
   ];
 
-  const sectionRef = useRef(null);
-  const bunRef = useRef(null);
-  const sauceRef = useRef(null);
-  const mainRef = useRef(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const bunRef = useRef<HTMLDivElement>(null);
+  const sauceRef = useRef<HTMLDivElement>(null);
+  const mainRef = useRef<HTMLDivElement>(null);
 
   const [
     bunIngredients,
@@ -58,7 +62,9 @@ function BurgerIngredients() {
     ref: bunRef,
     handler: () => {
       setCurrent(BUN_PRODUCT_NAME);
-      bunRef.current.scrollIntoView({ behavior: 'smooth' });
+      if(bunRef && bunRef.current) {
+        bunRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   },{
     value: SAUCE_PRODUCT_NAME,
@@ -67,7 +73,9 @@ function BurgerIngredients() {
     ref: sauceRef,
     handler: () => {
       setCurrent(SAUCE_PRODUCT_NAME);
-      sauceRef.current.scrollIntoView({ behavior: 'smooth' });
+      if(sauceRef && sauceRef.current) {
+        sauceRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   },{
     value: MAIN_PRODUCT_NAME,
@@ -76,7 +84,9 @@ function BurgerIngredients() {
     ref: mainRef,
     handler: () => {
       setCurrent(MAIN_PRODUCT_NAME);
-      mainRef.current.scrollIntoView({ behavior: 'smooth' });
+      if(mainRef && mainRef.current) {
+        mainRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   }];
 
@@ -87,10 +97,12 @@ function BurgerIngredients() {
         sauceRef.current,
         mainRef.current
       ];
-      const roundValue = (value) => Math.round(value.getBoundingClientRect().top);
+      const roundValue = (value: HTMLDivElement) => Math.round(value.getBoundingClientRect().top);
 
       sections.forEach((item, index) => {
-        if(roundValue(item) <= roundValue(sectionRef.current)) {
+        const itemRoundValue = item ? roundValue(item) : 0;
+        const refRoundValue = sectionRef && sectionRef.current ? roundValue(sectionRef.current) : 0;
+        if(itemRoundValue <= refRoundValue) {
           setCurrent(productNames[index]);
         };
       });
@@ -108,6 +120,7 @@ function BurgerIngredients() {
 
   useEffect(
     () => {
+      //@ts-ignore
       if(!ingredients.length) dispatch(getItems());
     },
     [dispatch]

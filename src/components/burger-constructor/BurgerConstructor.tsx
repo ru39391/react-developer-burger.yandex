@@ -1,10 +1,7 @@
 import React, { useEffect, useCallback, FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  useDrop,
-  DropTargetMonitor
-} from 'react-dnd';
+import { useDrop, DropTargetMonitor } from 'react-dnd';
 import {
   Button,
   CurrencyIcon,
@@ -99,7 +96,7 @@ const BurgerConstructor: FC = () => {
     collect: (monitor: DropTargetMonitor) => ({
       isHover: monitor.isOver()
     }),
-    drop: (item: TProductData, monitor: DropTargetMonitor) => {
+    drop: (item: TProductData) => {
       item.type === BUN_PRODUCT_NAME ? dispatch(addBunItem({ item })) : dispatch(addItem({ item }));
     },
   });

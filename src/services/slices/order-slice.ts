@@ -25,11 +25,11 @@ type TOrderAction = {
 };
 
 export type TOrderState = {
-  bunItems: Array<TProduct>;
-  mainItems: Array<TProduct>;
+  bunItems: TProduct[];
+  mainItems: TProduct[];
 
   order: TOrder | TDefaultData;
-  orderList: Array<string>;
+  orderList: string[];
   orderRequest: boolean;
   orderFailed: boolean;
 

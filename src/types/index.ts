@@ -1,5 +1,5 @@
 export type TDefaultData = {
-  [key: string]: string | number;
+  [key: string]: string | number | TProdData[];
 };
 
 export type TProductData = {
@@ -43,3 +43,8 @@ export type TDraggableItem = {
   index: number;
   product: TProductData;
 };
+
+export type TProdData = {
+  name: string;
+  value: number;
+}
