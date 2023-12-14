@@ -4,7 +4,8 @@ import React, {
   useMemo,
   useState,
   useEffect,
-  Fragment
+  Fragment,
+  RefObject
 } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -25,14 +26,22 @@ import { getItems } from '../../services/actions/products';
 import type { TRootState } from '../../services/store';
 import type { TProduct } from '../../types';
 
+type TTabData = {
+  value: string;
+  caption: string;
+  data: TProduct[];
+  ref: RefObject<HTMLDivElement>;
+  handler: () => void
+}
+
 const BurgerIngredients: FC = () => {
   const dispatch = useDispatch();
   const ingredients = useSelector((state: TRootState) => state.products.items);
   const [current, setCurrent] = useState<string>(BUN_PRODUCT_NAME);
 
-  const filterByType = (params: string[], arr: TProduct[]) => params.map((item: string) => arr.filter(({ type }) => type === item));
+  const filterByType = (params: string[], arr: TProduct[]): TProduct[][] => params.map((item: string) => arr.filter(({ type }: { type: string }) => type === item));
 
-  const productNames = [
+  const productNames: string[] = [
     BUN_PRODUCT_NAME,
     SAUCE_PRODUCT_NAME,
     MAIN_PRODUCT_NAME
@@ -55,7 +64,7 @@ const BurgerIngredients: FC = () => {
     [ingredients]
   );
 
-  const tabsArr = [{
+  const tabsArr: TTabData[] = [{
     value: BUN_PRODUCT_NAME,
     caption: BUN_PRODUCT_CAPTION,
     data: bunIngredients,
@@ -92,14 +101,14 @@ const BurgerIngredients: FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = [
+      const sections: (HTMLDivElement | null)[] = [
         bunRef.current,
         sauceRef.current,
         mainRef.current
       ];
-      const roundValue = (value: HTMLDivElement) => Math.round(value.getBoundingClientRect().top);
+      const roundValue = (value: HTMLDivElement): number => Math.round(value.getBoundingClientRect().top);
 
-      sections.forEach((item, index) => {
+      sections.forEach((item: HTMLDivElement | null, index: number) => {
         const itemRoundValue = item ? roundValue(item) : 0;
         const refRoundValue = sectionRef && sectionRef.current ? roundValue(sectionRef.current) : 0;
         if(itemRoundValue <= refRoundValue) {

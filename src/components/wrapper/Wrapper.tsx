@@ -1,19 +1,28 @@
-import React from "react";
+import React, { FC, ReactNode } from 'react';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
-import Preloader from "../../components/preloader/Preloader";
-import styles from "./Wrapper.module.css";
 
-function Wrapper({
+import Preloader from '../preloader/Preloader';
+import styles from './Wrapper.module.css';
+
+import type { TRootState } from '../../services/store';
+
+interface IWrapperProps {
+  title: string;
+  children: ReactNode;
+  isFormHolder?: boolean;
+  isGrid?: boolean;
+};
+
+const Wrapper: FC<IWrapperProps> = ({
   title,
   children,
   isFormHolder,
   isGrid
-}) {
+}) => {
   const {
     itemsRequest: isLoading,
     errorMsg
-  } = useSelector(state => state.products);
+  } = useSelector((state: TRootState) => state.products);
 
   return (
     <main className={`${styles.section} ${isFormHolder && `mt-30`} ${isGrid && `mt-20`}`}>
@@ -25,12 +34,5 @@ function Wrapper({
     </main>
   );
 }
-
-Wrapper.propTypes = {
-  title: PropTypes.string.isRequired,
-  children: PropTypes.node,
-  isFormHolder: PropTypes.bool,
-  isGrid: PropTypes.bool
-};
 
 export default Wrapper;

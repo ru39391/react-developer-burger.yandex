@@ -48,3 +48,8 @@ export type TProdData = {
   name: string;
   value: number;
 }
+
+export type TToken = string | null | {
+  date?: number | null;
+  token: string | null;
+};

@@ -27,7 +27,7 @@ import {
 } from '../../services/slices/order-slice';
 
 import type { TRootState } from '../../services/store';
-import type { TProductData, TDraggableData } from '../../types';
+import type { TProductData, TDraggableData, TDraggableItem, TProdData } from '../../types';
 
 const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
@@ -56,13 +56,13 @@ const BurgerConstructor: FC = () => {
 
   const handleDrop = useCallback(
     (data: TDraggableData) => {
-      const isBunItemsArr = Object.values(data).map(({ type }: { type: string }) => type === BUN_PRODUCT_NAME);
-      const getIndex = (value: number) => ({
+      const isBunItemsArr: boolean[] = Object.values(data).map(({ type }: { type: string }) => type === BUN_PRODUCT_NAME);
+      const getIndex = (value: number): TDraggableItem => ({
         product: Object.values(data)[value],
         index: ingredients.indexOf(Object.values(data)[value])
       });
 
-      if(isBunItemsArr.some(item => item)) {
+      if(isBunItemsArr.some((item: boolean) => item)) {
         return;
       } else {
         dispatch(updateOrderList({ items: { draggedItem: getIndex(0), targetItem: getIndex(1) } }));
@@ -123,7 +123,7 @@ const BurgerConstructor: FC = () => {
         />}
         <div className={styles.section}>
           <div className={styles.container}>
-            {ingredients.map((item, idx) => (
+            {ingredients.map((item) => (
               <Ingredient
                 text={item.name}
                 thumbnail={item.image}

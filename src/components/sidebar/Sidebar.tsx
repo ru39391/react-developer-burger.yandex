@@ -9,15 +9,14 @@ import { useDispatch } from 'react-redux';
 import useAuth from '../../hooks/useAuth';
 import useModal from '../../hooks/useModal';
 
-import Modal from '../../components/modal/Modal';
-import ModalContent from '../../components/modal-content/ModalContent';
+import Modal from '../modal/Modal';
+import ModalContent from '../modal-content/ModalContent';
 
 import styles from './Sidebar.module.css';
 
 import { signOut } from '../../services/actions/user';
 
 import {
-  LOGIN_URL,
   PROFILE_URL,
   ORDERS_URL,
   PROFILE_NAV_TITLE,
@@ -27,14 +26,19 @@ import {
   TOKEN_ERROR_MSG
 } from '../../utils/constants';
 
-function Sidebar() {
+type TNavArr = {
+  url: string;
+  title: string;
+}
+
+const Sidebar: FC = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const { refreshToken, isRefTokExist } = useAuth();
   const { isModalVisible, setModalVisibility } = useModal();
 
-  const navArr = [
+  const navArr: TNavArr[] = [
     {
       url: PROFILE_URL,
       title: PROFILE_NAV_TITLE
@@ -46,10 +50,11 @@ function Sidebar() {
   ];
 
   const logout = () => {
-    const { token } = refreshToken;
-    if(isRefTokExist) {
+    const token = typeof refreshToken === 'object' && refreshToken !== null ? refreshToken.token : null;
+    if(isRefTokExist && token) {
+      //@ts-ignore
       dispatch(signOut({ token }, LOGOUT_URL));
-      navigate(`/`);//${LOGIN_URL}
+      navigate(`/`)
     } else {
       setModalVisibility(true);
     }
@@ -66,7 +71,7 @@ function Sidebar() {
             key={index}
             to={`/${url}`}
             className={`${styles.link} text text_type_main-medium text_color_inactive pt-4 pb-4`}
-            style={() => ({ color: location.pathname === `/${url}` && '#fff' })}
+            style={() => ({ color: location.pathname === `/${url}`  ? '#fff' : '#8585AD' })}
           >
             {title}
           </NavLink>
