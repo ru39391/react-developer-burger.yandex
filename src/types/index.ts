@@ -1,8 +1,10 @@
-export type TCustumData<T> = {
+import { Location } from 'react-router-dom';
+
+export type TCustomData<T> = {
   [key: string]: T;
 };
 
-export type TDefaultData = TCustumData<string | number | TProdData[]>;
+export type TDefaultData = TCustomData<string | number | TProdData[]>;
 
 export type TProductData = {
   readonly _id: string;
@@ -36,7 +38,7 @@ export type TUserData = {
 
 export type TUser = TUserData & TDefaultData;
 
-export type TDraggableData = TCustumData<TProductData>;
+export type TDraggableData = TCustomData<TProductData>;
 
 export type TDraggableItem = {
   index: number;
@@ -53,8 +55,14 @@ export type TToken = string | null | {
   token: string | null;
 };
 
-export type TFieldsData = TCustumData<string> & {
+export type TFieldsData = TCustomData<string> & {
   value: string;
   error: boolean;
   onChange: () => void;
+};
+
+export type TLocState = {
+  layout: Location;
+  item: TProduct;
+  prevUrl?: string;
 };

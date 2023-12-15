@@ -1,4 +1,10 @@
-import { useMemo, useCallback, useEffect } from 'react';
+import React, {
+  FC,
+  useMemo,
+  useCallback,
+  useEffect,
+  ChangeEvent
+} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import useAuth from '../../hooks/useAuth';
@@ -21,9 +27,12 @@ import {
   PASSWORD_DEFAULT_VAL
 } from '../../utils/constants';
 
-function ProfileForm() {
+import type { TRootState } from '../../services/store';
+import type { TFieldsData, TCustomData } from '../../types';
+
+const ProfileForm: FC = () => {
   const dispatch = useDispatch();
-  const { name, email } = useSelector(state => state.user);
+  const { name, email } = useSelector((state: TRootState) => state.user);
   const { isModalVisible, setModalVisibility } = useModal();
   const {
     accessToken,
@@ -41,7 +50,7 @@ function ProfileForm() {
     setValues
   } = useInput();
 
-  const fieldsData = [
+  const fieldsData: TFieldsData[] = [
     {
       icon: 'EditIcon',
       type: 'text',
@@ -50,7 +59,8 @@ function ProfileForm() {
       placeholder: NAME_PLS,
       error: validValues.name === undefined ? false : validValues.name,
       errorText: errorMessages.name || '',
-      onChange: (e) => handleChange(e)
+      //@ts-ignore
+      onChange: (e: ChangeEvent<HTMLInputElement>) => handleChange(e)
     },
     {
       icon: 'EditIcon',
@@ -60,7 +70,8 @@ function ProfileForm() {
       placeholder: 'Логин',
       error: validValues.email === undefined ? false : validValues.email,
       errorText: errorMessages.email || '',
-      onChange: (e) => handleChange(e),
+      //@ts-ignore
+      onChange: (e: ChangeEvent<HTMLInputElement>) => handleChange(e),
     },
     {
       icon: 'EditIcon',
@@ -69,13 +80,15 @@ function ProfileForm() {
       placeholder: PASSWORD_PLS,
       error: validValues.password === undefined ? false : validValues.password,
       errorText: errorMessages.password || '',
-      onChange: (e) => handleChange(e)
+      //@ts-ignore
+      onChange: (e: ChangeEvent<HTMLInputElement>) => handleChange(e)
     }
   ];
 
   const getCurrentToken = useCallback(() => {
     if(isRefTokExist) {
-      const { token } = refreshToken;
+      const token = typeof refreshToken === 'object' && refreshToken !== null ? refreshToken.token : null;
+      //@ts-ignore
       dispatch(getAccessToken({ token }, TOKEN_URL));
     } else {
       setModalVisibility(true);
@@ -86,9 +99,10 @@ function ProfileForm() {
 
   const getUserData = useCallback(() => {
     if(isAccTokExist) {
-      const { token: jwt } = accessToken;
+      const jwt = typeof accessToken === 'object' && accessToken !== null ? accessToken.token : null;
       isTokenExpired
         ? getCurrentToken()
+        //@ts-ignore
         : dispatch(getAccessToken({ jwt }, USER_URL));
     } else {
       setModalVisibility(true);
@@ -100,7 +114,7 @@ function ProfileForm() {
   ]);
 
   const updatedValues = useMemo(() =>
-    Object.values(editedValues).reduce((acc, item, index) =>
+    Object.values(editedValues).reduce((acc: TCustomData<string>, item: string, index: number) =>
       ![name, email].includes(item)
       ? ({
           ...acc,
@@ -117,13 +131,14 @@ function ProfileForm() {
       getCurrentToken();
     }
 
+    //@ts-ignore
     dispatch(updateData({ values: updatedValues }, USER_URL));
   }, [
     updatedValues,
     dispatch
   ]);
 
-  const setDefaultValues = () => {
+  const setDefaultValues = (): void => {
     setValues({
       name,
       email,
@@ -145,7 +160,6 @@ function ProfileForm() {
   return (
     <>
       <Form
-        title=""
         fieldsData={fieldsData}
         onSubmit={setDefaultValues}
         classNameMod="ai_start">

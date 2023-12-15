@@ -5,7 +5,7 @@ import {
   PRICE_KEY
 } from '../../utils/constants';
 
-import {
+import type {
   TDefaultData,
   TProduct,
   TOrder,

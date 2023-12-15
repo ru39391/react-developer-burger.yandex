@@ -18,7 +18,7 @@ const checkout = (arr: string[]): TAppThunk<void> => async (dispatch: Dispatch) 
   try {
     const res = await api.checkout(arr);
     if (res && res.success) {
-      const { name, order } = res;
+      const { name, order }: { name: string; order: { number: number; }; } = res;
       dispatch(getOrderSuccess({ data: { name, id: order.number } }))
     } else {
       dispatch(getOrderFailed({ errorMsg: ACTION_ERROR_MSG }))

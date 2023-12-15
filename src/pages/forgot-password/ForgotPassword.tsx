@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import React, { FC, useCallback, ChangeEvent } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -22,7 +22,9 @@ import {
   IS_PASSWORD_REQ_SENT_KEY
 } from '../../utils/constants';
 
-function ForgotPassword() {
+import type { TFieldsData } from '../../types';
+
+const ForgotPassword: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
@@ -34,7 +36,7 @@ function ForgotPassword() {
   } = useInput();
   const { isPasswordReqSent } = useAuth();
 
-  const fieldsData = [
+  const fieldsData: TFieldsData[] = [
     {
       type: 'email',
       name: 'email',
@@ -42,7 +44,8 @@ function ForgotPassword() {
       placeholder: EMAIL_PLS,
       error: validValues.email === undefined ? false : validValues.email,
       errorText: errorMessages.email || '',
-      onChange: (e) => handleChange(e)
+      //@ts-ignore
+      onChange: (e: ChangeEvent<HTMLInputElement>) => handleChange(e)
     }
   ];
 
@@ -52,13 +55,14 @@ function ForgotPassword() {
   } = useSubmitBtn(fieldsData, validValues);
 
   const handleSubmit = useCallback(() => {
+    //@ts-ignore
     dispatch(recoverPassword({ ...values }));
   }, [
     values,
     dispatch
   ]);
 
-  const submitRecoveryForm = ({ isRecoverySucceed }) => {
+  const submitRecoveryForm = ({ isRecoverySucceed }: { isRecoverySucceed: boolean }) => {
     if(isRecoverySucceed && !isPasswordReqSent) {
       reset();
       disableBtn();
@@ -68,7 +72,7 @@ function ForgotPassword() {
   };
 
   return (
-    <Wrapper title="" isFormHolder={true}>
+    <Wrapper isFormHolder={true}>
       <Form
         title={FORGOT_PASSWORD_TITLE}
         fieldsData={fieldsData}

@@ -49,7 +49,7 @@ const Sidebar: FC = () => {
     }
   ];
 
-  const logout = () => {
+  const logout = (): void => {
     const token = typeof refreshToken === 'object' && refreshToken !== null ? refreshToken.token : null;
     if(isRefTokExist && token) {
       //@ts-ignore

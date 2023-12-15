@@ -1,8 +1,7 @@
-import { useCallback } from 'react';
+import React, { FC, useCallback, ChangeEvent } from 'react';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 
-import useModal from '../../hooks/useModal';
 import useInput from '../../hooks/useInput';
 import useSubmitBtn from '../../hooks/useSubmitBtn';
 
@@ -10,26 +9,27 @@ import Form from '../../components/form/Form';
 import FormButton from '../../components/form-button/FormButton';
 import FormFooter from '../../components/form-footer/FormFooter';
 import Wrapper from '../../components/wrapper/Wrapper';
-import Modal from '../../components/modal/Modal';
-import ModalContent from '../../components/modal-content/ModalContent';
 
 import { fetchData } from '../../services/actions/user';
 
+import storage from '../../utils/storage';
 import {
-  REGISTER_TITLE,
-  NAME_PLS,
+  LOGIN_TITLE,
   EMAIL_PLS,
   PASSWORD_PLS,
   LOGIN_URL,
-  REGISTER_URL
+  REGISTER_URL,
+  FORGOT_PASSWORD_URL,
+  IS_LOGGED_KEY
 } from '../../utils/constants';
 
-function Register() {
+import type { TFieldsData, TLocState } from '../../types';
+
+const Login: FC = () => {
+  const { state }: { state: TLocState | (null | undefined) } = useLocation();
+  const prevUrl = typeof state === 'object' && state !== null ? state.prevUrl : null;
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {
-    isModalVisible,
-    setModalVisibility
-  } = useModal();
   const {
     values,
     validValues,
@@ -37,17 +37,9 @@ function Register() {
     handleChange,
     reset
   } = useInput();
+  const targetUrl: boolean = Boolean(state && prevUrl);
 
-  const fieldsData = [
-    {
-      type: 'text',
-      name: 'name',
-      value: values.name || '',
-      placeholder: NAME_PLS,
-      error: validValues.name === undefined ? false : validValues.name,
-      errorText: errorMessages.name || '',
-      onChange: (e) => handleChange(e)
-    },
+  const fieldsData: TFieldsData[] = [
     {
       type: 'email',
       name: 'email',
@@ -55,7 +47,8 @@ function Register() {
       placeholder: EMAIL_PLS,
       error: validValues.email === undefined ? false : validValues.email,
       errorText: errorMessages.email || '',
-      onChange: (e) => handleChange(e)
+      //@ts-ignore
+      onChange: (e: ChangeEvent<HTMLInputElement>) => handleChange(e)
     },
     {
       name: 'password',
@@ -63,7 +56,8 @@ function Register() {
       placeholder: PASSWORD_PLS,
       error: validValues.password === undefined ? false : validValues.password,
       errorText: errorMessages.password || '',
-      onChange: (e) => handleChange(e),
+      //@ts-ignore
+      onChange: (e: ChangeEvent<HTMLInputElement>) => handleChange(e),
     }
   ];
 
@@ -73,43 +67,43 @@ function Register() {
   } = useSubmitBtn(fieldsData, validValues);
 
   const handleSubmit = useCallback(() => {
-    dispatch(fetchData({ values }, REGISTER_URL));
+    //@ts-ignore
+    dispatch(fetchData({ values }, LOGIN_URL));
   }, [
     values,
     dispatch
   ]);
 
-  const signUp = (data) => {
-    if(data.isSucceed) {
+  const signIn = ({ isLogged }: { isLogged: boolean; }) => {
+    if(isLogged) {
       reset();
       disableBtn();
-      setModalVisibility(true);
+      storage.setStorageItem(IS_LOGGED_KEY, isLogged);
+      navigate(`${targetUrl ? prevUrl : '/'}`, { replace: false });
     }
   };
 
   return (
-    <Wrapper title="" isFormHolder={true}>
+    <Wrapper isFormHolder={true}>
       <Form
-        title={REGISTER_TITLE}
+        title={LOGIN_TITLE}
         fieldsData={fieldsData}
-        onSubmit={signUp}>
+        onSubmit={signIn}>
         <FormButton
           isBtnDisabled={isBtnDisabled}
           handleSubmit={handleSubmit}
-          btnCaption="Зарегистрироваться" />
+          btnCaption="Войти" />
         <FormFooter>
           <p className="text text_type_main-default text_color_inactive">
-            Уже зарегистрированы? <NavLink to={`/${LOGIN_URL}`} style={{ textDecoration: 'none' }}>Войти</NavLink>
+            Вы — новый пользователь? <NavLink to={`/${REGISTER_URL}`} style={{ textDecoration: 'none' }}>Зарегистрироваться</NavLink>
+          </p>
+          <p className="text text_type_main-default text_color_inactive">
+            Забыли пароль? <NavLink to={`/${FORGOT_PASSWORD_URL}`} style={{ textDecoration: 'none' }}>Восстановить пароль</NavLink>
           </p>
         </FormFooter>
       </Form>
-      {isModalVisible && (
-        <Modal isModalOpen={isModalVisible} closeModal={() => setModalVisibility(false)}>
-          <ModalContent>Вы успешно зарегистрировались! <NavLink to={`/${LOGIN_URL}`} style={{ textDecoration: 'none' }}>Войти</NavLink></ModalContent>
-        </Modal>
-      )}
     </Wrapper>
   )
 };
 
-export default Register;
+export default Login;

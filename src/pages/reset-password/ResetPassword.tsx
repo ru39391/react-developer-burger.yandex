@@ -1,4 +1,9 @@
-import { useCallback, useEffect } from 'react';
+import React, {
+  FC,
+  useCallback,
+  useEffect,
+  ChangeEvent
+} from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -20,7 +25,9 @@ import {
   RESET_URL
 } from '../../utils/constants';
 
-function ResetPassword() {
+import type { TFieldsData } from '../../types';
+
+const ResetPassword: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
@@ -32,14 +39,15 @@ function ResetPassword() {
   } = useInput();
   const { isPasswordReqSent } = useAuth();
 
-  const fieldsData = [
+  const fieldsData: TFieldsData[] = [
     {
       name: 'password',
       value: values.password || '',
       placeholder: 'Введите новый пароль',
       error: validValues.password === undefined ? false : validValues.password,
       errorText: errorMessages.password || '',
-      onChange: (e) => handleChange(e),
+      //@ts-ignore
+      onChange: (e: ChangeEvent<HTMLInputElement>) => handleChange(e),
     },
     {
       type: 'text',
@@ -48,7 +56,8 @@ function ResetPassword() {
       placeholder: 'Введите код из письма',
       error: validValues.token === undefined ? false : validValues.token,
       errorText: errorMessages.token || '',
-      onChange: (e) => handleChange(e)
+      //@ts-ignore
+      onChange: (e: ChangeEvent<HTMLInputElement>) => handleChange(e)
     }
   ];
 
@@ -58,6 +67,7 @@ function ResetPassword() {
   } = useSubmitBtn(fieldsData, validValues);
 
   const handleSubmit = useCallback(() => {
+    //@ts-ignore
     dispatch(recoverPassword({ ...values }, RESET_URL));
   }, [
     values,
@@ -76,21 +86,21 @@ function ResetPassword() {
   }, []);
 
   return (
-    <Wrapper title="" isFormHolder={true}>
-    <Form
-      title={FORGOT_PASSWORD_TITLE}
-      fieldsData={fieldsData}
-      onSubmit={submitResetForm}>
-      <FormButton
-        isBtnDisabled={isBtnDisabled}
-        handleSubmit={handleSubmit}
-        btnCaption="Сохранить" />
-      <FormFooter>
-        <p className="text text_type_main-default text_color_inactive">
-          Вспомнили пароль? <NavLink to={`/${LOGIN_URL}`} style={{ textDecoration: 'none' }}>Войти</NavLink>
-        </p>
-      </FormFooter>
-    </Form>
+    <Wrapper isFormHolder={true}>
+      <Form
+        title={FORGOT_PASSWORD_TITLE}
+        fieldsData={fieldsData}
+        onSubmit={submitResetForm}>
+        <FormButton
+          isBtnDisabled={isBtnDisabled}
+          handleSubmit={handleSubmit}
+          btnCaption="Сохранить" />
+        <FormFooter>
+          <p className="text text_type_main-default text_color_inactive">
+            Вспомнили пароль? <NavLink to={`/${LOGIN_URL}`} style={{ textDecoration: 'none' }}>Войти</NavLink>
+          </p>
+        </FormFooter>
+      </Form>
     </Wrapper>
   )
 };

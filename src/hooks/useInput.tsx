@@ -1,6 +1,7 @@
 import {
   useState,
   useEffect,
+  ChangeEvent,
   SyntheticEvent
 } from 'react';
 import {
@@ -10,39 +11,39 @@ import {
   CODE_ERROR_MSG
 } from '../utils/constants';
 
-import type { TCustumData } from '../types';
+import type { TCustomData } from '../types';
 
 type TInputHook = {
-  values: TCustumData<string>,
-  validValues: TCustumData<boolean>;
-  editedValues: TCustumData<string>;
-  errorMessages: TCustumData<string>;
-  setValues: (data: TCustumData<string>) => void;
-  handleChange: Function;
+  values: TCustomData<string>,
+  validValues: TCustomData<boolean>;
+  editedValues: TCustomData<string>;
+  errorMessages: TCustomData<string>;
+  setValues: (data: TCustomData<string>) => void;
+  handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
   reset: Function;
 }
 
 const useInput = (): TInputHook => {
-  const [values, setValues] = useState<TCustumData<string>>({});
-  const [validValues, setValidValues] = useState<TCustumData<boolean>>({});
-  const [editedValues, setEditedValues] = useState<TCustumData<string>>({});
+  const [values, setValues] = useState<TCustomData<string>>({});
+  const [validValues, setValidValues] = useState<TCustomData<boolean>>({});
+  const [editedValues, setEditedValues] = useState<TCustomData<string>>({});
 
-  const regexPatterns: TCustumData<RegExp> = {
+  const regexPatterns: TCustomData<RegExp> = {
     name: /^[A-Za-zА-Яа-яЁё\s-]{2,30}$/,
     email: /^([A-Za-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})$/,
     password: /^[A-Za-z0-9_-]{8,30}$/,
     token: /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
   };
 
-  const errorsData: TCustumData<string> = {
+  const errorsData: TCustomData<string> = {
     name: NAME_ERROR_MSG,
     email: EMAIL_ERROR_MSG,
     password: PASSWORD_ERROR_MSG,
     token: CODE_ERROR_MSG
   };
 
-  const handleChange = (e: SyntheticEvent<HTMLInputElement>) => {
-    const { name, value } = e.target as HTMLInputElement;
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
     setValues({
       ...values,
       [name]: value
@@ -53,13 +54,13 @@ const useInput = (): TInputHook => {
     });
   };
 
-  const reset = () => {
+  const reset = (): void => {
     setValues({});
   };
 
   useEffect(() => {
     setEditedValues({
-      ...Object.keys(validValues).reduce((acc: TCustumData<string>, item: string) =>
+      ...Object.keys(validValues).reduce((acc: TCustomData<string>, item: string) =>
         validValues[item]
         ? acc
         : ({
@@ -74,7 +75,7 @@ const useInput = (): TInputHook => {
     values,
     validValues,
     editedValues,
-    errorMessages: Object.keys(validValues).reduce((acc: TCustumData<string>, item: string) =>
+    errorMessages: Object.keys(validValues).reduce((acc: TCustomData<string>, item: string) =>
       Object.keys(acc).find((key: string) => key === item)
       ? acc
       : ({

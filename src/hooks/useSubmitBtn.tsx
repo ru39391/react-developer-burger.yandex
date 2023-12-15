@@ -4,12 +4,19 @@ import {
   useEffect
 } from 'react';
 
-function useSubmitBtn(fields, validValues) {
-  const [isBtnDisabled, setBtnDisabled] = useState(true);
+import { TFieldsData, TCustomData } from '../types';
+
+type TSubmitBtnHook = {
+  isBtnDisabled: boolean;
+  disableBtn: Function;
+}
+
+const useSubmitBtn = (fields: TFieldsData[], validValues: TCustomData<boolean>): TSubmitBtnHook => {
+  const [isBtnDisabled, setBtnDisabled] = useState<boolean>(true);
 
   const values = useMemo(() => Object.values(validValues), [validValues]);
 
-  const disableBtn = () => {
+  const disableBtn = (): void => {
     setBtnDisabled(true);
   };
 

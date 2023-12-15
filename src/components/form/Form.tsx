@@ -10,11 +10,11 @@ import type { TRootState } from '../../services/store';
 import type { TFieldsData } from '../../types';
 
 interface IForm {
-  title: string;
+  title?: string;
   fieldsData: TFieldsData[];
   onSubmit: Function;
   children: ReactNode;
-  classNameMod: string;
+  classNameMod?: string;
 };
 
 const Form: FC<IForm> = ({

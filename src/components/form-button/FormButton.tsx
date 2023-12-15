@@ -7,12 +7,12 @@ import styles from './FormButton.module.css';
 import type { TRootState } from '../../services/store';
 
 interface IFormButton {
-  isBtnGroup: boolean;
+  isBtnGroup?: boolean;
   isBtnDisabled: boolean;
   handleSubmit: () => void;
-  handleSubmitOptional: () => void;
+  handleSubmitOptional?: () => void;
   btnCaption: string;
-  btnCaptionOptional: string;
+  btnCaptionOptional?: string;
 };
 
 const FormButton: FC<IFormButton> = ({

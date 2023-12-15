@@ -42,7 +42,7 @@ const App: FC = () => {
   const navigate = useNavigate();
   const layout = location.state && location.state.layout;
 
-  function closeModal() {
+  function closeModal(): void {
     navigate(`/`, { replace: true, state: null });
   }
 
