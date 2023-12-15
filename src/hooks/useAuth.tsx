@@ -6,7 +6,7 @@ import {
   REFRESH_TOKEN_KEY
 } from '../utils/constants';
 
-import { TToken } from '../types';
+import type { TToken } from '../types';
 
 type TAuthHook = {
   accessToken: TToken;

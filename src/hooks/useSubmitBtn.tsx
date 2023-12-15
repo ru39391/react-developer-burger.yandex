@@ -4,7 +4,7 @@ import {
   useEffect
 } from 'react';
 
-import { TFieldsData, TCustomData } from '../types';
+import type { TFieldsData, TCustomData } from '../types';
 
 type TSubmitBtnHook = {
   isBtnDisabled: boolean;

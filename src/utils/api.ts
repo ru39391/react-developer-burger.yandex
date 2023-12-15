@@ -11,20 +11,20 @@ import {
 } from '../types';
 
 class Api extends Component<{}> {
-  _path: string;
+  private _path: string;
 
   constructor(path: string) {
     super({});
     this._path = `${API_URL}${path}`;
   }
 
-  _setHeaders(): TCustomData<string> {
+  private _setHeaders(): TCustomData<string> {
     return {
       'Content-Type': 'application/json'
     }
   }
 
-  _checkResponse(result: Response, resultAlert: string): Promise<any> {
+  private _checkResponse(result: Response, resultAlert: string): Promise<any> {
     if (result.ok) {
       return result.json();
     }
@@ -32,14 +32,14 @@ class Api extends Component<{}> {
     return Promise.reject(`${resultAlert}: ${result.status}`);
   }
 
-  getData(): Promise<TProductDataRes> {
+  public getData(): Promise<TProductDataRes> {
     return fetch(this._path, {
       headers: this._setHeaders()
     })
       .then((res: Response) => {return this._checkResponse(res, RESPONSE_ERROR_MSG)});
   }
 
-  checkout(idsArr: string[]): Promise<TOrderDataRes> {
+  public checkout(idsArr: string[]): Promise<TOrderDataRes> {
     return fetch(this._path, {
       method: 'POST',
       headers: this._setHeaders(),

@@ -1,8 +1,7 @@
 import {
   useState,
   useEffect,
-  ChangeEvent,
-  SyntheticEvent
+  ChangeEvent
 } from 'react';
 import {
   NAME_ERROR_MSG,
