@@ -26,7 +26,7 @@ const IngredientDetails: FC<IIngredientDetails> = ({
         {nutritional && nutritional.map(({
           name,
           value
-        }, index) => (
+        }, index: number) => (
           <div key={index} className={`${styles.info} text text_type_digits-default text_color_inactive`}>
             <div className="text text_type_main-default">{name}</div>
             {value.toString()}

@@ -32,7 +32,7 @@ import {
 } from '../../services/slices/order-slice';
 
 import type { TRootState } from '../../services/store';
-import type { TProductData, TDraggableData, TDraggableItem } from '../../types';
+import type { TProduct, TProductData, TDraggableData, TDraggableItem } from '../../types';
 
 const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
@@ -128,7 +128,7 @@ const BurgerConstructor: FC = () => {
         />}
         <div className={styles.section}>
           <div className={styles.container}>
-            {ingredients.map((item) => (
+            {ingredients.map((item: TProduct) => (
               <Ingredient
                 text={item.name}
                 thumbnail={item.image}

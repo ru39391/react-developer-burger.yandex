@@ -86,7 +86,7 @@ const orderSlice = createSlice({
     }),
     removeItem: (state: TOrderState, action: TOrderAction) => ({
       ...state,
-      mainItems: [...state.mainItems].filter((_, index) => index !== action.payload.index)
+      mainItems: [...state.mainItems].filter((_: TProduct, index: number) => index !== action.payload.index)
     }),
     updateOrderList(state: TOrderState, action: TOrderAction) {
       const { draggedItem, targetItem } = action.payload.items || {};
@@ -101,12 +101,12 @@ const orderSlice = createSlice({
       }
     },
     setOrderData(state: TOrderState, action: TOrderAction) {
-      const addedItems = state.bunItems.filter(item => Boolean(item)).length ? [...state.bunItems, ...state.mainItems] : [...state.mainItems];
+      const addedItems = state.bunItems.filter((item: TProduct) => Boolean(item)).length ? [...state.bunItems, ...state.mainItems] : [...state.mainItems];
 
       return {
         ...state,
-        orderList: addedItems.map(item => item[ID_KEY]),
-        summ: addedItems.map(item => item[PRICE_KEY]).reduce((summ, value) => summ + value, 0)
+        orderList: addedItems.map((item: TProduct) => item[ID_KEY]),
+        summ: addedItems.map((item: TProduct) => item[PRICE_KEY]).reduce((summ: number, value: number) => summ + value, 0)
       };
     },
   }

@@ -28,7 +28,7 @@ const ConstructorSection: FC<IConstructorSection> = ({ data }) => {
   return (
     <>
       <div className={`${styles.wrapper} pr-4 pl-4 mb-10`}>
-        {data.map((item) => (
+        {data.map((item: TProduct) => (
           <Card
             data={item}
             thumbnail={item.image}

@@ -1,6 +1,8 @@
-export type TDefaultData = {
-  [key: string]: string | number | TProdData[];
+export type TCustumData<T> = {
+  [key: string]: T;
 };
+
+export type TDefaultData = TCustumData<string | number | TProdData[]>;
 
 export type TProductData = {
   readonly _id: string;
@@ -34,10 +36,7 @@ export type TUserData = {
 
 export type TUser = TUserData & TDefaultData;
 
-export type TDraggableData = {
-  draggedItem: TProductData;
-  targetItem: TProductData;
-};
+export type TDraggableData = TCustumData<TProductData>;
 
 export type TDraggableItem = {
   index: number;
@@ -54,7 +53,7 @@ export type TToken = string | null | {
   token: string | null;
 };
 
-export type TFieldsData = { [key: string]: string; } & {
+export type TFieldsData = TCustumData<string> & {
   value: string;
   error: boolean;
   onChange: () => void;
