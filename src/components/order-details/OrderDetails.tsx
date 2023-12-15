@@ -1,11 +1,14 @@
-import React from "react";
+import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import CheckoutImg from '../../images/checkout.png';
 
-import styles from "./OrderDetails.module.css";
+import styles from './OrderDetails.module.css';
 
-function OrderDetails() {
-  const { order: { id, name }, errorMsg } = useSelector(state => state.order);
+import type { TRootState } from '../../services/store';
+
+const OrderDetails: FC = () => {
+  const { order: { id, name }, errorMsg } = useSelector((state: TRootState) => state.order);
+  const caption = typeof name === 'string' ? name : '';
 
   return (
     <div className={`${styles.wrapper} pt-20 pb-20`}>
@@ -13,7 +16,7 @@ function OrderDetails() {
         <>
           <div className="mb-15">
             <div className={`${styles.id} text text_type_digits-large mb-8`}>{id.toString()}</div>
-            <div className="text text_type_main-medium">{name}</div>
+            <div className="text text_type_main-medium">{caption}</div>
           </div>
           <img src={CheckoutImg} alt="Ваш заказ начали готовить" />
           <div className="mt-15">

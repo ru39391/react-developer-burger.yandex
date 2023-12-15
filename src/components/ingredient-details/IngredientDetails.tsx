@@ -1,16 +1,22 @@
-import { memo } from "react";
-import PropTypes from 'prop-types';
+import React, { FC, memo } from 'react';
 
-import styles from "./IngredientDetails.module.css";
+import styles from './IngredientDetails.module.css';
 
-import { nutritionalPropTypes } from '../../utils/proptypes';
+import type { TProdData } from '../../types';
 
-function IngredientDetails({
+interface IIngredientDetails {
+  name: string;
+  image: string;
+  nutritional: TProdData[];
+  isCurrentPage: boolean;
+}
+
+const IngredientDetails: FC<IIngredientDetails> = ({
   name,
   image,
   nutritional,
   isCurrentPage
-}) {
+}) => {
   return (
     <div className={styles.wrapper}>
       <div className={`${styles.title} ${isCurrentPage ? 'mb-5' : `${styles.title_as_fs} pr-15`} text text_type_main-large`}>Детали ингредиента</div>
@@ -30,12 +36,5 @@ function IngredientDetails({
     </div>
   );
 }
-
-IngredientDetails.propTypes = {
-  name: PropTypes.string,
-  image: PropTypes.string,
-  nutritional: PropTypes.arrayOf(nutritionalPropTypes.isRequired),
-  isCurrentPage: PropTypes.bool
-};
 
 export default memo(IngredientDetails);

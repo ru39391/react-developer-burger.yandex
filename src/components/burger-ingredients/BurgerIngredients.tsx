@@ -26,7 +26,7 @@ import { getItems } from '../../services/actions/products';
 import type { TRootState } from '../../services/store';
 import type { TProduct } from '../../types';
 
-type TTabData = {
+type TTabItem = {
   value: string;
   caption: string;
   data: TProduct[];
@@ -64,7 +64,7 @@ const BurgerIngredients: FC = () => {
     [ingredients]
   );
 
-  const tabsArr: TTabData[] = [{
+  const tabsArr: TTabItem[] = [{
     value: BUN_PRODUCT_NAME,
     caption: BUN_PRODUCT_CAPTION,
     data: bunIngredients,

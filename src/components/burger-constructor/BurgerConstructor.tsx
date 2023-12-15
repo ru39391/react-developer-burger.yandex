@@ -16,7 +16,12 @@ import OrderDetails from '../order-details/OrderDetails';
 
 import styles from './BurgerConstructor.module.css';
 
-import { BUN_PRODUCT_NAME, LOGIN_URL } from '../../utils/constants';
+import {
+  TOP_KEY,
+  BOTTOM_KEY,
+  LOGIN_URL,
+  BUN_PRODUCT_NAME
+} from '../../utils/constants';
 import { checkout } from '../../services/actions/order';
 import {
   addItem,
@@ -27,7 +32,7 @@ import {
 } from '../../services/slices/order-slice';
 
 import type { TRootState } from '../../services/store';
-import type { TProductData, TDraggableData, TDraggableItem, TProdData } from '../../types';
+import type { TProductData, TDraggableData, TDraggableItem } from '../../types';
 
 const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
@@ -113,7 +118,7 @@ const BurgerConstructor: FC = () => {
     <>
       <div className={`${styles.wrapper} ${isHover && styles.wrapper_hovered}`} ref={wrapperRef}>
         {buns[0] && <Ingredient
-          type='top'
+          type={TOP_KEY}
           text={buns[0].name}
           price={buns[0].price}
           thumbnail={buns[0].image}
@@ -136,7 +141,7 @@ const BurgerConstructor: FC = () => {
           </div>
         </div>
         {buns[1] && <Ingredient
-          type='bottom'
+          type={BOTTOM_KEY}
           text={buns[1].name}
           price={buns[1].price}
           thumbnail={buns[1].image}

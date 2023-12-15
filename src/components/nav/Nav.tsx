@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
   BurgerIcon,
@@ -13,17 +13,23 @@ import {
   ORDERS_URL
 } from '../../utils/constants';
 
-function Nav() {
-  const navArr = [
+type TNavItem = {
+  url: string;
+  title: string;
+  icon: ReactNode;
+}
+
+const Nav: FC = () => {
+  const navArr: TNavItem[] = [
     {
       url: '',
       title: CONSTRUCTOR_TITLE,
-      icon: <BurgerIcon />
+      icon: <BurgerIcon type="primary" />
     },
     {
       url: `${PROFILE_URL}/${ORDERS_URL}`,
       title: ORDERS_TITLE,
-      icon: <ListIcon />
+      icon: <ListIcon type="primary" />
     }
   ];
 
@@ -34,7 +40,7 @@ function Nav() {
         title,
         icon,
       }, index) => (
-        <NavLink key={index} to={`/${url}`} className={`${styles.link} text text_color_inactive pt-4 pb-4 pl-5 pr-5`} style={({ isActive }) => ({ color: isActive && '#fff' })}>
+        <NavLink key={index} to={`/${url}`} className={`${styles.link} text text_color_inactive pt-4 pb-4 pl-5 pr-5`} style={({ isActive }: { isActive: boolean }) => ({ color: isActive ? '#fff' : '#8585AD' })}>
           {icon}
           {title}
         </NavLink>

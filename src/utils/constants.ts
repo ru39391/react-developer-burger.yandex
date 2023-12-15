@@ -66,8 +66,8 @@ const CARBOHYDRATES_CAPTION = 'Углеводы, г';
 const ID_KEY = '_id';
 const PRICE_KEY = 'price';
 
-const TOP_KEY = 'top';
-const BOTTOM_KEY = 'bottom';
+const TOP_KEY: string = 'top';
+const BOTTOM_KEY: string = 'bottom';
 
 const IS_LOGGED_KEY = 'isLogged';
 const IS_PASSWORD_REQ_SENT_KEY = 'isPasswordReqSent';

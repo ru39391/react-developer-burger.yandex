@@ -1,20 +1,34 @@
-import { useEffect } from "react";
+import React, {
+  FC,
+  useEffect,
+  ReactNode,
+  KeyboardEvent,
+  MouseEvent,
+  MouseEventHandler
+} from 'react';
 import { createPortal } from 'react-dom';
-import PropTypes from 'prop-types';
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./Modal.module.css";
 
 import ModalOverlay from "../modal-overlay/ModalOverlay";
 
-function Modal({
+interface IModalProps {
+  isModalOpen: boolean;
+  children: ReactNode;
+  closeModal: MouseEventHandler<HTMLButtonElement>;
+};
+
+const Modal: FC<IModalProps> = ({
   isModalOpen,
   children,
   closeModal
-}) {
+}) => {
   useEffect(() => {
-    function handleEscClose(e) {
-      if(e.key === 'Escape') closeModal();
+    function handleEscClose(e: unknown): void {
+      if ((e as KeyboardEvent).key === 'Escape') {
+        closeModal(e as MouseEvent<HTMLButtonElement>);
+      }
     }
 
     document.addEventListener('keydown', handleEscClose);
@@ -33,11 +47,5 @@ function Modal({
     document.body
   )
 }
-
-Modal.propTypes = {
-  isModalOpen: PropTypes.bool.isRequired,
-  children: PropTypes.node.isRequired,
-  closeModal: PropTypes.func.isRequired
-};
 
 export default Modal;
