@@ -105,8 +105,8 @@ const orderSlice = createSlice({
 
       return {
         ...state,
-        orderList: addedItems.map((item: TProduct) => item[ID_KEY]),
-        summ: addedItems.map((item: TProduct) => item[PRICE_KEY]).reduce((summ: number, value: number) => summ + value, 0)
+        orderList: addedItems.map((item: TProduct) => item[ID_KEY] as string),
+        summ: addedItems.map((item: TProduct) => item[PRICE_KEY] as number).reduce((summ: number, value: number) => summ + value, 0)
       };
     },
   }

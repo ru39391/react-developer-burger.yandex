@@ -19,10 +19,14 @@ export type TProductData = {
   readonly image_mobile: string;
   readonly image_large: string;
   readonly __v: number;
-  readonly key: string;
 };
 
 export type TProduct = TProductData & TDefaultData;
+
+export type TProductDataRes = {
+  readonly success: boolean;
+  readonly data: TProductData[];
+};
 
 export type TOrderData = {
   readonly id: number;
@@ -30,6 +34,14 @@ export type TOrderData = {
 };
 
 export type TOrder = TOrderData & TDefaultData;
+
+export type TOrderDataRes = {
+  readonly success: boolean;
+  readonly name: string;
+  readonly order: {
+    readonly number: number;
+  };
+};
 
 export type TUserData = {
   readonly name: string;
