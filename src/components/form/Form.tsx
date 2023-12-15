@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { FC, useEffect, ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 import {
   Input,
@@ -6,20 +6,31 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Form.module.css';
 
-function Form({
+import type { TRootState } from '../../services/store';
+import type { TFieldsData } from '../../types';
+
+interface IForm {
+  title: string;
+  fieldsData: TFieldsData[];
+  onSubmit: Function;
+  children: ReactNode;
+  classNameMod: string;
+};
+
+const Form: FC<IForm> = ({
   title,
   fieldsData,
   onSubmit,
   children,
   classNameMod
-}) {
+}) => {
   const {
     isLogged,
     isFailed,
     isSucceed,
     isRecoverySucceed,
     errorMsg
-  } = useSelector(state => state.user);
+  } = useSelector((state: TRootState) => state.user);
 
   useEffect(() => {
     onSubmit({

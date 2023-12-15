@@ -53,3 +53,9 @@ export type TToken = string | null | {
   date?: number | null;
   token: string | null;
 };
+
+export type TFieldsData = { [key: string]: string; } & {
+  value: string;
+  error: boolean;
+  onChange: () => void;
+};

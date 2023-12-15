@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import useModal from '../../hooks/useModal';
@@ -7,8 +7,15 @@ import Card from '../card/Card';
 
 import styles from './ConstructorSection.module.css';
 
-function ConstructorSection({ data }) {
-  const { item: cardDetails } = useSelector(state => state.products);
+import type { TRootState } from '../../services/store';
+import type { TProduct } from '../../types';
+
+interface IConstructorSection {
+  data: TProduct[];
+};
+
+const ConstructorSection: FC<IConstructorSection> = ({ data }) => {
+  const { item: cardDetails } = useSelector((state: TRootState) => state.products);
   const { setModalVisibility } = useModal();
 
   useEffect(
@@ -23,7 +30,6 @@ function ConstructorSection({ data }) {
       <div className={`${styles.wrapper} pr-4 pl-4 mb-10`}>
         {data.map((item) => (
           <Card
-            key={item._id}
             data={item}
             thumbnail={item.image}
             picture={item.image_large}

@@ -4,15 +4,26 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './FormButton.module.css';
 
-function FormButton({
+import type { TRootState } from '../../services/store';
+
+interface IFormButton {
+  isBtnGroup: boolean;
+  isBtnDisabled: boolean;
+  handleSubmit: () => void;
+  handleSubmitOptional: () => void;
+  btnCaption: string;
+  btnCaptionOptional: string;
+};
+
+const FormButton: FC<IFormButton> = ({
   isBtnGroup,
   isBtnDisabled,
   handleSubmit,
   handleSubmitOptional,
   btnCaption,
   btnCaptionOptional
-}) {
-  const { userRequest } = useSelector(state => state.user);
+}) => {
+  const { userRequest } = useSelector((state: TRootState) => state.user);
 
   return (
     <div className={isBtnGroup ? styles.wrapper : 'mb-20'}>
