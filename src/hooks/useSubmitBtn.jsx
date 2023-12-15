@@ -4,9 +4,6 @@ import {
   useEffect
 } from 'react';
 
-import PropTypes from 'prop-types';
-import { fieldPropTypes } from '../utils/proptypes';
-
 function useSubmitBtn(fields, validValues) {
   const [isBtnDisabled, setBtnDisabled] = useState(true);
 
@@ -29,10 +26,5 @@ function useSubmitBtn(fields, validValues) {
     disableBtn
   };
 }
-
-useSubmitBtn.propTypes = {
-  fields: PropTypes.arrayOf(fieldPropTypes.isRequired).isRequired,
-  validValues: PropTypes.arrayOf(PropTypes.bool.isRequired).isRequired
-};
 
 export default useSubmitBtn;

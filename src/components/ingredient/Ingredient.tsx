@@ -76,12 +76,14 @@ const Ingredient: FC<IIngredient> = ({
   });
 
   const ref = useRef<HTMLDivElement>(null);
+  //@ts-ignore
   const ingredientRef: RefObject<HTMLDivElement> | null = !bunTypeKeys.includes(type) && type ? dragRef(dropRef(ref)) : null;
 
   return (
     <div className={styles.item} ref={ingredientRef}>
       {!bunTypeKeys.includes(type) && type && <DragIcon type="primary" />}
       <ConstructorElement
+        //@ts-ignore
         type={type}
         isLocked={Boolean(bunTypeKeys.includes(type) && type)}
         text={bunTypeKeys.includes(type) && type ? `${text} (${[TOP_PRODUCT_CAPTION, BOTTOM_PRODUCT_CAPTION][bunTypeKeys.indexOf(type)]})` : text}

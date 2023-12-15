@@ -9,7 +9,8 @@ import styles from '../../components/wrapper/Wrapper.module.css';
 
 import { HOME_TITLE } from '../../utils/constants';
 
-function Home() {
+
+const Home: FC = () => {
   return (
     <Wrapper title={HOME_TITLE}>
       <div className={styles.container}>

@@ -8,7 +8,7 @@ interface IIngredientDetails {
   name: string;
   image: string;
   nutritional: TProdData[];
-  isCurrentPage: boolean;
+  isCurrentPage?: boolean;
 }
 
 const IngredientDetails: FC<IIngredientDetails> = ({

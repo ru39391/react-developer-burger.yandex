@@ -1,17 +1,20 @@
-import { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getItems } from '../../services/actions/products';
 import { setItemDetails } from '../../services/slices/products-slice';
 
-function IngredientsList() {
+import type { TRootState } from '../../services/store';
+
+const IngredientsList: FC = () => {
   const dispatch = useDispatch();
-  const { items } = useSelector(state => state.products);
+  const { items } = useSelector((state: TRootState) => state.products);
 
   useEffect(
     () => {
       dispatch(setItemDetails({ item: {} }));
+      //@ts-ignore
       if(!items.length) dispatch(getItems());
     },
     [dispatch]

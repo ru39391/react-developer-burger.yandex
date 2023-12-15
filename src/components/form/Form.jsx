@@ -1,13 +1,10 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import {
   Input,
   PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Form.module.css';
-
-import { fieldPropTypes } from '../../utils/proptypes';
 
 function Form({
   title,
@@ -58,14 +55,6 @@ function Form({
       </form>
     </>
   )
-};
-
-Form.propTypes = {
-  title: PropTypes.string.isRequired,
-  fieldsData: PropTypes.arrayOf(fieldPropTypes.isRequired).isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  children: PropTypes.node,
-  classNameMod: PropTypes.string
 };
 
 export default Form;

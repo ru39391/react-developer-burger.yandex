@@ -1,14 +1,11 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import useModal from '../../hooks/useModal';
 
 import Card from '../card/Card';
 
 import styles from './ConstructorSection.module.css';
-
-import { productPropTypes } from '../../utils/proptypes';
 
 function ConstructorSection({ data }) {
   const { item: cardDetails } = useSelector(state => state.products);
@@ -43,9 +40,5 @@ function ConstructorSection({ data }) {
     </>
   );
 }
-
-ConstructorSection.propTypes = {
-  data: PropTypes.arrayOf(productPropTypes.isRequired).isRequired
-};
 
 export default ConstructorSection;

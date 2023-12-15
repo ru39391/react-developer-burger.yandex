@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import Wrapper from '../../components/wrapper/Wrapper';
 
-function NotFound() {
+const NotFound: FC = () => {
   return (
     <Wrapper title="Стр. не найдена" />
   )

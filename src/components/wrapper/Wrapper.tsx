@@ -7,8 +7,8 @@ import styles from './Wrapper.module.css';
 import type { TRootState } from '../../services/store';
 
 interface IWrapperProps {
-  title: string;
-  children: ReactNode;
+  title?: string;
+  children?: ReactNode;
   isFormHolder?: boolean;
   isGrid?: boolean;
 };

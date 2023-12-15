@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
@@ -8,14 +8,17 @@ import IngredientDetails from '../../components/ingredient-details/IngredientDet
 
 import { fetchItem } from '../../services/actions/products';
 
-function IngredientsItem() {
+import type { TRootState } from '../../services/store';
+
+const IngredientsItem: FC = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { item } = useSelector(state => state.products);
+  const { item } = useSelector((state: TRootState) => state.products);
   const { handleProdData } = useProdData();
 
   useEffect(
     () => {
+      //@ts-ignore
       if(!Object.values(item).length) dispatch(fetchItem(id));
     },
     [dispatch]
@@ -24,12 +27,13 @@ function IngredientsItem() {
   return (
     <IngredientDetails
       {...item}
+      //@ts-ignore
       image={item.image_large}
       nutritional={handleProdData([
-        item.calories ? item.calories : 0,
-        item.proteins ? item.proteins : 0,
-        item.fat ? item.fat : 0,
-        item.carbohydrates ? item.carbohydrates : 0
+        item.calories ? Number(item.calories) : 0,
+        item.proteins ? Number(item.proteins) : 0,
+        item.fat ? Number(item.fat) : 0,
+        item.carbohydrates ? Number(item.carbohydrates) : 0
       ])}
       isCurrentPage={true}
     />
