@@ -34,29 +34,29 @@ const productsSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
-    getItemsRequest: (state: TProductsState, action: TProductsAction) => ({
+    getItemsRequest: (state, action: TProductsAction) => ({
       ...state,
       itemsRequest: true
     }),
-    getItemsSuccess: (state: TProductsState, action: TProductsAction) => ({
+    getItemsSuccess: (state, action: TProductsAction) => ({
       ...state,
       items: action.payload.data || state.items,
       itemsRequest: false,
       itemsFailed: false
     }),
-    fetchItemSuccess: (state: TProductsState, action: TProductsAction) => ({
+    fetchItemSuccess: (state, action: TProductsAction) => ({
       ...state,
       item: action.payload.item || state.item,
       itemsRequest: false,
       itemsFailed: false
     }),
-    getItemsFailed: (state: TProductsState, action: TProductsAction) => ({
+    getItemsFailed: (state, action: TProductsAction) => ({
       ...state,
       itemsRequest: false,
       itemsFailed: true,
       errorMsg: action.payload.errorMsg || ''
     }),
-    setItemDetails: (state: TProductsState, action: TProductsAction) => ({
+    setItemDetails: (state, action: TProductsAction) => ({
       ...state,
       item: action.payload.item || state.item,
     })

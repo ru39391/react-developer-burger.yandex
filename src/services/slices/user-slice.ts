@@ -42,11 +42,11 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    getUserRequest: (state: TUserState, action: TUserAction) => ({
+    getUserRequest: (state, action: TUserAction) => ({
       ...state,
       userRequest: true
     }),
-    getUserSuccess: (state: TUserState, action: TUserAction) => ({
+    getUserSuccess: (state, action: TUserAction) => ({
       ...state,
       ...action.payload.data,
       isFailed: false,
@@ -54,14 +54,14 @@ const userSlice = createSlice({
       userRequest: false,
       errorMsg: ''
     }),
-    getRecoverySuccess: (state: TUserState, action: TUserAction) => ({
+    getRecoverySuccess: (state, action: TUserAction) => ({
       ...state,
       isFailed: false,
       isRecoverySucceed: true,
       userRequest: false,
       errorMsg: ''
     }),
-    getFailed: (state: TUserState, action: TUserAction) => ({
+    getFailed: (state, action: TUserAction) => ({
       ...state,
       isLogged: false,
       isFailed: true,
