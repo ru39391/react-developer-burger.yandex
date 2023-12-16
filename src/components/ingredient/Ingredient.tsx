@@ -20,16 +20,16 @@ import styles from './Ingredient.module.css';
 
 import {
   ID_KEY,
-  TOP_KEY,
-  BOTTOM_KEY,
+  TOP_POS_KEY,
+  BOTTOM_POS_KEY,
   TOP_PRODUCT_CAPTION,
   BOTTOM_PRODUCT_CAPTION,
 } from '../../utils/constants';
 
-import type { TProduct } from '../../types';
+import type { TProduct, TIngredientPos } from '../../types';
 
 interface IIngredient {
-  type?: string;
+  pos?: TIngredientPos;
   text: string;
   price: number;
   thumbnail: string;
@@ -39,7 +39,7 @@ interface IIngredient {
 }
 
 const Ingredient: FC<IIngredient> = ({
-  type,
+  pos,
   text,
   price,
   thumbnail,
@@ -47,7 +47,7 @@ const Ingredient: FC<IIngredient> = ({
   handleDrop,
   removeIngredient
 }) => {
-  const bunTypeKeys: (string | undefined)[] = [TOP_KEY, BOTTOM_KEY];
+  const bunTypeKeys: TIngredientPos[] = [TOP_POS_KEY, BOTTOM_POS_KEY];
 
   function handleClose(): void {
     removeIngredient(ingredient);
@@ -77,16 +77,15 @@ const Ingredient: FC<IIngredient> = ({
 
   const ref = useRef<HTMLDivElement>(null);
   //@ts-ignore
-  const ingredientRef: RefObject<HTMLDivElement> | null = !bunTypeKeys.includes(type) && type ? dragRef(dropRef(ref)) : null;
+  const ingredientRef: RefObject<HTMLDivElement> | null = !bunTypeKeys.includes(pos) ? dragRef(dropRef(ref)) : null;
 
   return (
     <div className={styles.item} ref={ingredientRef}>
-      {!bunTypeKeys.includes(type) && type && <DragIcon type="primary" />}
+      {!bunTypeKeys.includes(pos) && <DragIcon type="primary" />}
       <ConstructorElement
-        //@ts-ignore
-        type={type}
-        isLocked={Boolean(bunTypeKeys.includes(type) && type)}
-        text={bunTypeKeys.includes(type) && type ? `${text} (${[TOP_PRODUCT_CAPTION, BOTTOM_PRODUCT_CAPTION][bunTypeKeys.indexOf(type)]})` : text}
+        type={pos}
+        isLocked={Boolean(bunTypeKeys.includes(pos))}
+        text={bunTypeKeys.includes(pos) ? `${text} (${[TOP_PRODUCT_CAPTION, BOTTOM_PRODUCT_CAPTION][bunTypeKeys.indexOf(pos)]})` : text}
         price={price}
         thumbnail={thumbnail}
         handleClose={handleClose}

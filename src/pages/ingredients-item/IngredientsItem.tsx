@@ -26,8 +26,7 @@ const IngredientsItem: FC = () => {
 
   return (
     <IngredientDetails
-      {...item}
-      //@ts-ignore
+      name={item.name}
       image={item.image_large}
       nutritional={handleProdData([
         item.calories ? Number(item.calories) : 0,

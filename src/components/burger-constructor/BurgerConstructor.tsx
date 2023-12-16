@@ -17,8 +17,8 @@ import OrderDetails from '../order-details/OrderDetails';
 import styles from './BurgerConstructor.module.css';
 
 import {
-  TOP_KEY,
-  BOTTOM_KEY,
+  TOP_POS_KEY,
+  BOTTOM_POS_KEY,
   LOGIN_URL,
   BUN_PRODUCT_NAME
 } from '../../utils/constants';
@@ -118,7 +118,7 @@ const BurgerConstructor: FC = () => {
     <>
       <div className={`${styles.wrapper} ${isHover && styles.wrapper_hovered}`} ref={wrapperRef}>
         {buns[0] && <Ingredient
-          type={TOP_KEY}
+          pos={TOP_POS_KEY}
           text={buns[0].name}
           price={buns[0].price}
           thumbnail={buns[0].image}
@@ -141,7 +141,7 @@ const BurgerConstructor: FC = () => {
           </div>
         </div>
         {buns[1] && <Ingredient
-          type={BOTTOM_KEY}
+          pos={BOTTOM_POS_KEY}
           text={buns[1].name}
           price={buns[1].price}
           thumbnail={buns[1].image}

@@ -4,7 +4,9 @@ export type TCustomData<T> = {
   [key: string]: T;
 };
 
-export type TProductDefault = TCustomData<string | number | TProdData[]>;
+export type TIngredientPos = 'top' | 'bottom' | undefined;
+
+export type TProductDefault = TCustomData<string | number | TProdData[]> & { pos?: TIngredientPos; };
 
 export type TProductData = {
   readonly _id: string;

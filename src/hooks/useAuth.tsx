@@ -25,9 +25,8 @@ const useAuth = (): TAuthHook => {
     isAccTokExist: storage.isItemExist(ACCESS_TOKEN_KEY),
     isRefTokExist: storage.isItemExist(REFRESH_TOKEN_KEY),
     isTokenExpired: storage.isTokenExpired(),
-    //TODO: проверить после изменения на Boolean(...)
-    isLogged: storage.isItemExist(IS_LOGGED_KEY, false) && Boolean(storage.getStorageItem(IS_LOGGED_KEY, false)),
-    isPasswordReqSent: storage.isItemExist(IS_PASSWORD_REQ_SENT_KEY, false) && Boolean(storage.getStorageItem(IS_PASSWORD_REQ_SENT_KEY, false))
+    isLogged: Boolean(storage.isItemExist(IS_LOGGED_KEY, false) && storage.getStorageItem(IS_LOGGED_KEY, false)),
+    isPasswordReqSent: Boolean(storage.isItemExist(IS_PASSWORD_REQ_SENT_KEY, false) && storage.getStorageItem(IS_PASSWORD_REQ_SENT_KEY, false))
   };
 }
 

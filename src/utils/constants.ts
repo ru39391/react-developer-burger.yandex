@@ -1,3 +1,5 @@
+import { TIngredientPos } from '../types';
+
 const DEFAULT_DOC_TITLE = 'Stellar Burgers';
 
 const HOME_TITLE: string = 'Соберите бургер';
@@ -68,6 +70,9 @@ const PRICE_KEY: string = 'price';
 
 const TOP_KEY: string = 'top';
 const BOTTOM_KEY: string = 'bottom';
+
+const TOP_POS_KEY: TIngredientPos = 'top';
+const BOTTOM_POS_KEY: TIngredientPos = 'bottom';
 
 const IS_LOGGED_KEY: string = 'isLogged';
 const IS_PASSWORD_REQ_SENT_KEY: string = 'isPasswordReqSent';
@@ -143,6 +148,9 @@ export {
   PRICE_KEY,
   TOP_KEY,
   BOTTOM_KEY,
+
+  TOP_POS_KEY,
+  BOTTOM_POS_KEY,
 
   IS_LOGGED_KEY,
   IS_PASSWORD_REQ_SENT_KEY,

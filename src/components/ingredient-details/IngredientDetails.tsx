@@ -5,8 +5,8 @@ import styles from './IngredientDetails.module.css';
 import type { TProdData } from '../../types';
 
 interface IIngredientDetails {
-  name: string;
-  image: string;
+  name: string | number | TProdData[];
+  image: string | number | TProdData[];
   nutritional: TProdData[];
   isCurrentPage?: boolean;
 }
@@ -20,8 +20,8 @@ const IngredientDetails: FC<IIngredientDetails> = ({
   return (
     <div className={styles.wrapper}>
       <div className={`${styles.title} ${isCurrentPage ? 'mb-5' : `${styles.title_as_fs} pr-15`} text text_type_main-large`}>Детали ингредиента</div>
-      <img className="mb-4" src={image} alt={name} />
-      <div className={`${styles.subtitle} text text_type_main-medium mb-8`}>{name}</div>
+      <img className="mb-4" src={image.toString()} alt={name.toString()} />
+      <div className={`${styles.subtitle} text text_type_main-medium mb-8`}>{name.toString()}</div>
       <div className={`${styles.row} mb-5`}>
         {nutritional && nutritional.map(({
           name,

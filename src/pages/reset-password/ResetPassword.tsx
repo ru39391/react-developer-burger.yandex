@@ -74,6 +74,7 @@ const ResetPassword: FC = () => {
     dispatch
   ]);
 
+  //TODO: настроить корректный сброс формы и отображение модального окна
   const submitResetForm = (): void => {
     reset();
     disableBtn();
