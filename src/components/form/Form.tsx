@@ -50,7 +50,7 @@ const Form: FC<IForm> = ({
         {title && <div className={`${styles.title} text text_type_main-medium mb-6`}>{title}</div>}
         {isFailed && <div className={`${styles.title} text text_type_main-default mb-4`} style={{ color: '#e52b1a' }}>{errorMsg}</div>}
         <fieldset className={`${styles.fieldset} mb-4`}>
-          {fieldsData.map((item: TFieldsData, index: number) => (
+          {fieldsData.map((item, index) => (
             item.name === 'password'
             ? <PasswordInput
               key={index}

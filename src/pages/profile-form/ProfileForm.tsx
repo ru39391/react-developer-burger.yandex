@@ -114,7 +114,7 @@ const ProfileForm: FC = () => {
   ]);
 
   const updatedValues = useMemo(() =>
-    Object.values(editedValues).reduce((acc: TCustomData<string>, item: string, index: number) =>
+    Object.values(editedValues).reduce((acc, item, index) =>
       ![name, email].includes(item)
       ? ({
           ...acc,

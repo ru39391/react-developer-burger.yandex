@@ -59,7 +59,7 @@ const useInput = (): TInputHook => {
 
   useEffect(() => {
     setEditedValues({
-      ...Object.keys(validValues).reduce((acc: TCustomData<string>, item: string) =>
+      ...Object.keys(validValues).reduce((acc, item) =>
         validValues[item]
         ? acc
         : ({
@@ -74,8 +74,8 @@ const useInput = (): TInputHook => {
     values,
     validValues,
     editedValues,
-    errorMessages: Object.keys(validValues).reduce((acc: TCustomData<string>, item: string) =>
-      Object.keys(acc).find((key: string) => key === item)
+    errorMessages: Object.keys(validValues).reduce((acc, item) =>
+      Object.keys(acc).find(key => key === item)
       ? acc
       : ({
           ...acc,

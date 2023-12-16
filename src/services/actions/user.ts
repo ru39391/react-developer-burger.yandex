@@ -16,7 +16,7 @@ import {
   getFailed,
   resetUserData
 } from '../slices/user-slice';
-import userApi from '../../utils/userApi';
+import UserApi from '../../utils/userApi';
 import storage from '../../utils/storage';
 import type { TAppThunk } from '../../services/store';
 import type {
@@ -26,8 +26,8 @@ import type {
   TToken
 } from '../../types';
 
-const api: userApi = new userApi(AUTH_ALIAS);
-const passwordApi: userApi = new userApi(RESET_PASSWORD_ALIAS);
+const api: UserApi = new UserApi(AUTH_ALIAS);
+const passwordApi: UserApi = new UserApi(RESET_PASSWORD_ALIAS);
 
 const fetchData = (data: { values: TCustomData<string> }, alias: string = ''): TAppThunk<void> => async (dispatch: Dispatch) => {
   dispatch(getUserRequest({}));

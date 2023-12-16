@@ -86,7 +86,7 @@ const Card: FC<ICardProps> = ({
   });
 
   useEffect(() => {
-    setCounter(orderList.filter((value: string) => value === data[ID_KEY]).length);
+    setCounter(orderList.filter(value => value === data[ID_KEY]).length);
   }, [orderList]);
 
   return (

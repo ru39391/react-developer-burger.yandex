@@ -17,16 +17,19 @@ const IngredientDetails: FC<IIngredientDetails> = ({
   nutritional,
   isCurrentPage
 }) => {
+  const nameVal = typeof name === 'string' ? name.toString() : '';
+  const imageVal = typeof image === 'string' ? image.toString() : '';
+
   return (
     <div className={styles.wrapper}>
       <div className={`${styles.title} ${isCurrentPage ? 'mb-5' : `${styles.title_as_fs} pr-15`} text text_type_main-large`}>Детали ингредиента</div>
-      <img className="mb-4" src={image.toString()} alt={name.toString()} />
-      <div className={`${styles.subtitle} text text_type_main-medium mb-8`}>{name.toString()}</div>
+      <img className="mb-4" src={imageVal} alt={nameVal} />
+      <div className={`${styles.subtitle} text text_type_main-medium mb-8`}>{nameVal}</div>
       <div className={`${styles.row} mb-5`}>
         {nutritional && nutritional.map(({
           name,
           value
-        }, index: number) => (
+        }, index) => (
           <div key={index} className={`${styles.info} text text_type_digits-default text_color_inactive`}>
             <div className="text text_type_main-default">{name}</div>
             {value.toString()}

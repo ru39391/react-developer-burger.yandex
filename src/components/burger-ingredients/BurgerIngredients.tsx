@@ -7,7 +7,7 @@ import React, {
   Fragment,
   RefObject
 } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import ConstructorSection from '../constructor-section/ConstructorSection';
 
@@ -21,7 +21,6 @@ import {
   MAIN_PRODUCT_CAPTION,
   SAUCE_PRODUCT_CAPTION,
 } from '../../utils/constants';
-import { getItems } from '../../services/actions/products';
 
 import type { TRootState } from '../../services/store';
 import type { TProduct } from '../../types';
@@ -35,11 +34,10 @@ type TTabItem = {
 }
 
 const BurgerIngredients: FC = () => {
-  const dispatch = useDispatch();
-  const ingredients = useSelector((state: TRootState) => state.products.items);
   const [current, setCurrent] = useState<string>(BUN_PRODUCT_NAME);
+  const ingredients = useSelector((state: TRootState) => state.products.items);
 
-  const filterByType = (params: string[], arr: TProduct[]): TProduct[][] => params.map((item: string) => arr.filter(({ type }: { type: string }) => type === item));
+  const filterByType = (params: string[], arr: TProduct[]): TProduct[][] => params.map(item => arr.filter(({ type }) => type === item));
 
   const productNames: string[] = [
     BUN_PRODUCT_NAME,
@@ -126,14 +124,6 @@ const BurgerIngredients: FC = () => {
       }
     };
   }, []);
-
-  useEffect(
-    () => {
-      //@ts-ignore
-      if(!ingredients.length) dispatch(getItems());
-    },
-    [dispatch]
-  );
 
   return (
     <div className={styles.wrapper}>

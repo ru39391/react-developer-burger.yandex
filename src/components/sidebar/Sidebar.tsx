@@ -66,7 +66,7 @@ const Sidebar: FC = () => {
         {navArr.map(({
           url,
           title
-        }, index: number) => (
+        }, index) => (
           <NavLink
             key={index}
             to={`/${url}`}

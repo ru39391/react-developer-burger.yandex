@@ -20,8 +20,8 @@ import styles from './Ingredient.module.css';
 
 import {
   ID_KEY,
-  TOP_POS_KEY,
-  BOTTOM_POS_KEY,
+  TOP_KEY,
+  BOTTOM_KEY,
   TOP_PRODUCT_CAPTION,
   BOTTOM_PRODUCT_CAPTION,
 } from '../../utils/constants';
@@ -47,7 +47,7 @@ const Ingredient: FC<IIngredient> = ({
   handleDrop,
   removeIngredient
 }) => {
-  const bunTypeKeys: TIngredientPos[] = [TOP_POS_KEY, BOTTOM_POS_KEY];
+  const bunTypeKeys: TIngredientPos[] = [TOP_KEY, BOTTOM_KEY];
 
   function handleClose(): void {
     removeIngredient(ingredient);

@@ -13,6 +13,8 @@ import styles from "./Modal.module.css";
 
 import ModalOverlay from "../modal-overlay/ModalOverlay";
 
+const modalElement = document.querySelector('#modals') as HTMLElement;
+
 interface IModalProps {
   isModalOpen: boolean;
   children: ReactNode;
@@ -44,7 +46,7 @@ const Modal: FC<IModalProps> = ({
         {children}
       </div>
     </ModalOverlay>,
-    document.body
+    modalElement
   )
 }
 

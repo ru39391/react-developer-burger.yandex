@@ -33,7 +33,7 @@ const fetchItem = (id: string): TAppThunk<void> => async (dispatch: Dispatch) =>
   try {
     const res = await api.getData();
     if (res && res.success) {
-      dispatch(fetchItemSuccess({ item: res.data.find(({ _id }: { _id: string }) => _id === id) }))
+      dispatch(fetchItemSuccess({ item: res.data.find(({ _id }) => _id === id) }))
     } else {
       dispatch(getItemsFailed({ errorMsg: RESPONSE_ERROR_MSG }))
     }

@@ -11,7 +11,7 @@ import {
   TPasswordResponse
 } from '../types';
 
-class userApi extends Component<{}> {
+class UserApi extends Component<{}> {
   private _path: string;
 
   constructor(path: string) {
@@ -73,4 +73,4 @@ class userApi extends Component<{}> {
   }
 }
 
-export default userApi;
+export default UserApi;

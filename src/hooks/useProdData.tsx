@@ -20,7 +20,7 @@ const useProdData = (): TProdDataHook => {
   ];
 
   const handleProdData = (arr: number[]): TProdData[] => {
-    return arr.map((value: number, index: number) => ({
+    return arr.map((value, index) => ({
       name: captionsArr[index],
       value
     }));

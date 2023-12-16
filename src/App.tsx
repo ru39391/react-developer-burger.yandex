@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import {
   useLocation,
   useNavigate,
@@ -6,6 +6,7 @@ import {
   Routes,
   Route
 } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Home from './pages/home/Home';
 import Orders from './pages/orders/Orders';
@@ -27,6 +28,9 @@ import IngredientDetails from './components/ingredient-details/IngredientDetails
 
 import AppHeader from './components/app-header/AppHeader';
 
+import { getItems } from './services/actions/products';
+import type { TRootState } from './services/store';
+
 import {
   ORDERS_URL,
   PROFILE_URL,
@@ -40,11 +44,21 @@ import {
 const App: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const ingredients = useSelector((state: TRootState) => state.products.items);
   const layout = location.state && location.state.layout;
 
   function closeModal(): void {
     navigate(`/`, { replace: true, state: null });
   }
+
+  useEffect(
+    () => {
+      //@ts-ignore
+      if(!ingredients.length) dispatch(getItems());
+    },
+    [dispatch]
+  );
 
   return (
     <div className="page">

@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, FC } from 'react';
+import React, { FC, Key, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop, DropTargetMonitor } from 'react-dnd';
@@ -17,8 +17,8 @@ import OrderDetails from '../order-details/OrderDetails';
 import styles from './BurgerConstructor.module.css';
 
 import {
-  TOP_POS_KEY,
-  BOTTOM_POS_KEY,
+  TOP_KEY,
+  BOTTOM_KEY,
   LOGIN_URL,
   BUN_PRODUCT_NAME
 } from '../../utils/constants';
@@ -32,7 +32,7 @@ import {
 } from '../../services/slices/order-slice';
 
 import type { TRootState } from '../../services/store';
-import type { TProduct, TProductData, TDraggableData, TDraggableItem } from '../../types';
+import type { TProductData, TDraggableData, TDraggableItem } from '../../types';
 
 const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ const BurgerConstructor: FC = () => {
 
   const handleDrop = useCallback(
     (data: TDraggableData) => {
-      const isBunItemsArr: boolean[] = Object.values(data).map(({ type }: { type: string }) => type === BUN_PRODUCT_NAME);
+      const isBunItemsArr: boolean[] = Object.values(data).map(({ type }) => type === BUN_PRODUCT_NAME);
       const getIndex = (value: number): TDraggableItem => ({
         product: Object.values(data)[value],
         index: ingredients.indexOf(Object.values(data)[value])
@@ -118,7 +118,7 @@ const BurgerConstructor: FC = () => {
     <>
       <div className={`${styles.wrapper} ${isHover && styles.wrapper_hovered}`} ref={wrapperRef}>
         {buns[0] && <Ingredient
-          pos={TOP_POS_KEY}
+          pos={TOP_KEY}
           text={buns[0].name}
           price={buns[0].price}
           thumbnail={buns[0].image}
@@ -128,20 +128,21 @@ const BurgerConstructor: FC = () => {
         />}
         <div className={styles.section}>
           <div className={styles.container}>
-            {ingredients.map((item: TProduct) => (
+            {ingredients.map(item => (
               <Ingredient
+                {...item}
+                key={item.key as Key}
                 text={item.name}
                 thumbnail={item.image}
                 ingredient={item}
                 handleDrop={handleDrop}
                 removeIngredient={removeIngredient}
-                {...item}
               />
             ))}
           </div>
         </div>
         {buns[1] && <Ingredient
-          pos={BOTTOM_POS_KEY}
+          pos={BOTTOM_KEY}
           text={buns[1].name}
           price={buns[1].price}
           thumbnail={buns[1].image}
