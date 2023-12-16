@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux';
 import {
   LOGIN_URL,
+  RESET_URL,
   AUTH_ALIAS,
   RESET_PASSWORD_ALIAS,
   ACCESS_TOKEN_KEY,
@@ -13,6 +14,7 @@ import {
   getUserRequest,
   getUserSuccess,
   getRecoverySuccess,
+  getResetSuccess,
   getFailed,
   resetUserData
 } from '../slices/user-slice';
@@ -90,7 +92,7 @@ const recoverPassword = (data: TCustomData<string>, alias: string = ''): TAppThu
   try {
     const res = await passwordApi.recoverPassword(data, alias);
     if (res && res.success) {
-      dispatch(getRecoverySuccess({}));
+      alias === RESET_URL ? dispatch(getResetSuccess({})) : dispatch(getRecoverySuccess({}));
     } else {
       dispatch(getFailed({ errorMsg: UPDATE_ERROR_MSG }));
     }

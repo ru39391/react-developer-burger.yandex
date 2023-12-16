@@ -1,13 +1,9 @@
-import React, {
-  FC,
-  useCallback,
-  useEffect,
-  ChangeEvent
-} from 'react';
+import React, { FC, useCallback, useEffect, ChangeEvent } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import useAuth from '../../hooks/useAuth'
+import useModal from '../../hooks/useModal';
 import useInput from '../../hooks/useInput';
 import useSubmitBtn from '../../hooks/useSubmitBtn';
 
@@ -15,6 +11,8 @@ import Form from '../../components/form/Form';
 import FormButton from '../../components/form-button/FormButton';
 import FormFooter from '../../components/form-footer/FormFooter';
 import Wrapper from '../../components/wrapper/Wrapper';
+import Modal from '../../components/modal/Modal';
+import ModalContent from '../../components/modal-content/ModalContent';
 
 import { recoverPassword } from '../../services/actions/user';
 
@@ -25,11 +23,14 @@ import {
   RESET_URL
 } from '../../utils/constants';
 
+import type { TRootState } from '../../services/store';
 import type { TFieldsData } from '../../types';
 
 const ResetPassword: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isResetSucceed } = useSelector((state: TRootState) => state.user);
+  const { isModalVisible, setModalVisibility } = useModal();
   const {
     values,
     validValues,
@@ -66,6 +67,14 @@ const ResetPassword: FC = () => {
     disableBtn
   } = useSubmitBtn(fieldsData, validValues);
 
+  const submitResetForm = () => {
+    if(isResetSucceed) {
+      reset();
+      disableBtn();
+      setModalVisibility(true);
+    }
+  };
+
   const handleSubmit = useCallback(() => {
     //@ts-ignore
     dispatch(recoverPassword({ ...values }, RESET_URL));
@@ -74,27 +83,26 @@ const ResetPassword: FC = () => {
     dispatch
   ]);
 
-  //TODO: настроить корректный сброс формы и отображение модального окна
-  const submitResetForm = (): void => {
-    reset();
-    disableBtn();
-  };
-
   useEffect(() => {
     if(!isPasswordReqSent) {
       navigate(`/${FORGOT_PASSWORD_URL}`, { replace: false });
     }
   }, []);
 
+  useEffect(() => {
+    submitResetForm();
+  }, [
+    isResetSucceed
+  ]);
+
   return (
     <Wrapper isFormHolder={true}>
       <Form
         title={FORGOT_PASSWORD_TITLE}
         fieldsData={fieldsData}
-        onSubmit={submitResetForm}>
+        onSubmit={handleSubmit}>
         <FormButton
           isBtnDisabled={isBtnDisabled}
-          handleSubmit={handleSubmit}
           btnCaption="Сохранить" />
         <FormFooter>
           <p className="text text_type_main-default text_color_inactive">
@@ -102,6 +110,11 @@ const ResetPassword: FC = () => {
           </p>
         </FormFooter>
       </Form>
+      {isModalVisible && (
+        <Modal isModalOpen={isModalVisible} closeModal={() => setModalVisibility(false)}>
+          <ModalContent>Пароль успешно изменён! <NavLink to={`/${LOGIN_URL}`} style={{ textDecoration: 'none' }}>Войти</NavLink></ModalContent>
+        </Modal>
+      )}
     </Wrapper>
   )
 };

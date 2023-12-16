@@ -16,7 +16,7 @@ const useSubmitBtn = (fields: TFieldsData[], validValues: TCustomData<boolean>):
 
   const values = useMemo(() => Object.values(validValues), [validValues]);
 
-  const disableBtn = (): void => {
+  const disableBtn = () => {
     setBtnDisabled(true);
   };
 

@@ -1,10 +1,4 @@
-import React, {
-  FC,
-  useMemo,
-  useCallback,
-  useEffect,
-  ChangeEvent
-} from 'react';
+import React, {FC, useMemo, useCallback, useEffect, ChangeEvent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import useAuth from '../../hooks/useAuth';
@@ -28,7 +22,7 @@ import {
 } from '../../utils/constants';
 
 import type { TRootState } from '../../services/store';
-import type { TFieldsData, TCustomData } from '../../types';
+import type { TFieldsData } from '../../types';
 
 const ProfileForm: FC = () => {
   const dispatch = useDispatch();
@@ -126,6 +120,14 @@ const ProfileForm: FC = () => {
     editedValues
   ]);
 
+  const setDefaultValues = () => {
+    setValues({
+      name,
+      email,
+      password: PASSWORD_DEFAULT_VAL
+    });
+  };
+
   const handleSubmit = useCallback(() => {
     if(isTokenExpired) {
       getCurrentToken();
@@ -137,14 +139,6 @@ const ProfileForm: FC = () => {
     updatedValues,
     dispatch
   ]);
-
-  const setDefaultValues = (): void => {
-    setValues({
-      name,
-      email,
-      password: PASSWORD_DEFAULT_VAL
-    });
-  };
 
   useEffect(() => {
     getUserData();
@@ -161,13 +155,12 @@ const ProfileForm: FC = () => {
     <>
       <Form
         fieldsData={fieldsData}
-        onSubmit={setDefaultValues}
+        onSubmit={handleSubmit}
         classNameMod="ai_start">
         <FormButton
           isBtnGroup={true}
           isBtnDisabled={!Object.values(updatedValues).length}
-          handleSubmit={handleSubmit}
-          handleSubmitOptional={setDefaultValues}
+          handleBtn={setDefaultValues}
           btnCaption="Сохранить"
           btnCaptionOptional="Отмена"
           />

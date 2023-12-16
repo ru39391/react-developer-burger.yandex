@@ -1,6 +1,6 @@
-import React, { FC, useCallback, ChangeEvent } from 'react';
+import React, { FC, useEffect, useCallback, ChangeEvent } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import useInput from '../../hooks/useInput';
 import useSubmitBtn from '../../hooks/useSubmitBtn';
@@ -23,6 +23,7 @@ import {
   IS_LOGGED_KEY
 } from '../../utils/constants';
 
+import type { TRootState } from '../../services/store';
 import type { TFieldsData, TLocState } from '../../types';
 
 const Login: FC = () => {
@@ -30,6 +31,7 @@ const Login: FC = () => {
   const prevUrl = typeof state === 'object' && state !== null ? state.prevUrl : null;
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isLogged } = useSelector((state: TRootState) => state.user);
   const {
     values,
     validValues,
@@ -66,15 +68,7 @@ const Login: FC = () => {
     disableBtn
   } = useSubmitBtn(fieldsData, validValues);
 
-  const handleSubmit = useCallback(() => {
-    //@ts-ignore
-    dispatch(fetchData({ values }, LOGIN_URL));
-  }, [
-    values,
-    dispatch
-  ]);
-
-  const signIn = ({ isLogged }: { isLogged: boolean; }) => {
+  const signIn = () => {
     if(isLogged) {
       reset();
       disableBtn();
@@ -83,15 +77,28 @@ const Login: FC = () => {
     }
   };
 
+  const handleSubmit = useCallback(() => {
+    //@ts-ignore
+    dispatch(fetchData({ values }, LOGIN_URL));
+  }, [
+    values,
+    dispatch
+  ]);
+
+  useEffect(() => {
+    signIn();
+  }, [
+    isLogged
+  ]);
+
   return (
     <Wrapper isFormHolder={true}>
       <Form
         title={LOGIN_TITLE}
         fieldsData={fieldsData}
-        onSubmit={signIn}>
+        onSubmit={handleSubmit}>
         <FormButton
           isBtnDisabled={isBtnDisabled}
-          handleSubmit={handleSubmit}
           btnCaption="Войти" />
         <FormFooter>
           <p className="text text_type_main-default text_color_inactive">

@@ -1,6 +1,6 @@
-import React, { FC, useCallback, ChangeEvent } from 'react';
+import React, { FC, useEffect, useCallback, ChangeEvent } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import useAuth from '../../hooks/useAuth';
 import useInput from '../../hooks/useInput';
@@ -22,11 +22,13 @@ import {
   IS_PASSWORD_REQ_SENT_KEY
 } from '../../utils/constants';
 
+import type { TRootState } from '../../services/store';
 import type { TFieldsData } from '../../types';
 
 const ForgotPassword: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isRecoverySucceed } = useSelector((state: TRootState) => state.user);
   const {
     values,
     validValues,
@@ -54,15 +56,7 @@ const ForgotPassword: FC = () => {
     disableBtn
   } = useSubmitBtn(fieldsData, validValues);
 
-  const handleSubmit = useCallback(() => {
-    //@ts-ignore
-    dispatch(recoverPassword({ ...values }));
-  }, [
-    values,
-    dispatch
-  ]);
-
-  const submitRecoveryForm = ({ isRecoverySucceed }: { isRecoverySucceed: boolean }) => {
+  const submitRecoveryForm = () => {
     if(isRecoverySucceed && !isPasswordReqSent) {
       reset();
       disableBtn();
@@ -71,15 +65,28 @@ const ForgotPassword: FC = () => {
     }
   };
 
+  const handleSubmit = useCallback(() => {
+    //@ts-ignore
+    dispatch(recoverPassword({ ...values }));
+  }, [
+    values,
+    dispatch
+  ]);
+
+  useEffect(() => {
+    submitRecoveryForm();
+  }, [
+    isRecoverySucceed
+  ]);
+
   return (
     <Wrapper isFormHolder={true}>
       <Form
         title={FORGOT_PASSWORD_TITLE}
         fieldsData={fieldsData}
-        onSubmit={submitRecoveryForm}>
+        onSubmit={handleSubmit}>
         <FormButton
           isBtnDisabled={isBtnDisabled}
-          handleSubmit={handleSubmit}
           btnCaption="Восстановить" />
         <FormFooter>
           <p className="text text_type_main-default text_color_inactive">

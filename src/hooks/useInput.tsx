@@ -53,7 +53,7 @@ const useInput = (): TInputHook => {
     });
   };
 
-  const reset = (): void => {
+  const reset = () => {
     setValues({});
   };
 

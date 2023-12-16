@@ -1,5 +1,5 @@
-import React, { FC, useCallback, ChangeEvent } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { FC, useEffect, useCallback, ChangeEvent } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 import useModal from '../../hooks/useModal';
@@ -24,10 +24,12 @@ import {
   REGISTER_URL
 } from '../../utils/constants';
 
-import type { TFieldsData, TCustomData } from '../../types';
+import type { TRootState } from '../../services/store';
+import type { TFieldsData } from '../../types';
 
 const Register: FC = () => {
   const dispatch = useDispatch();
+  const { isRegistered } = useSelector((state: TRootState) => state.user);
   const {
     isModalVisible,
     setModalVisibility
@@ -77,6 +79,14 @@ const Register: FC = () => {
     disableBtn
   } = useSubmitBtn(fieldsData, validValues);
 
+  const signUp = () => {
+    if(isRegistered) {
+      reset();
+      disableBtn();
+      setModalVisibility(true);
+    }
+  };
+
   const handleSubmit = useCallback(() => {
     //@ts-ignore
     dispatch(fetchData({ values }, REGISTER_URL));
@@ -85,23 +95,20 @@ const Register: FC = () => {
     dispatch
   ]);
 
-  const signUp = (data: TCustomData<boolean>) => {
-    if(data.isSucceed) {
-      reset();
-      disableBtn();
-      setModalVisibility(true);
-    }
-  };
+  useEffect(() => {
+    signUp();
+  }, [
+    isRegistered
+  ]);
 
   return (
     <Wrapper isFormHolder={true}>
       <Form
         title={REGISTER_TITLE}
         fieldsData={fieldsData}
-        onSubmit={signUp}>
+        onSubmit={handleSubmit}>
         <FormButton
           isBtnDisabled={isBtnDisabled}
-          handleSubmit={handleSubmit}
           btnCaption="Зарегистрироваться" />
         <FormFooter>
           <p className="text text_type_main-default text_color_inactive">

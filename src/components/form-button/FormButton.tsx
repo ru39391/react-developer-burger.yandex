@@ -9,8 +9,7 @@ import type { TRootState } from '../../services/store';
 interface IFormButton {
   isBtnGroup?: boolean;
   isBtnDisabled: boolean;
-  handleSubmit: () => void;
-  handleSubmitOptional?: () => void;
+  handleBtn?: () => void;
   btnCaption: string;
   btnCaptionOptional?: string;
 };
@@ -18,8 +17,7 @@ interface IFormButton {
 const FormButton: FC<IFormButton> = ({
   isBtnGroup,
   isBtnDisabled,
-  handleSubmit,
-  handleSubmitOptional,
+  handleBtn,
   btnCaption,
   btnCaptionOptional
 }) => {
@@ -27,8 +25,8 @@ const FormButton: FC<IFormButton> = ({
 
   return (
     <div className={isBtnGroup ? styles.wrapper : 'mb-20'}>
-      <Button htmlType="submit" type="primary" size="medium" disabled={isBtnDisabled || userRequest} onClick={handleSubmit}>{btnCaption}</Button>
-      {isBtnGroup && <Button htmlType="button" type="primary" size="medium" disabled={isBtnDisabled || userRequest} onClick={handleSubmitOptional}>{btnCaptionOptional}</Button>}
+      <Button htmlType="submit" type="primary" size="medium" disabled={isBtnDisabled || userRequest}>{btnCaption}</Button>
+      {isBtnGroup && <Button htmlType="button" type="primary" size="medium" disabled={isBtnDisabled || userRequest} onClick={handleBtn}>{btnCaptionOptional}</Button>}
     </div>
   )
 };

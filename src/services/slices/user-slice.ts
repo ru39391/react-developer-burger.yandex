@@ -18,8 +18,9 @@ export type TUserState = {
 
   isLogged: boolean;
   isFailed: boolean;
-  isSucceed: boolean;
+  isRegistered: boolean;
   isRecoverySucceed: boolean;
+  isResetSucceed: boolean;
   userRequest: boolean;
 
   errorMsg: string;
@@ -31,8 +32,9 @@ const initialState: TUserState = {
 
   isLogged: false,
   isFailed: false,
-  isSucceed: false,
+  isRegistered: false,
   isRecoverySucceed: false,
+  isResetSucceed: false,
   userRequest: false,
 
   errorMsg: '',
@@ -50,7 +52,7 @@ const userSlice = createSlice({
       ...state,
       ...action.payload.data,
       isFailed: false,
-      isSucceed: true,
+      isRegistered: true,
       userRequest: false,
       errorMsg: ''
     }),
@@ -61,11 +63,18 @@ const userSlice = createSlice({
       userRequest: false,
       errorMsg: ''
     }),
+    getResetSuccess: (state, action: TUserAction) => ({
+      ...state,
+      isFailed: false,
+      isResetSucceed: true,
+      userRequest: false,
+      errorMsg: ''
+    }),
     getFailed: (state, action: TUserAction) => ({
       ...state,
       isLogged: false,
       isFailed: true,
-      isSucceed: false,
+      isRegistered: false,
       isRecoverySucceed: false,
       userRequest: false,
       errorMsg: action.payload.errorMsg || ''
@@ -78,6 +87,7 @@ export const {
   getUserRequest,
   getUserSuccess,
   getRecoverySuccess,
+  getResetSuccess,
   getFailed,
   resetUserData
 } = userSlice.actions

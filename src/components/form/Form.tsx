@@ -1,4 +1,4 @@
-import React, { FC, useEffect, ReactNode } from 'react';
+import React, { FC, ReactNode, FormEvent } from 'react';
 import { useSelector } from 'react-redux';
 import {
   Input,
@@ -24,29 +24,16 @@ const Form: FC<IForm> = ({
   children,
   classNameMod
 }) => {
-  const {
-    isLogged,
-    isFailed,
-    isSucceed,
-    isRecoverySucceed,
-    errorMsg
-  } = useSelector((state: TRootState) => state.user);
+  const { isFailed, errorMsg } = useSelector((state: TRootState) => state.user);
 
-  useEffect(() => {
-    onSubmit({
-      isLogged,
-      isSucceed,
-      isRecoverySucceed
-    });
-  }, [
-    isLogged,
-    isSucceed,
-    isRecoverySucceed
-  ]);
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    onSubmit();
+  };
 
   return (
     <>
-      <form className={`${styles.wrapper} ${classNameMod && styles[classNameMod]}`} onSubmit={(e) => e.preventDefault()}>
+      <form className={`${styles.wrapper} ${classNameMod && styles[classNameMod]}`} onSubmit={handleSubmit}>
         {title && <div className={`${styles.title} text text_type_main-medium mb-6`}>{title}</div>}
         {isFailed && <div className={`${styles.title} text text_type_main-default mb-4`} style={{ color: '#e52b1a' }}>{errorMsg}</div>}
         <fieldset className={`${styles.fieldset} mb-4`}>

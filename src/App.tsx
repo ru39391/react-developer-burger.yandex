@@ -48,7 +48,7 @@ const App: FC = () => {
   const ingredients = useSelector((state: TRootState) => state.products.items);
   const layout = location.state && location.state.layout;
 
-  function closeModal(): void {
+  function closeModal() {
     navigate(`/`, { replace: true, state: null });
   }
 

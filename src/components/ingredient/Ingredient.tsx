@@ -49,7 +49,7 @@ const Ingredient: FC<IIngredient> = ({
 }) => {
   const bunTypeKeys: TIngredientPos[] = [TOP_KEY, BOTTOM_KEY];
 
-  function handleClose(): void {
+  function handleClose() {
     removeIngredient(ingredient);
   }
 
