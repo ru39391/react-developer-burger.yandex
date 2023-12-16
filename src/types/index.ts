@@ -58,6 +58,11 @@ export type TAuthResponse = {
   readonly refreshToken?: string;
 };
 
+export type TPasswordResponse = {
+  readonly success: boolean;
+  readonly message: string;
+};
+
 export type TDraggableData = TCustomData<TProductData>;
 
 export type TDraggableItem = {

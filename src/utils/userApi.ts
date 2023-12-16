@@ -5,7 +5,11 @@ import {
   RESPONSE_ERROR_MSG
 } from './constants';
 
-import { TCustomData, TAuthResponse } from '../types';
+import {
+  TCustomData,
+  TAuthResponse,
+  TPasswordResponse
+} from '../types';
 
 class userApi extends Component<{}> {
   private _path: string;
@@ -59,7 +63,7 @@ class userApi extends Component<{}> {
       .then((res) => {return this._checkResponse(res, RESPONSE_ERROR_MSG)});
   }
 
-  public recoverPassword(data: TCustomData<string>, alias: string = ''): Promise<any> {
+  public recoverPassword(data: TCustomData<string>, alias: string = ''): Promise<TPasswordResponse> {
     return fetch(`${this._path}${alias}`, {
       method: 'POST',
       headers: this._setHeaders(),

@@ -74,7 +74,7 @@ const ResetPassword: FC = () => {
     dispatch
   ]);
 
-  const submitResetForm = () => {
+  const submitResetForm = (): void => {
     reset();
     disableBtn();
   };
