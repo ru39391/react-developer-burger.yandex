@@ -50,8 +50,8 @@ const Sidebar: FC = () => {
   ];
 
   const logout = (): void => {
-    const token: string | null = typeof refreshToken === 'object' && refreshToken !== null ? refreshToken.token : null;
-    if(isRefTokExist && token) {
+    if(isRefTokExist) {
+      const token: string | undefined = typeof refreshToken === 'object' && refreshToken !== undefined ? refreshToken.token : undefined;
       //@ts-ignore
       dispatch(signOut({ token }, LOGOUT_URL));
       navigate(`/`)

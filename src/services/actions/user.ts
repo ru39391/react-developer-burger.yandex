@@ -1,3 +1,4 @@
+import { Dispatch } from 'redux';
 import {
   LOGIN_URL,
   AUTH_ALIAS,
@@ -17,32 +18,39 @@ import {
 } from '../slices/user-slice';
 import userApi from '../../utils/userApi';
 import storage from '../../utils/storage';
+import type { TAppThunk } from '../../services/store';
+import type {
+  TUser,
+  TUserData,
+  TCustomData,
+  TToken
+} from '../../types';
 
-const api = new userApi(AUTH_ALIAS);
-const passwordApi = new userApi(RESET_PASSWORD_ALIAS);
+const api: userApi = new userApi(AUTH_ALIAS);
+const passwordApi: userApi = new userApi(RESET_PASSWORD_ALIAS);
 
-const fetchData = (data, alias = '') => async dispatch => {
-  dispatch(getUserRequest());
+const fetchData = (data: { values: TCustomData<string> }, alias: string = ''): TAppThunk<void> => async (dispatch: Dispatch) => {
+  dispatch(getUserRequest({}));
   try {
     const res = await api.fetchData(data, alias);
     if (res && res.success) {
       const { user, accessToken, refreshToken } = res;
-      const data = alias === LOGIN_URL
+      const data: TUser | TUserData = alias === LOGIN_URL
         ? { ...user, isLogged: true }
         : { ...user };
 
       dispatch(getUserSuccess({ data }));
-      if(alias === LOGIN_URL) storage.setCurrTokens({ accessToken, refreshToken });
+      if(alias === LOGIN_URL && (accessToken && refreshToken)) storage.setCurrTokens({ accessToken, refreshToken });
     } else {
       dispatch(getFailed({ errorMsg: RESPONSE_ERROR_MSG }));
     }
-  } catch (err) {
-    dispatch(getFailed({ errorMsg: err }));
+  } catch (err: unknown) {
+    dispatch(getFailed({ errorMsg: err as string }));
   }
 };
 
-const getAccessToken = (data, alias = '') => async dispatch => {
-  dispatch(getUserRequest());
+const getAccessToken = (data, alias: string = ''): TAppThunk<void> => async (dispatch: Dispatch) => {
+  dispatch(getUserRequest({}));
   try {
     const res = await api.getAccessToken(data, alias);
     if (res && res.success) {
@@ -53,15 +61,18 @@ const getAccessToken = (data, alias = '') => async dispatch => {
     } else {
       dispatch(getFailed({ errorMsg: RESPONSE_ERROR_MSG }));
     }
-  } catch (err) {
-    dispatch(getFailed({ errorMsg: err }));
+  } catch (err: unknown) {
+    dispatch(getFailed({ errorMsg: err as string }));
   }
 };
 
-const updateData = (data, alias = '') => async dispatch => {
-  dispatch(getUserRequest());
+const updateData = (data: { values: TCustomData<string> }, alias: string = ''): TAppThunk<void> => async (dispatch: Dispatch) => {
+  dispatch(getUserRequest({}));
   try {
-    const { token } = storage.getStorageItem(ACCESS_TOKEN_KEY);
+    const accessToken: TToken = typeof storage.getStorageItem(ACCESS_TOKEN_KEY) !== 'string' && Boolean(storage.getStorageItem(ACCESS_TOKEN_KEY))
+      ? storage.getStorageItem(ACCESS_TOKEN_KEY)
+      : undefined;
+    const token: string | undefined = typeof accessToken === 'object' && accessToken !== undefined ? accessToken.token : undefined;
     const res = await api.fetchData({ ...data, jwt: token }, alias);
     if (res && res.success) {
       const { user } = res;
@@ -69,27 +80,27 @@ const updateData = (data, alias = '') => async dispatch => {
     } else {
       dispatch(getFailed({ errorMsg: UPDATE_ERROR_MSG }));
     }
-  } catch (err) {
-    dispatch(getFailed({ errorMsg: err }));
+  } catch (err: unknown) {
+    dispatch(getFailed({ errorMsg: err as string }));
   }
 };
 
-const recoverPassword = (data, alias = '') => async dispatch => {
-  dispatch(getUserRequest());
+const recoverPassword = (data, alias: string = ''): TAppThunk<void> => async (dispatch: Dispatch) => {
+  dispatch(getUserRequest({}));
   try {
     const res = await passwordApi.recoverPassword(data, alias);
     if (res && res.success) {
-      dispatch(getRecoverySuccess());
+      dispatch(getRecoverySuccess({}));
     } else {
       dispatch(getFailed({ errorMsg: UPDATE_ERROR_MSG }));
     }
-  } catch (err) {
-    dispatch(getFailed({ errorMsg: err }));
+  } catch (err: unknown) {
+    dispatch(getFailed({ errorMsg: err as string }));
   }
 };
 
-const signOut = (data, alias = '') => async dispatch => {
-  dispatch(getUserRequest());
+const signOut = (data, alias: string = ''): TAppThunk<void> => async (dispatch: Dispatch) => {
+  dispatch(getUserRequest({}));
   try {
     const res = await api.getAccessToken(data, alias);
     if (res && res.success) {
@@ -99,8 +110,8 @@ const signOut = (data, alias = '') => async dispatch => {
     } else {
       dispatch(getFailed({ errorMsg: RESPONSE_ERROR_MSG }));
     }
-  } catch (err) {
-    dispatch(getFailed({ errorMsg: err }));
+  } catch (err: unknown) {
+    dispatch(getFailed({ errorMsg: err as string }));
   }
 };
 

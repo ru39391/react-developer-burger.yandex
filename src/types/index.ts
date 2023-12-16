@@ -4,7 +4,7 @@ export type TCustomData<T> = {
   [key: string]: T;
 };
 
-export type TDefaultData = TCustomData<string | number | TProdData[]>;
+export type TProductDefault = TCustomData<string | number | TProdData[]>;
 
 export type TProductData = {
   readonly _id: string;
@@ -21,7 +21,7 @@ export type TProductData = {
   readonly __v: number;
 };
 
-export type TProduct = TProductData & TDefaultData;
+export type TProduct = TProductData & TProductDefault;
 
 export type TProductDataRes = {
   readonly success: boolean;
@@ -33,7 +33,7 @@ export type TOrderData = {
   readonly name: string;
 };
 
-export type TOrder = TOrderData & TDefaultData;
+export type TOrder = TOrderData & TCustomData<string | number>;
 
 export type TOrderDataRes = {
   readonly success: boolean;
@@ -48,7 +48,19 @@ export type TUserData = {
   readonly email: string;
 };
 
-export type TUser = TUserData & TDefaultData;
+export type TUser = TUserData & TCustomData<boolean>;
+
+export type TUserDataRes = {
+  readonly success: boolean;
+  readonly accessToken?: string;
+  readonly refreshToken?: string;
+  readonly user: TUserData;
+};
+
+export type TLoginDataRes = TUserDataRes & {
+  readonly accessToken: string;
+  readonly refreshToken: string;
+};
 
 export type TDraggableData = TCustomData<TProductData>;
 
@@ -62,9 +74,9 @@ export type TProdData = {
   value: number;
 }
 
-export type TToken = string | null | {
-  date?: number | null;
-  token: string | null;
+export type TToken = string | undefined | {
+  date?: number | undefined;
+  token: string | undefined;
 };
 
 export type TFieldsData = TCustomData<string> & {

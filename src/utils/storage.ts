@@ -29,31 +29,32 @@ class StorageApi extends Component<{}> {
   };
 
   public getStorageItem(key: string, isTokenKey: boolean = true): TToken {
-    const value = this._storage.getItem(key);
+    const value: string | null = this._storage.getItem(key);
+    const storageItem = value !== null ? value : undefined;
     if(isTokenKey) {
       return key === ACCESS_TOKEN_KEY
         ? {
-          date: value ? Number(value.split(',')[0]) : null,
-          token: value ? value.split(',')[1] : null
+          date: storageItem ? Number(storageItem.split(',')[0]) : undefined,
+          token: storageItem ? storageItem.split(',')[1] : undefined
         }
-        : { token: value };
+        : { token: storageItem };
     }
-    return value;
+    return storageItem;
   };
 
   public isItemExist(key: string, isTokenKey: boolean = true): boolean {
     const data: TToken = typeof this.getStorageItem(key) !== 'string' && Boolean(this.getStorageItem(key))
       ? this.getStorageItem(key)
-      : null;
-    const token: string | null = typeof data === 'object' && data !== null ? data.token : null;
+      : undefined;
+    const token: string | undefined = typeof data === 'object' && data !== undefined ? data.token : undefined;
     return isTokenKey ? Boolean(token) : Boolean(this.getStorageItem(key, false));
   };
 
   public isTokenExpired(): boolean {
     const accessToken: TToken = typeof this.getStorageItem(ACCESS_TOKEN_KEY) !== 'string' && Boolean(this.getStorageItem(ACCESS_TOKEN_KEY))
       ? this.getStorageItem(ACCESS_TOKEN_KEY)
-      : null;
-    const date: number | null | undefined = typeof accessToken === 'object' && accessToken !== null ? accessToken.date : 0;
+      : undefined;
+    const date: number | undefined = typeof accessToken === 'object' && accessToken !== undefined ? accessToken.date : 0;
     return date ? this._setCurrDate() - date > 20 * 60 * 1000 : false;
   };
 
@@ -78,6 +79,6 @@ class StorageApi extends Component<{}> {
   };
 };
 
-const storage = new StorageApi();
+const storage: StorageApi = new StorageApi();
 
 export default storage;

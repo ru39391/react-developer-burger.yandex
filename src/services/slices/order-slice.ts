@@ -6,7 +6,7 @@ import {
 } from '../../utils/constants';
 
 import type {
-  TDefaultData,
+  TCustomData,
   TProduct,
   TOrder,
   TDraggableItem
@@ -28,7 +28,7 @@ export type TOrderState = {
   bunItems: TProduct[];
   mainItems: TProduct[];
 
-  order: TOrder | TDefaultData;
+  order: TOrder | TCustomData<string | number>;
   orderList: string[];
   orderRequest: boolean;
   orderFailed: boolean;

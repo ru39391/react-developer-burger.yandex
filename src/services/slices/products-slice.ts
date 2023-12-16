@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import type { TDefaultData, TProduct } from '../../types';
+import type { TProductDefault, TProduct } from '../../types';
 
 type TProductsAction = {
   payload: {
     data?: TProduct[];
-    item?: TProduct | TDefaultData;
+    item?: TProduct | TProductDefault;
     errorMsg?: string;
   };
 };
@@ -15,7 +15,7 @@ export type TProductsState = {
   itemsRequest: boolean;
   itemsFailed: boolean;
 
-  item: TProduct | TDefaultData;
+  item: TProduct | TProductDefault;
 
   errorMsg: string;
 };

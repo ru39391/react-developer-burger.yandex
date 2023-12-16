@@ -11,7 +11,7 @@ import {
 import Api from '../../utils/api';
 import type { TAppThunk } from '../../services/store';
 
-const api = new Api(ORDERS_ALIAS);
+const api: Api = new Api(ORDERS_ALIAS);
 
 const checkout = (arr: string[]): TAppThunk<void> => async (dispatch: Dispatch) => {
   dispatch(getOrderRequest({}))

@@ -87,7 +87,7 @@ const ProfileForm: FC = () => {
 
   const getCurrentToken = useCallback(() => {
     if(isRefTokExist) {
-      const token: string | null = typeof refreshToken === 'object' && refreshToken !== null ? refreshToken.token : null;
+      const token: string | undefined = typeof refreshToken === 'object' && refreshToken !== undefined ? refreshToken.token : undefined;
       //@ts-ignore
       dispatch(getAccessToken({ token }, TOKEN_URL));
     } else {
@@ -99,7 +99,7 @@ const ProfileForm: FC = () => {
 
   const getUserData = useCallback(() => {
     if(isAccTokExist) {
-      const jwt: string | null = typeof accessToken === 'object' && accessToken !== null ? accessToken.token : null;
+      const jwt: string | undefined = typeof accessToken === 'object' && accessToken !== undefined ? accessToken.token : undefined;
       isTokenExpired
         ? getCurrentToken()
         //@ts-ignore

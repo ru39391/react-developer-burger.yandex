@@ -12,7 +12,7 @@ import {
 import Api from '../../utils/api';
 import type { TAppThunk } from '../../services/store';
 
-const api = new Api(INGREDIENTS_ALIAS);
+const api: Api = new Api(INGREDIENTS_ALIAS);
 
 const getItems = (): TAppThunk<void> => async (dispatch: Dispatch) => {
   dispatch(getItemsRequest({}))

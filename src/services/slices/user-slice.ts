@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import type { TUser } from '../../types';
+import type { TUserData, TUser } from '../../types';
 
 type TUserAction = {
   payload: {
-    data?: TUser;
+    data?: TUser | TUserData;
     name?: string;
     email?: string;
     isLogged?: boolean;
