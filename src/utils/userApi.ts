@@ -5,7 +5,7 @@ import {
   RESPONSE_ERROR_MSG
 } from './constants';
 
-import { TCustomData, TUserDataRes, TLoginDataRes } from '../types';
+import { TCustomData, TAuthResponse } from '../types';
 
 class userApi extends Component<{}> {
   private _path: string;
@@ -34,7 +34,7 @@ class userApi extends Component<{}> {
     return Promise.reject(`${resultAlert}: ${result.status}`);
   }
 
-  public getAccessToken(data: TCustomData<string>, alias: string = ''): Promise<any> {
+  public getAccessToken(data: TCustomData<string>, alias: string = ''): Promise<TAuthResponse> {
     const params = {
       method: 'GET',
       headers: this._setHeaders(data.jwt),
@@ -50,7 +50,7 @@ class userApi extends Component<{}> {
       .then((res) => {return this._checkResponse(res, RESPONSE_ERROR_MSG)});
   }
 
-  public fetchData(data: { jwt?: string; values: TCustomData<string>; }, alias: string = ''): Promise<TUserDataRes> {
+  public fetchData(data: { jwt?: string; values: TCustomData<string>; }, alias: string = ''): Promise<TAuthResponse> {
     return fetch(`${this._path}${alias}`, {
       method: alias === USER_URL ? 'PATCH' : 'POST',
       headers: this._setHeaders(data.jwt),

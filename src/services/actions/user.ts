@@ -49,13 +49,13 @@ const fetchData = (data: { values: TCustomData<string> }, alias: string = ''): T
   }
 };
 
-const getAccessToken = (data, alias: string = ''): TAppThunk<void> => async (dispatch: Dispatch) => {
+const getAccessToken = (data: TCustomData<string>, alias: string = ''): TAppThunk<void> => async (dispatch: Dispatch) => {
   dispatch(getUserRequest({}));
   try {
     const res = await api.getAccessToken(data, alias);
     if (res && res.success) {
       const { user, accessToken, refreshToken } = res;
-      accessToken
+      accessToken && refreshToken
         ? storage.setCurrTokens({ accessToken, refreshToken })
         : dispatch(getUserSuccess({ data: { ...user } }));
     } else {

@@ -50,16 +50,12 @@ export type TUserData = {
 
 export type TUser = TUserData & TCustomData<boolean>;
 
-export type TUserDataRes = {
+export type TAuthResponse = {
   readonly success: boolean;
+  readonly user: TUserData;
+  readonly message?: string;
   readonly accessToken?: string;
   readonly refreshToken?: string;
-  readonly user: TUserData;
-};
-
-export type TLoginDataRes = TUserDataRes & {
-  readonly accessToken: string;
-  readonly refreshToken: string;
 };
 
 export type TDraggableData = TCustomData<TProductData>;

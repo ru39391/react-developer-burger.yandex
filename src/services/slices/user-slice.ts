@@ -4,7 +4,7 @@ import type { TUserData, TUser } from '../../types';
 
 type TUserAction = {
   payload: {
-    data?: TUser | TUserData;
+    data?: TUser | TUserData
     name?: string;
     email?: string;
     isLogged?: boolean;
