@@ -19,12 +19,12 @@ class StorageApi extends Component<{}> {
     return currDate.getTime();
   };
 
-  public setStorageItem(key: string, value: string | boolean): void {
+  public setStorageItem(key: string, value: string | boolean) {
     const bool: string | number = typeof value === 'boolean' && value ? 1 : '';
     this._storage.setItem(key, typeof value !== 'boolean' ? value : bool.toString());
   };
 
-  public removeStorageItem(key: string): void {
+  public removeStorageItem(key: string) {
     this._storage.removeItem(key);
   };
 
@@ -64,7 +64,7 @@ class StorageApi extends Component<{}> {
       : true;
   };
 
-  public setCurrTokens({ accessToken, refreshToken }: TCustomData<string>): void {
+  public setCurrTokens({ accessToken, refreshToken }: TCustomData<string>) {
     const jwt: string = accessToken.split('Bearer ')[1];
     const data: TCustomData<string> = {
       accessToken: [this._setCurrDate(),jwt].toString(),

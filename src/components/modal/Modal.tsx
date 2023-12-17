@@ -18,7 +18,7 @@ const modalElement = document.querySelector('#modals') as HTMLElement;
 interface IModalProps {
   isModalOpen: boolean;
   children: ReactNode;
-  closeModal: MouseEventHandler<HTMLButtonElement>;
+  closeModal: () => void;
 };
 
 const Modal: FC<IModalProps> = ({
@@ -27,9 +27,9 @@ const Modal: FC<IModalProps> = ({
   closeModal
 }) => {
   useEffect(() => {
-    function handleEscClose(e: unknown): void {
+    function handleEscClose(e: unknown) {
       if ((e as KeyboardEvent).key === 'Escape') {
-        closeModal(e as MouseEvent<HTMLButtonElement>);
+        closeModal();
       }
     }
 

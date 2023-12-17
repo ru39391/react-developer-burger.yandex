@@ -62,6 +62,8 @@ const orderSlice = createSlice({
     }),
     getOrderSuccess: (state, action: TOrderAction) => ({
       ...state,
+      bunItems: [...Array(2)],
+      mainItems: [],
       order: {...action.payload.data},
       orderRequest: false,
       orderFailed: false
@@ -76,13 +78,15 @@ const orderSlice = createSlice({
       ...state,
       mainItems: action.payload.item
         ? [...state.mainItems, {...action.payload.item, key: uuidv4()}]
-        : [...state.mainItems]
+        : [...state.mainItems],
+      order: {}
     }),
     addBunItem: (state, action: TOrderAction) => ({
       ...state,
       bunItems: action.payload.item
         ? [...state.bunItems].map(() => ({...action.payload.item, key: uuidv4()}))
-        : [...Array(2)]
+        : [...Array(2)],
+      order: {}
     }),
     removeItem: (state, action: TOrderAction) => ({
       ...state,
