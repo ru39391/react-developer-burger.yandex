@@ -1,6 +1,5 @@
 import React, { FC, Key, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 import { useDrop, DropTargetMonitor } from 'react-dnd';
 import {
   Button,
@@ -31,6 +30,7 @@ import {
   updateOrderList
 } from '../../services/slices/order-slice';
 
+import { useSelector, useDispatch } from '../../services/hooks';
 import type { TRootState } from '../../services/store';
 import type { TProductData, TDraggableData, TDraggableItem } from '../../types';
 
@@ -83,7 +83,6 @@ const BurgerConstructor: FC = () => {
     () => {
       if(isLogged) {
         setModalVisibility(true);
-        //@ts-ignore
         dispatch(checkout(orderList));
       } else {
         navigate(`/${LOGIN_URL}`, { replace: false });

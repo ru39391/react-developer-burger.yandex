@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
+import { useSelector } from '../../services/hooks';
 import type { TRootState } from '../../services/store';
 
 const IngredientsList: FC = () => {

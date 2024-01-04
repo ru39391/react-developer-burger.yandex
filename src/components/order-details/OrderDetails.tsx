@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
 import CheckoutImg from '../../images/checkout.png';
 
 import styles from './OrderDetails.module.css';
 
+import { useSelector } from '../../services/hooks';
 import type { TRootState } from '../../services/store';
 
 const OrderDetails: FC = () => {

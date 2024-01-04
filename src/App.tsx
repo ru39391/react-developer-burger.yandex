@@ -6,7 +6,6 @@ import {
   Routes,
   Route
 } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 
 import Home from './pages/home/Home';
 import Orders from './pages/orders/Orders';
@@ -28,6 +27,7 @@ import IngredientDetails from './components/ingredient-details/IngredientDetails
 
 import AppHeader from './components/app-header/AppHeader';
 
+import { useSelector, useDispatch } from './services/hooks';
 import { getItems } from './services/actions/products';
 import type { TRootState } from './services/store';
 
@@ -54,7 +54,6 @@ const App: FC = () => {
 
   useEffect(
     () => {
-      //@ts-ignore
       if(!ingredients.length) dispatch(getItems());
     },
     [dispatch]

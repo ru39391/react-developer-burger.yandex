@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useCallback, ChangeEvent } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 import useModal from '../../hooks/useModal';
@@ -24,6 +23,7 @@ import {
   REGISTER_URL
 } from '../../utils/constants';
 
+import { useSelector, useDispatch } from '../../services/hooks';
 import type { TRootState } from '../../services/store';
 import type { TFieldsData } from '../../types';
 
@@ -88,7 +88,6 @@ const Register: FC = () => {
   };
 
   const handleSubmit = useCallback(() => {
-    //@ts-ignore
     dispatch(fetchData({ values }, REGISTER_URL));
   }, [
     values,

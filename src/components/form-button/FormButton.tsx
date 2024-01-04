@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './FormButton.module.css';
 
+import { useSelector } from '../../services/hooks';
 import type { TRootState } from '../../services/store';
 
 interface IFormButton {

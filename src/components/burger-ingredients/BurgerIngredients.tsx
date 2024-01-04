@@ -7,7 +7,6 @@ import React, {
   Fragment,
   RefObject
 } from 'react';
-import { useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import ConstructorSection from '../constructor-section/ConstructorSection';
 
@@ -22,6 +21,7 @@ import {
   SAUCE_PRODUCT_CAPTION,
 } from '../../utils/constants';
 
+import { useSelector } from '../../services/hooks';
 import type { TRootState } from '../../services/store';
 import type { TProduct } from '../../types';
 

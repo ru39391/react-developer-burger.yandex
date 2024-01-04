@@ -6,7 +6,6 @@ import React, {
   useCallback
 } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 import { useDrag, DragSourceMonitor } from 'react-dnd';
 import {
   Counter,
@@ -20,6 +19,7 @@ import useProdData from '../../hooks/useProdData';
 import { INGREDIENTS_URL, ID_KEY } from '../../utils/constants';
 import { setItemDetails } from '../../services/slices/products-slice';
 
+import { useSelector, useDispatch } from '../../services/hooks';
 import type { TRootState } from '../../services/store';
 import type { TProduct } from '../../types';
 

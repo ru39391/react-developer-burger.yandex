@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useCallback, ChangeEvent } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 
 import useInput from '../../hooks/useInput';
 import useSubmitBtn from '../../hooks/useSubmitBtn';
@@ -23,6 +22,7 @@ import {
   IS_LOGGED_KEY
 } from '../../utils/constants';
 
+import { useSelector, useDispatch } from '../../services/hooks';
 import type { TRootState } from '../../services/store';
 import type { TFieldsData, TLocState } from '../../types';
 
@@ -78,7 +78,6 @@ const Login: FC = () => {
   };
 
   const handleSubmit = useCallback(() => {
-    //@ts-ignore
     dispatch(fetchData({ values }, LOGIN_URL));
   }, [
     values,
