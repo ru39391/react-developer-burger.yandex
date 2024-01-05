@@ -78,6 +78,17 @@ const IS_PASSWORD_REQ_SENT_KEY = 'isPasswordReqSent';
 const ACCESS_TOKEN_KEY = 'accessToken';
 const REFRESH_TOKEN_KEY = 'refreshToken';
 
+const CONNECTING: 'CONNECTING' = 'CONNECTING';
+const OPEN: 'OPEN' = 'OPEN';
+const CLOSING: 'CLOSING' = 'CLOSING';
+const CLOSED: 'CLOSED' = 'CLOSED';
+const socketStates = {
+  0: CONNECTING,
+  1: OPEN,
+  2: CLOSING,
+  3: CLOSED
+};
+
 export {
   DEFAULT_DOC_TITLE,
   HOME_TITLE,
@@ -153,5 +164,11 @@ export {
   IS_LOGGED_KEY,
   IS_PASSWORD_REQ_SENT_KEY,
   ACCESS_TOKEN_KEY,
-  REFRESH_TOKEN_KEY
+  REFRESH_TOKEN_KEY,
+
+  CONNECTING,
+  OPEN,
+  CLOSING,
+  CLOSED,
+  socketStates
 };
