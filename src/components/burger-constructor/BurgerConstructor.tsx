@@ -11,7 +11,7 @@ import useModal from '../../hooks/useModal';
 
 import Modal from '../modal/Modal';
 import Ingredient from '../ingredient/Ingredient';
-import OrderDetails from '../order-details/OrderDetails';
+import OrderAlert from '../order-alert/OrderAlert';
 
 import styles from './BurgerConstructor.module.css';
 
@@ -159,7 +159,7 @@ const BurgerConstructor: FC = () => {
           </div>
         )}
       </div>
-      {isModalVisible && <Modal isModalOpen={isModalVisible} closeModal={() => setModalVisibility(false)}><OrderDetails /></Modal>}
+      {isModalVisible && <Modal isModalOpen={isModalVisible} closeModal={() => setModalVisibility(false)}><OrderAlert /></Modal>}
     </>
   );
 }

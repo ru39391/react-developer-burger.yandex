@@ -3,6 +3,7 @@ import { TIngredientPos } from '../types';
 const DEFAULT_DOC_TITLE = 'Stellar Burgers';
 
 const HOME_TITLE = 'Соберите бургер';
+const FEED_TITLE = 'Лента заказов';
 const CONSTRUCTOR_TITLE = 'Конструктор';
 const ORDERS_TITLE = 'Лента заказов';
 const PROFILE_TITLE = 'Личный кабинет';
@@ -27,6 +28,7 @@ const BOTTOM_PRODUCT_CAPTION = 'низ';
 
 const UNDER_CONSTRUCTION_TEXT = 'Раздел находится в разработке';
 
+const FEED_URL = 'feed';
 const ORDERS_URL = 'orders';
 const PROFILE_URL = 'profile';
 const LOGIN_URL = 'login';
@@ -79,6 +81,7 @@ const REFRESH_TOKEN_KEY = 'refreshToken';
 export {
   DEFAULT_DOC_TITLE,
   HOME_TITLE,
+  FEED_TITLE,
   CONSTRUCTOR_TITLE,
   ORDERS_TITLE,
   PROFILE_TITLE,
@@ -109,6 +112,7 @@ export {
 
   PASSWORD_DEFAULT_VAL,
 
+  FEED_URL,
   ORDERS_URL,
   PROFILE_URL,
   LOGIN_URL,
