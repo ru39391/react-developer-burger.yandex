@@ -9,6 +9,7 @@ import type { TRootState } from '../../services/store';
 
 const OrderDetails: FC = () => {
   const ingredients = useSelector((state: TRootState) => state.products.items);
+
   return (
     <div className={styles.wrapper}>
       <div className="mb-15">
