@@ -1,12 +1,48 @@
 .wrapper {
+  width: 100%;
+  max-width: 640px;
+  align-self: center;
 }
 
-.header {
+.id {
+  text-align: center;
+}
+
+.subtitle {
+  color: #0cc;
+}
+
+.container {
+  gap: 40px 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.section {
+  flex-grow: 1;
+  height: 320px;
+  overflow: auto;
+  position: relative;
+  margin: 0 -13px 0 0;
 }
 
 .list {
-
+  gap: 16px 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 24px 0 0;
 }
 
 .footer {
+  gap: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.total {
+  gap: 0 8px;
+  display: flex;
+  align-items: center;
 }

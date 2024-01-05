@@ -7,10 +7,7 @@ const OrderItem: FC = () => {
   const { id } = useParams();
 
   return (
-    <Wrapper>
-      <p className="text text_type_main-default">Подробности заказа {id}</p>
-      <OrderDetails />
-    </Wrapper>
+    <Wrapper><OrderDetails /></Wrapper>
   )
 };
 

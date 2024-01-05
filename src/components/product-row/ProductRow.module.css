@@ -1,18 +1,24 @@
 .wrapper {
+  gap: 0 16px;
   display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  align-items: center;
 }
 
-.container {
+.img {
+  width: 64px;
+  height: 64px;
+  flex: 0 0 64px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #801AB2;
+}
+
+.title {
   flex-grow: 1;
-  overflow: auto;
-  position: relative;
-  margin: 0 -13px 0 0;
 }
 
-.section {
-  position: absolute;
-  left: 0;
-  top: 0;
+.aside {
+  gap: 0 8px;
+  display: flex;
+  align-items: center;
 }
