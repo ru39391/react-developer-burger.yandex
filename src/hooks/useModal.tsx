@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
-type TModalHook = {
+interface IModalHook {
   isModalVisible: boolean;
   setModalVisibility: (isModalVisible: boolean) => void;
 }
 
-const useModal = (): TModalHook => {
+const useModal = (): IModalHook => {
   const [isModalVisible, setModalVisibility] = useState<boolean>(false);
 
   return {

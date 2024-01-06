@@ -2,7 +2,12 @@ import React, { FC } from 'react';
 
 import styles from './FeedTotal.module.css';
 
-const FeedTotal: FC = () => {
+interface IFeedTotal {
+  total: string;
+  totalToday: string;
+}
+
+const FeedTotal: FC<IFeedTotal> = ({ total, totalToday }) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
@@ -21,11 +26,11 @@ const FeedTotal: FC = () => {
       </div>
       <div className={styles.section}>
         <div className="text text_type_main-medium">Выполнено за все время:</div>
-        <div className={`${styles.total} text text_type_digits-large`}>28 752</div>
+        <div className={`${styles.total} text text_type_digits-large`}>{total}</div>
       </div>
       <div className={styles.section}>
         <div className="text text_type_main-medium">Выполнено за сегодня:</div>
-        <div className={`${styles.total} text text_type_digits-large`}>138</div>
+        <div className={`${styles.total} text text_type_digits-large`}>{totalToday}</div>
       </div>
     </div>
   );

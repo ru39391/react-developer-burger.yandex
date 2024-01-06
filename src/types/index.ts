@@ -93,3 +93,15 @@ export type TLocState = {
   item: TProduct;
   prevUrl?: string;
 };
+
+export type TFeedOrder = TCustomData<string> & {
+  ingredients: string[];
+  number: number;
+};
+
+export type TFeedData = {
+  success: boolean;
+  orders: TFeedOrder[];
+  total: number;
+  totalToday: number;
+};

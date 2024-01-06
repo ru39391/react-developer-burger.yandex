@@ -7,11 +7,11 @@ import {
 
 import type { TProdData } from '../types';
 
-type TProdDataHook = {
+interface IProdDataHook {
   handleProdData: (arr: number[]) => TProdData[];
 }
 
-const useProdData = (): TProdDataHook => {
+const useProdData = (): IProdDataHook => {
   const captionsArr: string[] = [
     CALORIES_CAPTION,
     PROTEINS_CAPTION,

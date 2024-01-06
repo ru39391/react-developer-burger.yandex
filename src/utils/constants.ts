@@ -41,6 +41,7 @@ const TOKEN_URL = 'token';
 const LOGOUT_URL = 'logout';
 const RESET_URL = 'reset';
 
+const WS_FEED_URL = 'wss://norma.nomoreparties.space/orders/all';
 const API_URL = 'https://norma.nomoreparties.space/api/';
 const INGREDIENTS_ALIAS = 'ingredients';
 const ORDERS_ALIAS = 'orders';
@@ -123,7 +124,7 @@ export {
 
   PASSWORD_DEFAULT_VAL,
 
-  FEED_URL,
+  WS_FEED_URL,
   ORDERS_URL,
   PROFILE_URL,
   LOGIN_URL,
@@ -136,6 +137,7 @@ export {
   LOGOUT_URL,
   RESET_URL,
 
+  FEED_URL,
   API_URL,
   INGREDIENTS_ALIAS,
   ORDERS_ALIAS,
