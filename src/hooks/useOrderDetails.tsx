@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import useFeed from './useFeed';
 import useOrderData from './useOrderData';

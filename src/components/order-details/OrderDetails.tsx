@@ -1,5 +1,4 @@
 import React, { FC, Key, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 
 import Preloader from '../preloader/Preloader';
 import ProductRow from '../product-row/ProductRow';
@@ -13,11 +12,11 @@ import { ORDER_STATES } from '../../utils/constants';
 import useOrderDetails from '../../hooks/useOrderDetails';
 
 interface IOrderDetails {
-  onFailed: Function;
+  id: string | undefined;
+  onFailed?: Function;
 };
 
-const OrderDetails: FC<IOrderDetails> = ({ onFailed }) => {
-  const { id } = useParams();
+const OrderDetails: FC<IOrderDetails> = ({ id, onFailed }) => {
   const {
     summ,
     isFailed,
@@ -27,12 +26,16 @@ const OrderDetails: FC<IOrderDetails> = ({ onFailed }) => {
   } = useOrderDetails();
 
   useEffect(() => {
-    onFailed(isFailed);
+    if(typeof onFailed === 'function') {
+      onFailed(isFailed);
+    }
   }, [isFailed]);
 
   useEffect(() => {
-    fetchOrderDetails(id as string);
-  }, []);
+    if(typeof id === 'string') {
+      fetchOrderDetails(id as string);
+    }
+  }, [summ]);
 
   return (
     <>

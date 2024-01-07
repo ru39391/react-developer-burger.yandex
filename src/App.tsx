@@ -24,6 +24,7 @@ import NotFound from './pages/not-found/NotFound';
 import Modal from './components/modal/Modal';
 import ProtectedRoute from './components/protected-route/ProtectedRoute';
 import IngredientDetails from './components/ingredient-details/IngredientDetails';
+import OrderDetails from './components/order-details/OrderDetails';
 
 import AppHeader from './components/app-header/AppHeader';
 import Wrapper from './components/wrapper/Wrapper';
@@ -49,9 +50,10 @@ const App: FC = () => {
   const dispatch = useDispatch();
   const ingredients = useSelector((state: TRootState) => state.products.items);
   const layout = location.state && location.state.layout;
+  const path = location.state && location.state.path ? location.state.path : `/`;
 
   function closeModal() {
-    navigate(`/`, { replace: true, state: null });
+    navigate(path, { replace: true, state: {...location.state, layout: null} });
   }
 
   useEffect(
@@ -91,6 +93,9 @@ const App: FC = () => {
         <Routes>
           <Route path={`/${INGREDIENTS_URL}`} element={<Outlet />}>
             <Route path=':id' element={<Modal isModalOpen={Boolean(layout)} closeModal={closeModal}><IngredientDetails {...location.state.item} /></Modal>} />
+          </Route>
+          <Route path={`/${FEED_URL}`} element={<Outlet />}>
+            <Route path=':id' element={<Modal isModalOpen={Boolean(layout)} closeModal={closeModal}><OrderDetails {...location.state.item} /></Modal>} />
           </Route>
         </Routes>
         )

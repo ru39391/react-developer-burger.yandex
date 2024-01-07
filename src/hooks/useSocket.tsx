@@ -1,35 +1,26 @@
-import { useCallback, useEffect, useRef } from 'react';
+import {
+  useRef,
+  useCallback,
+  MutableRefObject
+} from 'react';
+
+interface ISocketHook {
+  socketRef: MutableRefObject<WebSocket | null>;
+  connect: () => void;
+  disconnect: () => void;
+};
 
 interface IWSOptions {
   onMessage: (event: MessageEvent<string>) => void;
   onConnect?: (event: Event) => void;
   onError?: (event: Event) => void;
-  onDisconnect?: (event: Event) => void;
+  onDisconnect?: (event: CloseEvent) => void;
 };
 
-const useSocket = (url: string, options: IWSOptions) => {
+const useSocket = (url: string, options: IWSOptions): ISocketHook => {
   const socketRef = useRef<WebSocket | null>(null);
 
-  /*
-  const setSocketEvents = () => {
-    const ws = socketRef.current;
-    const {
-      onMessage,
-      onConnect,
-      onError,
-      onDisconnect
-    } = options;
-
-    if(ws) {
-      ws.onmessage = typeof onMessage === 'function' ? onMessage : null;
-      ws.onopen = typeof onConnect === 'function' ? onConnect : null;
-      ws.onerror = typeof onError === 'function' ? onError : null;
-      ws.onclose = typeof onDisconnect === 'function' ? onDisconnect : null;
-    }
-  };
-  */
-
-  const handleEvent = (handler: Function | undefined, event: Event | MessageEvent) => {
+  const handleEvent = (handler: Function | undefined, event: Event | CloseEvent | MessageEvent) => {
     if (typeof handler === 'function') {
       handler(event);
     }
@@ -37,7 +28,7 @@ const useSocket = (url: string, options: IWSOptions) => {
 
   const connect = useCallback(
     (token: string = '') => {
-      socketRef.current = new WebSocket(`${url}?token=${token}`);
+      socketRef.current = new WebSocket(token ? `${url}?token=${token}` : url);
 
       socketRef.current.onmessage = (event: MessageEvent) => {
         const { onMessage } = options;
@@ -54,7 +45,7 @@ const useSocket = (url: string, options: IWSOptions) => {
         handleEvent(onError, event);
       };
 
-      socketRef.current.onclose = (event: Event) => {
+      socketRef.current.onclose = (event: CloseEvent) => {
         const { onDisconnect } = options;
         handleEvent(onDisconnect, event);
       };
@@ -72,26 +63,10 @@ const useSocket = (url: string, options: IWSOptions) => {
     };
   };
 
-  /*
-  useEffect(() => {
-      setSocketEvents();
-    },
-    [
-      socketRef,
-      options
-    ]
-  );
-  */
-
-  useEffect(() => {
-      return disconnect();
-    },
-    []
-  );
-
   return {
     socketRef,
-    connect
+    connect,
+    disconnect
   };
 };
 

@@ -1,9 +1,10 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useCallback } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './OrderCard.module.css';
 
-import { ORDER_STATES } from '../../utils/constants';
+import { FEED_URL, ORDER_STATES } from '../../utils/constants';
 import useOrderData from '../../hooks/useOrderData';
 
 interface IOrderCard {
@@ -21,18 +22,35 @@ const OrderCard: FC<IOrderCard> = ({
   products,
   date
 }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const {
     summ,
     orderProducts,
     handleProductsList
   } = useOrderData();
 
+  const handleOrderCardData = useCallback(
+    () => {
+      navigate(`/${FEED_URL}/${id.toString()}`, {
+        replace: true,
+        state: {
+          layout: location,
+          path: location.pathname,
+          item: {
+            id: id.toString()
+          }
+        }
+      });
+    }, [id]
+  );
+
   useEffect(() => {
     handleProductsList(products);
   }, [products]);
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} onClick={handleOrderCardData}>
       <div className={styles.container}>
         <div className="text text_type_digits-default">#{id.toString()}</div>
         <div className="text text_type_main-default text_color_inactive">{date}</div>
