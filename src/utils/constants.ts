@@ -26,6 +26,7 @@ const SAUCE_PRODUCT_CAPTION = 'Соусы';
 const TOP_PRODUCT_CAPTION = 'верх';
 const BOTTOM_PRODUCT_CAPTION = 'низ';
 
+const NO_ORDERS = 'Заказов нет';
 const UNDER_CONSTRUCTION_TEXT = 'Раздел находится в разработке';
 
 const FEED_URL = 'feed';
@@ -115,6 +116,7 @@ export {
   TOP_PRODUCT_CAPTION,
   BOTTOM_PRODUCT_CAPTION,
 
+  NO_ORDERS,
   UNDER_CONSTRUCTION_TEXT,
 
   NAME_PLS,

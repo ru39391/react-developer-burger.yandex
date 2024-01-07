@@ -5,49 +5,50 @@ import type { TRootState } from '../services/store';
 
 import type { TProductDefault, TProductData } from '../types';
 
+type TProductsList = {
+  totalSumm: number;
+  products: TProductDefault[]
+};
+
 interface IOrderDataHook {
-  summ: number;
+  summ: string;
   orderProducts: TProductDefault[];
+  handleProductsList: (products: string[]) => TProductsList;
 }
 
-const useOrderData = (products: string[]): IOrderDataHook => {
-  const [summ, setSumm] = useState<number>(0);
+const useOrderData = (): IOrderDataHook => {
+  const [summ, setSumm] = useState<string>('');
   const [orderProducts, setOrderProducts] = useState<TProductDefault[]>([]);
 
   const ingredients = useSelector((state: TRootState) => state.products.items);
 
-  const handleProductsList = () => {
+  const handleProductsList = (products: string[]): TProductsList => {
     const productsArr: TProductData[] = products.map(item => ingredients.find(({ _id }) => _id === item) as TProductData);
-    const productsList: TProductDefault[] = productsArr.map(
-      (
-        {
-          _id,
-          name,
-          image_mobile
-        },
-        _,
-        arr
-      ) => (
-        {
-          _id,
-          caption: name,
-          img: image_mobile,
-          counter: arr.length > 6 ? arr.length - 6 : 0
-        }
-      )
-    );
+    const totalSumm = productsArr.reduce((acc, item) => item ? acc + item.price : acc, 0);
+    const productsList: TProductDefault[] = productsArr.map((item, _, arr) => (
+      {
+        _id: item ? item._id : '',
+        caption: item ? item.name : '',
+        price: item ? item.price : 0,
+        img: item ? item.image_mobile : '',
+        counter: arr.filter(product => product ? product._id === item._id : []).length,
+        hidden: arr.length > 6 ? arr.length - 6 : 0
+      }
+    ));
 
-    setSumm(productsArr.reduce((acc, item) => acc + item.price, 0));
+    setSumm(totalSumm.toString());
     setOrderProducts(productsList.length > 6 ? productsList.filter((_, index) => index < 6) : productsList);
-  };
 
-  useEffect(() => {
-    handleProductsList();
-  }, [products]);
+    return {
+      totalSumm,
+      products: productsList
+    };
+  };
 
   return {
     summ,
-    orderProducts
+    orderProducts,
+    handleProductsList
   };
 };
 

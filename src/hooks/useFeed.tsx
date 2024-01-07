@@ -10,7 +10,7 @@ interface IFeedHook {
   feedOrders: TFeedOrder[];
   feedOrdersDone: string[];
   feedOrdersPending: string[];
-  handleFeed: (data: TFeedData) => void;
+  handleFeed: (data: TFeedData) => TFeedOrder[];
 }
 
 const useFeed = (): IFeedHook => {
@@ -38,35 +38,33 @@ const useFeed = (): IFeedHook => {
     return matchesArr.length === 3 ? `Сегодня, ${formattedTime}` : `${formattedDate}, ${formattedTime}`;
   };
 
-  const filterOrders = (arr: TFeedOrder[], state: string): string[] => [...arr].filter(({ status }) => status === state).map(({ number }) => number.toString());
+  const filterOrders = (arr: TFeedOrder[], state: string): string[] => [...arr].filter(({ status }, index) => status === state && index < 10).map(({ number }) => number.toString());
 
-  const handleFeed = (data: TFeedData) => {
+  const handleFeed = (data: TFeedData): TFeedOrder[] => {
     const {
       success,
       orders,
       total,
       totalToday,
     } = data;
+    const handledOrders: TFeedOrder[] = [...orders].map(
+      item => ({
+        ...item,
+        updatedAt: formatDate(item.updatedAt)
+      })
+    );
+
     setSucceed(success);
     setFailed(!success);
     setTotalData({
-      total: total.toString(),
-      totalToday: totalToday.toString()
+      total: total ? total.toString() : '',
+      totalToday: totalToday ? totalToday.toString() : ''
     });
-    setFeedOrders(
-      [...orders].map(
-        item => ({
-          ...item,
-          updatedAt: formatDate(item.updatedAt),
-          number: item.number.toString()
-        })
-      )
-    );
+    setFeedOrders(handledOrders);
     setFeedOrdersDone(filterOrders(orders, DONE_STATE));
     setFeedOrdersPending(filterOrders(orders, PENDING_STATE));
 
-    console.log(total, totalToday);
-    console.log(totalData);
+    return handledOrders;
   };
 
   return {

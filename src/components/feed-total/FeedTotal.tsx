@@ -2,6 +2,8 @@ import React, { FC } from 'react';
 
 import styles from './FeedTotal.module.css';
 
+import { NO_ORDERS } from '../../utils/constants';
+
 interface IFeedTotal {
   total: string;
   totalToday: string;
@@ -23,7 +25,7 @@ const FeedTotal: FC<IFeedTotal> = ({
           <ul className={styles.list}>
             {ordersDone.length
               ? ordersDone.map(item => (<li className={`${styles.success} text text_type_digits-default mb-2`} key={item}>{item}</li>))
-              : <li className="text text_type_digits-default mb-2">{ordersDone.length.toString()}</li>}
+              : <li className="text text_type_main-default mb-2">{NO_ORDERS}</li>}
           </ul>
         </div>
         <div className={styles.section}>
@@ -31,7 +33,7 @@ const FeedTotal: FC<IFeedTotal> = ({
           <ul className={styles.list}>
             {ordersPending.length
               ? ordersPending.map(item => (<li className="text text_type_digits-default mb-2" key={item}>{item}</li>))
-              : <li className="text text_type_digits-default mb-2">{ordersPending.length.toString()}</li>}
+              : <li className="text text_type_main-default mb-2">{NO_ORDERS}</li>}
           </ul>
         </div>
       </div>

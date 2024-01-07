@@ -11,20 +11,20 @@ import {
 } from '../types';
 
 class Api extends Component<{}> {
-  private _path: string;
+  public _path: string;
 
   constructor(path: string) {
     super({});
     this._path = `${API_URL}${path}`;
   }
 
-  private _setHeaders(): TCustomData<string> {
+  public _setHeaders(): TCustomData<string> {
     return {
       'Content-Type': 'application/json'
     }
   }
 
-  private _checkResponse(result: Response, resultAlert: string): Promise<any> {
+  public _checkResponse(result: Response, resultAlert: string): Promise<any> {
     if (result.ok) {
       return result.json();
     }

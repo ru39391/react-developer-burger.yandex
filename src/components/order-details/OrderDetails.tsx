@@ -1,37 +1,80 @@
-import React, { FC } from 'react';
-import ProductRow from '../../components/product-row/ProductRow';
+import React, { FC, Key, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+
+import Preloader from '../preloader/Preloader';
+import ProductRow from '../product-row/ProductRow';
+
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './OrderDetails.module.css';
 
-import { useSelector } from '../../services/hooks';
-import type { TRootState } from '../../services/store';
+import { ORDER_STATES } from '../../utils/constants';
 
-const OrderDetails: FC = () => {
-  const ingredients = useSelector((state: TRootState) => state.products.items);
+import useOrderDetails from '../../hooks/useOrderDetails';
+
+interface IOrderDetails {
+  onFailed: Function;
+};
+
+const OrderDetails: FC<IOrderDetails> = ({ onFailed }) => {
+  const { id } = useParams();
+  const {
+    summ,
+    isFailed,
+    orderProducts,
+    currentOrder,
+    fetchOrderDetails
+  } = useOrderDetails();
+
+  useEffect(() => {
+    onFailed(isFailed);
+  }, [isFailed]);
+
+  useEffect(() => {
+    fetchOrderDetails(id as string);
+  }, []);
 
   return (
-    <div className={styles.wrapper}>
-      <div className="mb-15">
-        <div className={`${styles.id} text text_type_digits-default mb-10`}>#034533</div>
-        <div className="text text_type_main-medium mb-3">Black Hole Singularity острый бургер</div>
-        <div className={`${styles.subtitle} text text_type_main-small`}>Выполнен</div>
-      </div>
-      <div className={styles.container}>
-        <div className={styles.section}>
-          <div className={styles.list}>
-            {ingredients.map(item => (<ProductRow key={item._id} picture={item.image_mobile} {...item} />))}
+    <>
+      {currentOrder ? (
+        <div className={styles.wrapper}>
+          <div className="mb-15">
+            <div className={`${styles.id} text text_type_digits-default mb-10`}>#{id}</div>
+            <div className="text text_type_main-medium mb-3">{currentOrder.name}</div>
+            <div className={`${styles[currentOrder.status]} text text_type_main-small`}>{ORDER_STATES[currentOrder.status]}</div>
+          </div>
+          <div className={styles.container}>
+            <div className={styles.section}>
+              <div className={styles.list}>
+                {orderProducts.length && orderProducts.map(({
+                    _id,
+                    caption,
+                    img,
+                    price,
+                    counter
+                  }) => (
+                    <ProductRow
+                      key={_id as Key}
+                      caption={caption as string}
+                      img={img as string}
+                      counter={`${counter.toString()} x ${price.toString()}`}
+                    />
+                ))}
+              </div>
+            </div>
+            <div className={styles.footer}>
+              <div className="text text_type_main-default text_color_inactive">{currentOrder.updatedAt}</div>
+              <div className={styles.total}>
+                <div className="text text_type_digits-default">{summ}</div>
+                <CurrencyIcon type="primary" />
+              </div>
+            </div>
           </div>
         </div>
-        <div className={styles.footer}>
-          <div className="text text_type_main-default text_color_inactive">Вчера, 13:50</div>
-          <div className={styles.total}>
-            <div className="text text_type_digits-default">510</div>
-            <CurrencyIcon type="primary" />
-          </div>
-        </div>
-      </div>
-    </div>
+      ) : (
+        <Preloader />
+      )}
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './OrderCard.module.css';
@@ -7,7 +7,7 @@ import { ORDER_STATES } from '../../utils/constants';
 import useOrderData from '../../hooks/useOrderData';
 
 interface IOrderCard {
-  id: string;
+  id: number;
   name: string;
   status: string;
   products: string[];
@@ -21,12 +21,20 @@ const OrderCard: FC<IOrderCard> = ({
   products,
   date
 }) => {
-  const { summ, orderProducts } = useOrderData(products);
+  const {
+    summ,
+    orderProducts,
+    handleProductsList
+  } = useOrderData();
+
+  useEffect(() => {
+    handleProductsList(products);
+  }, [products]);
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-        <div className="text text_type_digits-default">#{id}</div>
+        <div className="text text_type_digits-default">#{id.toString()}</div>
         <div className="text text_type_main-default text_color_inactive">{date}</div>
       </div>
       <div className={styles.header}>
@@ -38,11 +46,11 @@ const OrderCard: FC<IOrderCard> = ({
           {orderProducts.length && orderProducts.map(({
               img,
               caption,
-              counter
+              hidden
             }, index) => (
               <div key={index} className={styles.picholder}>
                 <img className={styles.img} src={img as string} alt={caption as string} title={caption as string} />
-                {counter && <div className={`${styles.counter} text text_type_main-default`}>+{counter.toString()}</div>}
+                {hidden && <div className={`${styles.counter} text text_type_main-default`}>+{hidden.toString()}</div>}
               </div>
           ))}
         </div>
