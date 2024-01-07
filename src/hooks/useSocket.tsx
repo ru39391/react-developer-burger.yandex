@@ -1,5 +1,6 @@
 import {
   useRef,
+  useEffect,
   useCallback,
   MutableRefObject
 } from 'react';
@@ -12,8 +13,8 @@ interface ISocketHook {
 
 interface IWSOptions {
   onMessage: (event: MessageEvent<string>) => void;
-  onConnect?: (event: Event) => void;
-  onError?: (event: Event) => void;
+  onConnect?: () => void;
+  onError?: () => void;
   onDisconnect?: (event: CloseEvent) => void;
 };
 
@@ -62,6 +63,10 @@ const useSocket = (url: string, options: IWSOptions): ISocketHook => {
       ws.close();
     };
   };
+
+  useEffect(() => {
+    return disconnect();
+  }, []);
 
   return {
     socketRef,

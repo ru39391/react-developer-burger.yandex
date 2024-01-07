@@ -3,9 +3,8 @@ import { TIngredientPos, TCustomData } from '../types';
 const DEFAULT_DOC_TITLE = 'Stellar Burgers';
 
 const HOME_TITLE = 'Соберите бургер';
-const FEED_TITLE = 'Лента заказов';
 const CONSTRUCTOR_TITLE = 'Конструктор';
-const ORDERS_TITLE = 'Лента заказов';
+const FEED_TITLE = 'Лента заказов';
 const PROFILE_TITLE = 'Личный кабинет';
 const LOGIN_TITLE = 'Вход';
 const REGISTER_TITLE = 'Регистрация';
@@ -94,9 +93,8 @@ const ORDER_STATES: TCustomData<string> = {
 export {
   DEFAULT_DOC_TITLE,
   HOME_TITLE,
-  FEED_TITLE,
   CONSTRUCTOR_TITLE,
-  ORDERS_TITLE,
+  FEED_TITLE,
   PROFILE_TITLE,
   LOGIN_TITLE,
   REGISTER_TITLE,

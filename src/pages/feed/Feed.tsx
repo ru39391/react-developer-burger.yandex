@@ -14,8 +14,8 @@ import styles from '../../components/wrapper/Wrapper.module.css';
 
 import {
   ALL_ALIAS,
-  FEED_TITLE,
   WS_FEED_URL,
+  FEED_TITLE,
   FEED_ERROR_MSG
 } from '../../utils/constants';
 
@@ -36,14 +36,17 @@ const Feed: FC = () => {
     connect
   } = useSocket(`${WS_FEED_URL}/${ALL_ALIAS}`, {
     onMessage: (event: MessageEvent) => handleFeed(JSON.parse(event.data)),
-    onConnect: () => {
-      console.log('Соединение установлено');
-    },
-    onError: (event: Event) => close(event),
+    onConnect: () => open(),
+    onError: () => close(),
     onDisconnect: (event: CloseEvent) => disconnect(event)
   });
 
-  const close = (event: Event) => {
+  const open = () => {
+    setSocketMess('');
+    setModalVisibility(false);
+  }
+
+  const close = () => {
     setSocketMess(FEED_ERROR_MSG);
     setModalVisibility(true);
   }
