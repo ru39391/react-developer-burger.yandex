@@ -4,7 +4,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 
 import styles from './OrderCard.module.css';
 
-import { FEED_URL, ORDER_STATES } from '../../utils/constants';
+import { FEED_URL, PROFILE_URL, ORDERS_URL, ORDER_STATES } from '../../utils/constants';
 import useOrderData from '../../hooks/useOrderData';
 
 interface IOrderCard {
@@ -29,10 +29,11 @@ const OrderCard: FC<IOrderCard> = ({
     orderProducts,
     handleProductsList
   } = useOrderData();
+  const currentUrl = location.pathname.split('/').includes(PROFILE_URL) ? location.pathname.replace('/','') : FEED_URL;
 
   const handleOrderCardData = useCallback(
     () => {
-      navigate(`/${FEED_URL}/${id.toString()}`, {
+      navigate(`/${currentUrl}/${id.toString()}`, {
         replace: true,
         state: {
           layout: location,

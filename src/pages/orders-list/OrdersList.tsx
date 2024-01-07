@@ -19,7 +19,6 @@ import { useDispatch } from '../../services/hooks';
 import { getAccessToken } from '../../services/actions/user';
 
 import {
-  USER_URL,
   TOKEN_URL,
   WS_FEED_URL,
   FEED_ERROR_MSG
@@ -62,7 +61,7 @@ const OrdersList: FC = () => {
   const disconnect = (event: CloseEvent) => {
     setSocketMess(event.wasClean
       ? `Соединение успешно закрыто (код ${event.code}), причина: ${event.reason}`
-      : `Соединение закрыто с кодом ${event.code}`);
+      : `Произошла ошибка, соединение закрыто с кодом ${event.code}`);
     setModalVisibility(true);
   }
 
@@ -72,6 +71,7 @@ const OrdersList: FC = () => {
 
       dispatch(getAccessToken({ token: token as string }, TOKEN_URL));
     } else {
+      setSocketMess(FEED_ERROR_MSG);
       setModalVisibility(true);
     }
   }, [
@@ -86,6 +86,7 @@ const OrdersList: FC = () => {
         ? getCurrentToken()
         : connect(jwt);
     } else {
+      setSocketMess(FEED_ERROR_MSG);
       setModalVisibility(true);
     }
   };

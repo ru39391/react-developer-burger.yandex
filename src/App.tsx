@@ -97,6 +97,9 @@ const App: FC = () => {
           <Route path={`/${FEED_URL}`} element={<Outlet />}>
             <Route path=':id' element={<Modal isModalOpen={Boolean(layout)} closeModal={closeModal}><OrderDetails {...location.state.item} /></Modal>} />
           </Route>
+          <Route path={`/${PROFILE_URL}/${ORDERS_URL}`} element={<Outlet />}>
+            <Route path=':id' element={<Modal isModalOpen={Boolean(layout)} closeModal={closeModal}><OrderDetails {...location.state.item} /></Modal>} />
+          </Route>
         </Routes>
         )
       }
