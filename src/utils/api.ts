@@ -18,9 +18,10 @@ class Api extends Component<{}> {
     this._path = `${API_URL}${path}`;
   }
 
-  public _setHeaders(): TCustomData<string> {
+  public _setHeaders(jwt: string = ''): TCustomData<string> {
     return {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization' : `Bearer ${jwt}`
     }
   }
 
@@ -40,9 +41,9 @@ class Api extends Component<{}> {
   }
 
   public checkout(jwt: string, idsArr: string[]): Promise<TOrderDataRes> {
-    return fetch(`${this._path}?token=${jwt}`, {
+    return fetch(this._path, {
       method: 'POST',
-      headers: this._setHeaders(),
+      headers: this._setHeaders(jwt),
       body: JSON.stringify({
         ingredients: idsArr
       })

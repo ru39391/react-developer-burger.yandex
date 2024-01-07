@@ -64,7 +64,7 @@ const OrdersList: FC = () => {
   const disconnect = (event: CloseEvent) => {
     setSocketMess(event.wasClean
       ? `Соединение успешно закрыто (код ${event.code}), причина: ${event.reason}`
-      : `Произошла ошибка, соединение закрыто с кодом ${event.code}`);
+      : `Соединение закрыто с кодом ${event.code}`);
     setModalVisibility(true);
   }
 
