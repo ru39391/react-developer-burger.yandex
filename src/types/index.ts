@@ -94,9 +94,14 @@ export type TLocState = {
   prevUrl?: string;
 };
 
-export type TFeedOrder = TCustomData<string> & {
+export type TFeedOrder = {
+  _id: string;
+  status: string;
   ingredients: string[];
-  number: number;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  number: string;
 };
 
 export type TFeedData = {

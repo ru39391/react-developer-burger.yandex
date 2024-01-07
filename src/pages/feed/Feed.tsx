@@ -1,5 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import Wrapper from '../../components/wrapper/Wrapper';
+import Preloader from '../../components/preloader/Preloader';
 import FeedList from '../../components/feed-list/FeedList';
 import FeedTotal from '../../components/feed-total/FeedTotal';
 
@@ -8,19 +9,27 @@ import useSocket from '../../hooks/useSocket';
 
 import styles from '../../components/wrapper/Wrapper.module.css';
 
-import { WS_FEED_URL, FEED_TITLE } from '../../utils/constants';
+import {
+  FEED_TITLE,
+  WS_FEED_URL,
+  FEED_ERROR_MSG
+} from '../../utils/constants';
 
 const Feed: FC = () => {
   const {
+    isSucceed,
+    isFailed,
     totalData,
     feedOrders,
-    handleFeed
+    feedOrdersDone,
+    feedOrdersPending,
+    handleFeed,
   } = useFeed();
   const { socketRef, connect } = useSocket(WS_FEED_URL, {
     onMessage: (event: MessageEvent) => handleFeed(JSON.parse(event.data)),
     onConnect: () => {
       console.log('Соединение установлено');
-    }
+    },
   });
 
   useEffect(() => {
@@ -30,11 +39,22 @@ const Feed: FC = () => {
   );
 
   return (
-    <Wrapper title={FEED_TITLE}>
-      <div className={`${styles.container} ${styles.gcg_lg}`}>
-        <FeedList orders={feedOrders} />
-        <FeedTotal total={totalData.total} totalToday={totalData.totalToday} />
-      </div>
+    <Wrapper title={isFailed ? FEED_ERROR_MSG : FEED_TITLE}>
+      {
+        isSucceed ? (
+          <div className={`${styles.container} ${styles.gcg_lg}`}>
+            <FeedList orders={feedOrders} />
+            <FeedTotal
+              total={totalData.total}
+              totalToday={totalData.totalToday}
+              ordersDone={feedOrdersDone}
+              ordersPending={feedOrdersPending}
+            />
+          </div>
+        ) : (
+          <Preloader />
+        )
+      }
     </Wrapper>
   )
 };

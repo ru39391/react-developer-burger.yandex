@@ -19,14 +19,16 @@ const FeedList: FC<IFeedList> = ({ orders }) => {
               ingredients,
               status,
               name,
-              number
+              number,
+              updatedAt
             }) => (
               <OrderCard
                 key={_id}
-                id={number.toString()}
+                id={number}
                 name={name}
                 status={status}
                 products={ingredients}
+                date={updatedAt}
               />
           ))}
         </div>
