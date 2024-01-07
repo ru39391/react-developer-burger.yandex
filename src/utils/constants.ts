@@ -42,11 +42,12 @@ const TOKEN_URL = 'token';
 const LOGOUT_URL = 'logout';
 const RESET_URL = 'reset';
 
-const WS_FEED_URL = 'wss://norma.nomoreparties.space/orders/all';
+const WS_FEED_URL = 'wss://norma.nomoreparties.space/orders';
 const API_URL = 'https://norma.nomoreparties.space/api/';
 const INGREDIENTS_ALIAS = 'ingredients';
 const ORDERS_ALIAS = 'orders';
 const AUTH_ALIAS = 'auth';
+const ALL_ALIAS = 'all';
 const RESET_PASSWORD_ALIAS = 'password-reset';
 
 const FEED_ERROR_MSG = 'Невозможно обработать данные заказов';
@@ -143,6 +144,7 @@ export {
   INGREDIENTS_ALIAS,
   ORDERS_ALIAS,
   AUTH_ALIAS,
+  ALL_ALIAS,
   RESET_PASSWORD_ALIAS,
 
   FEED_ERROR_MSG,

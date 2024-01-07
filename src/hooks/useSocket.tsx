@@ -6,7 +6,7 @@ import {
 
 interface ISocketHook {
   socketRef: MutableRefObject<WebSocket | null>;
-  connect: () => void;
+  connect: (token: string | undefined) => void;
   disconnect: () => void;
 };
 
@@ -27,7 +27,7 @@ const useSocket = (url: string, options: IWSOptions): ISocketHook => {
   };
 
   const connect = useCallback(
-    (token: string = '') => {
+    (token: string | undefined = '') => {
       socketRef.current = new WebSocket(token ? `${url}?token=${token}` : url);
 
       socketRef.current.onmessage = (event: MessageEvent) => {

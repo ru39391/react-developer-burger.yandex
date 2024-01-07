@@ -13,6 +13,7 @@ import useSocket from '../../hooks/useSocket';
 import styles from '../../components/wrapper/Wrapper.module.css';
 
 import {
+  ALL_ALIAS,
   FEED_TITLE,
   WS_FEED_URL,
   FEED_ERROR_MSG
@@ -33,7 +34,7 @@ const Feed: FC = () => {
   const {
     socketRef,
     connect
-  } = useSocket(WS_FEED_URL, {
+  } = useSocket(`${WS_FEED_URL}/${ALL_ALIAS}`, {
     onMessage: (event: MessageEvent) => handleFeed(JSON.parse(event.data)),
     onConnect: () => {
       console.log('Соединение установлено');
@@ -55,7 +56,7 @@ const Feed: FC = () => {
   }
 
   useEffect(() => {
-      connect();
+      connect('');
     },
     [socketRef]
   );
@@ -77,8 +78,8 @@ const Feed: FC = () => {
           <Preloader />
         )
       }
-      {isModalVisible && (
-        <Modal isModalOpen={isModalVisible} closeModal={() => setModalVisibility(false)}>
+      {(isModalVisible || isFailed) && (
+        <Modal isModalOpen={isModalVisible || isFailed} closeModal={() => setModalVisibility(false)}>
           <ModalContent children={socketMess} />
         </Modal>
       )}
