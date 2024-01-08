@@ -1,13 +1,16 @@
-import React, { FC } from "react";
-import { Outlet } from 'react-router-dom';
+import React, { FC, ReactNode } from "react";
 import Wrapper from "../../components/wrapper/Wrapper";
 import Sidebar from "../../components/sidebar/Sidebar";
 
-const Profile: FC = () => {
+interface IProfile {
+  children: ReactNode;
+};
+
+const Profile: FC<IProfile> = ({ children }) => {
   return (
     <Wrapper isGrid={true}>
       <Sidebar />
-      <Outlet />
+      {children}
     </Wrapper>
   );
 }

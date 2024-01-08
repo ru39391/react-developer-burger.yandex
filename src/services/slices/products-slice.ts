@@ -64,10 +64,13 @@ const productsSlice = createSlice({
 });
 
 export const {
+  reducer: productsReducer,
+  actions: productsActions
+} = productsSlice;
+export const {
   getItemsRequest,
   getItemsSuccess,
   fetchItemSuccess,
   getItemsFailed,
   setItemDetails
-} = productsSlice.actions
-export default productsSlice.reducer;
+} = productsSlice.actions;

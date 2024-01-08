@@ -6,12 +6,12 @@ import {
 
 import type { TFieldsData, TCustomData } from '../types';
 
-type TSubmitBtnHook = {
+interface ISubmitBtnHook {
   isBtnDisabled: boolean;
   disableBtn: Function;
 }
 
-const useSubmitBtn = (fields: TFieldsData[], validValues: TCustomData<boolean>): TSubmitBtnHook => {
+const useSubmitBtn = (fields: TFieldsData[], validValues: TCustomData<boolean>): ISubmitBtnHook => {
   const [isBtnDisabled, setBtnDisabled] = useState<boolean>(true);
 
   const values = useMemo(() => Object.values(validValues), [validValues]);

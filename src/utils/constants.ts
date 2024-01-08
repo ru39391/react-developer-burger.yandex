@@ -1,10 +1,10 @@
-import { TIngredientPos } from '../types';
+import { TIngredientPos, TCustomData } from '../types';
 
 const DEFAULT_DOC_TITLE = 'Stellar Burgers';
 
 const HOME_TITLE = 'Соберите бургер';
 const CONSTRUCTOR_TITLE = 'Конструктор';
-const ORDERS_TITLE = 'Лента заказов';
+const FEED_TITLE = 'Лента заказов';
 const PROFILE_TITLE = 'Личный кабинет';
 const LOGIN_TITLE = 'Вход';
 const REGISTER_TITLE = 'Регистрация';
@@ -25,8 +25,10 @@ const SAUCE_PRODUCT_CAPTION = 'Соусы';
 const TOP_PRODUCT_CAPTION = 'верх';
 const BOTTOM_PRODUCT_CAPTION = 'низ';
 
+const NO_ORDERS = 'Заказов нет';
 const UNDER_CONSTRUCTION_TEXT = 'Раздел находится в разработке';
 
+const FEED_URL = 'feed';
 const ORDERS_URL = 'orders';
 const PROFILE_URL = 'profile';
 const LOGIN_URL = 'login';
@@ -39,12 +41,15 @@ const TOKEN_URL = 'token';
 const LOGOUT_URL = 'logout';
 const RESET_URL = 'reset';
 
+const WS_FEED_URL = 'wss://norma.nomoreparties.space/orders';
 const API_URL = 'https://norma.nomoreparties.space/api/';
 const INGREDIENTS_ALIAS = 'ingredients';
 const ORDERS_ALIAS = 'orders';
 const AUTH_ALIAS = 'auth';
+const ALL_ALIAS = 'all';
 const RESET_PASSWORD_ALIAS = 'password-reset';
 
+const FEED_ERROR_MSG = 'Невозможно обработать данные заказов';
 const TOKEN_ERROR_MSG = 'Невозможно обработать данные пользователя';
 const ACTION_ERROR_MSG = 'Передан неизвестный тип';
 const UPDATE_ERROR_MSG = 'Ошибка обновления данных';
@@ -76,11 +81,20 @@ const IS_PASSWORD_REQ_SENT_KEY = 'isPasswordReqSent';
 const ACCESS_TOKEN_KEY = 'accessToken';
 const REFRESH_TOKEN_KEY = 'refreshToken';
 
+const DONE_STATE = 'done';
+const CREATED_STATE = 'created';
+const PENDING_STATE = 'pending'
+const ORDER_STATES: TCustomData<string> = {
+  [DONE_STATE]: 'Выполнен',
+  [CREATED_STATE]: 'Создан',
+  [PENDING_STATE]: 'Готовится'
+};
+
 export {
   DEFAULT_DOC_TITLE,
   HOME_TITLE,
   CONSTRUCTOR_TITLE,
-  ORDERS_TITLE,
+  FEED_TITLE,
   PROFILE_TITLE,
   LOGIN_TITLE,
   REGISTER_TITLE,
@@ -101,6 +115,7 @@ export {
   TOP_PRODUCT_CAPTION,
   BOTTOM_PRODUCT_CAPTION,
 
+  NO_ORDERS,
   UNDER_CONSTRUCTION_TEXT,
 
   NAME_PLS,
@@ -109,6 +124,7 @@ export {
 
   PASSWORD_DEFAULT_VAL,
 
+  WS_FEED_URL,
   ORDERS_URL,
   PROFILE_URL,
   LOGIN_URL,
@@ -121,12 +137,15 @@ export {
   LOGOUT_URL,
   RESET_URL,
 
+  FEED_URL,
   API_URL,
   INGREDIENTS_ALIAS,
   ORDERS_ALIAS,
   AUTH_ALIAS,
+  ALL_ALIAS,
   RESET_PASSWORD_ALIAS,
 
+  FEED_ERROR_MSG,
   TOKEN_ERROR_MSG,
   ACTION_ERROR_MSG,
   UPDATE_ERROR_MSG,
@@ -149,5 +168,10 @@ export {
   IS_LOGGED_KEY,
   IS_PASSWORD_REQ_SENT_KEY,
   ACCESS_TOKEN_KEY,
-  REFRESH_TOKEN_KEY
+  REFRESH_TOKEN_KEY,
+
+  DONE_STATE,
+  CREATED_STATE,
+  PENDING_STATE,
+  ORDER_STATES
 };

@@ -117,6 +117,10 @@ const orderSlice = createSlice({
 });
 
 export const {
+  reducer: orderReducer,
+  actions: orderActions
+} = orderSlice;
+export const {
   getOrderRequest,
   getOrderSuccess,
   getOrderFailed,
@@ -125,5 +129,4 @@ export const {
   removeItem,
   updateOrderList,
   setOrderData
-} = orderSlice.actions
-export default orderSlice.reducer;
+} = orderSlice.actions;

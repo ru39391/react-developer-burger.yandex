@@ -11,20 +11,21 @@ import {
 } from '../types';
 
 class Api extends Component<{}> {
-  private _path: string;
+  public _path: string;
 
   constructor(path: string) {
     super({});
     this._path = `${API_URL}${path}`;
   }
 
-  private _setHeaders(): TCustomData<string> {
+  public _setHeaders(jwt: string = ''): TCustomData<string> {
     return {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization' : `Bearer ${jwt}`
     }
   }
 
-  private _checkResponse(result: Response, resultAlert: string): Promise<any> {
+  public _checkResponse(result: Response, resultAlert: string): Promise<any> {
     if (result.ok) {
       return result.json();
     }
@@ -39,10 +40,10 @@ class Api extends Component<{}> {
       .then((res: Response) => {return this._checkResponse(res, RESPONSE_ERROR_MSG)});
   }
 
-  public checkout(idsArr: string[]): Promise<TOrderDataRes> {
+  public checkout(jwt: string, idsArr: string[]): Promise<TOrderDataRes> {
     return fetch(this._path, {
       method: 'POST',
-      headers: this._setHeaders(),
+      headers: this._setHeaders(jwt),
       body: JSON.stringify({
         ingredients: idsArr
       })

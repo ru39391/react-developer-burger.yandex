@@ -8,7 +8,7 @@ import {
 
 import type { TToken } from '../types';
 
-type TAuthHook = {
+interface IAuthHook {
   accessToken: TToken;
   refreshToken: TToken;
   isAccTokExist: boolean;
@@ -18,7 +18,7 @@ type TAuthHook = {
   isPasswordReqSent: boolean;
 }
 
-const useAuth = (): TAuthHook => {
+const useAuth = (): IAuthHook => {
   return {
     accessToken: storage.getStorageItem(ACCESS_TOKEN_KEY),
     refreshToken: storage.getStorageItem(REFRESH_TOKEN_KEY),

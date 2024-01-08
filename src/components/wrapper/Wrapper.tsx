@@ -1,9 +1,9 @@
 import React, { FC, ReactNode } from 'react';
-import { useSelector } from 'react-redux';
 
 import Preloader from '../preloader/Preloader';
 import styles from './Wrapper.module.css';
 
+import { useSelector } from '../../services/hooks';
 import type { TRootState } from '../../services/store';
 
 interface IWrapperProps {

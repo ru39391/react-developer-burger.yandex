@@ -1,6 +1,5 @@
 import React, { FC, useCallback, useEffect, ChangeEvent } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 
 import useAuth from '../../hooks/useAuth'
 import useModal from '../../hooks/useModal';
@@ -23,6 +22,7 @@ import {
   RESET_URL
 } from '../../utils/constants';
 
+import { useSelector, useDispatch } from '../../services/hooks';
 import type { TRootState } from '../../services/store';
 import type { TFieldsData } from '../../types';
 
@@ -76,7 +76,6 @@ const ResetPassword: FC = () => {
   };
 
   const handleSubmit = useCallback(() => {
-    //@ts-ignore
     dispatch(recoverPassword({ ...values }, RESET_URL));
   }, [
     values,

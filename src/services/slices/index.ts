@@ -1,6 +1,6 @@
-import productsReducer from './products-slice';
-import orderReducer from './order-slice';
-import userReducer from './user-slice';
+import { productsReducer, productsActions } from './products-slice';
+import { orderReducer, orderActions } from './order-slice';
+import { userReducer, userActions } from './user-slice';
 
 const reducer = {
   products: productsReducer,
@@ -8,4 +8,5 @@ const reducer = {
   user: userReducer
 };
 
+export type TAppActions = typeof productsActions | typeof orderActions | typeof userActions;
 export default reducer;

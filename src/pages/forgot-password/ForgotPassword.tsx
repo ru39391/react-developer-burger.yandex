@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useCallback, ChangeEvent } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 
 import useAuth from '../../hooks/useAuth';
 import useInput from '../../hooks/useInput';
@@ -22,6 +21,7 @@ import {
   IS_PASSWORD_REQ_SENT_KEY
 } from '../../utils/constants';
 
+import { useSelector, useDispatch } from '../../services/hooks';
 import type { TRootState } from '../../services/store';
 import type { TFieldsData } from '../../types';
 
@@ -66,7 +66,6 @@ const ForgotPassword: FC = () => {
   };
 
   const handleSubmit = useCallback(() => {
-    //@ts-ignore
     dispatch(recoverPassword({ ...values }));
   }, [
     values,

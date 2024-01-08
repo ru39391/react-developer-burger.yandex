@@ -12,7 +12,7 @@ import {
 
 import type { TCustomData } from '../types';
 
-type TInputHook = {
+interface IInputHook {
   values: TCustomData<string>,
   validValues: TCustomData<boolean>;
   editedValues: TCustomData<string>;
@@ -22,7 +22,7 @@ type TInputHook = {
   reset: Function;
 }
 
-const useInput = (): TInputHook => {
+const useInput = (): IInputHook => {
   const [values, setValues] = useState<TCustomData<string>>({});
   const [validValues, setValidValues] = useState<TCustomData<boolean>>({});
   const [editedValues, setEditedValues] = useState<TCustomData<string>>({});

@@ -65,6 +65,23 @@ export type TPasswordResponse = {
   readonly message: string;
 };
 
+export type TFeedOrder = {
+  readonly _id: string;
+  readonly status: string;
+  readonly ingredients: string[];
+  readonly name: string;
+  readonly createdAt: string;
+  readonly updatedAt: string;
+  readonly number: number;
+};
+
+export type TFeedData = {
+  readonly success: boolean;
+  readonly orders: TFeedOrder[];
+  readonly total?: number;
+  readonly totalToday?: number;
+};
+
 export type TDraggableData = TCustomData<TProductData>;
 
 export type TDraggableItem = {

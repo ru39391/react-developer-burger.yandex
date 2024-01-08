@@ -84,11 +84,14 @@ const userSlice = createSlice({
 });
 
 export const {
+  reducer: userReducer,
+  actions: userActions
+} = userSlice;
+export const {
   getUserRequest,
   getUserSuccess,
   getRecoverySuccess,
   getResetSuccess,
   getFailed,
   resetUserData
-} = userSlice.actions
-export default userSlice.reducer;
+} = userSlice.actions;

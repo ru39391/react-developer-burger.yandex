@@ -8,9 +8,8 @@ import styles from './Nav.module.css';
 
 import {
   CONSTRUCTOR_TITLE,
-  ORDERS_TITLE,
-  PROFILE_URL,
-  ORDERS_URL
+  FEED_TITLE,
+  FEED_URL
 } from '../../utils/constants';
 
 type TNavItem = {
@@ -27,8 +26,8 @@ const Nav: FC = () => {
       icon: <BurgerIcon type="primary" />
     },
     {
-      url: `${PROFILE_URL}/${ORDERS_URL}`,
-      title: ORDERS_TITLE,
+      url: FEED_URL,
+      title: FEED_TITLE,
       icon: <ListIcon type="primary" />
     }
   ];

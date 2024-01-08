@@ -1,5 +1,4 @@
 import React, { FC, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import useProdData from '../../hooks/useProdData';
@@ -8,6 +7,7 @@ import IngredientDetails from '../../components/ingredient-details/IngredientDet
 
 import { fetchItem } from '../../services/actions/products';
 
+import { useSelector, useDispatch } from '../../services/hooks';
 import type { TRootState } from '../../services/store';
 
 const IngredientsItem: FC = () => {
@@ -18,8 +18,7 @@ const IngredientsItem: FC = () => {
 
   useEffect(
     () => {
-      //@ts-ignore
-      if(!Object.values(item).length) dispatch(fetchItem(id));
+      if(!Object.values(item).length) dispatch(fetchItem(id as string));
     },
     [dispatch]
   );
