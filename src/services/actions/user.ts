@@ -2,7 +2,6 @@ import { Dispatch } from 'redux';
 import {
   LOGIN_URL,
   RESET_URL,
-  ACCESS_TOKEN_KEY,
   IS_LOGGED_KEY,
   IS_PASSWORD_REQ_SENT_KEY,
   UPDATE_ERROR_MSG,
@@ -22,8 +21,7 @@ import type { TAppThunk } from '../../services/store';
 import type {
   TUser,
   TUserData,
-  TCustomData,
-  TToken
+  TCustomData
 } from '../../types';
 
 const handleUser = (data: { values: TCustomData<string> }, alias: string = ''): TAppThunk<void> => async (dispatch: Dispatch) => {
@@ -65,14 +63,10 @@ const getAccessToken = (data: TCustomData<string>, alias: string = ''): TAppThun
   }
 };
 
-const updateData = (data: { values: TCustomData<string> }, alias: string = ''): TAppThunk<void> => async (dispatch: Dispatch) => {
+const updateData = (data: { values: TCustomData<string> }, jwt: string, alias: string = ''): TAppThunk<void> => async (dispatch: Dispatch) => {
   dispatch(getUserRequest({}));
   try {
-    const accessToken: TToken = typeof storage.getStorageItem(ACCESS_TOKEN_KEY) !== 'string' && Boolean(storage.getStorageItem(ACCESS_TOKEN_KEY))
-      ? storage.getStorageItem(ACCESS_TOKEN_KEY)
-      : undefined;
-    const token: string | undefined = typeof accessToken === 'object' && accessToken !== undefined ? accessToken.token : undefined;
-    const res = await userApi.handleUser({ ...data, jwt: token }, alias);
+    const res = await userApi.handleUser({ ...data, jwt }, alias);
     if (res && res.success) {
       const { user } = res;
       dispatch(getUserSuccess({ data: { ...user } }));

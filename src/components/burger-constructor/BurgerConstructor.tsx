@@ -43,7 +43,7 @@ const BurgerConstructor: FC = () => {
     orderList,
     summ
   } = useSelector((state: TRootState) => state.order);
-  const { isLogged } = useAuth();
+  const { isLogged, accessToken } = useAuth();
   const {
     isModalVisible,
     setModalVisibility
@@ -83,7 +83,7 @@ const BurgerConstructor: FC = () => {
     () => {
       if(isLogged) {
         setModalVisibility(true);
-        dispatch(checkout(orderList));
+        dispatch(checkout(accessToken as string, orderList));
       } else {
         navigate(`/${LOGIN_URL}`, { replace: false });
       }

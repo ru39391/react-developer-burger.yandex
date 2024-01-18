@@ -6,15 +6,12 @@ import {
   getOrderFailed
 } from '../slices/order-slice';
 import orderApi from '../../utils/orderApi';
-import useAuth from '../../hooks/useAuth';
 import type { TAppThunk } from '../../services/store';
 
-const checkout = (arr: string[]): TAppThunk<void> => async (dispatch: Dispatch) => {
+const checkout = (jwt: string, arr: string[]): TAppThunk<void> => async (dispatch: Dispatch) => {
   dispatch(getOrderRequest({}))
   try {
-    const { accessToken } = useAuth();
-    const jwt: string | undefined = typeof accessToken === 'object' && accessToken !== undefined ? accessToken.token : undefined;
-    const res = await orderApi.checkout(jwt as string, arr);
+    const res = await orderApi.checkout(jwt, arr);
     if (res && res.success) {
       const { name, order }: { name: string; order: { number: number; }; } = res;
       dispatch(getOrderSuccess({ data: { name, id: order.number } }))

@@ -6,11 +6,9 @@ import {
   REFRESH_TOKEN_KEY
 } from '../utils/constants';
 
-import type { TToken } from '../types';
-
 interface IAuthHook {
-  accessToken: TToken;
-  refreshToken: TToken;
+  accessToken: string | undefined;
+  refreshToken: string | undefined;
   isAccTokExist: boolean;
   isRefTokExist: boolean;
   isTokenExpired: boolean;
@@ -19,9 +17,12 @@ interface IAuthHook {
 }
 
 const useAuth = (): IAuthHook => {
+  const accessToken = storage.getStorageItem(ACCESS_TOKEN_KEY);
+  const refreshToken = storage.getStorageItem(REFRESH_TOKEN_KEY);
+
   return {
-    accessToken: storage.getStorageItem(ACCESS_TOKEN_KEY),
-    refreshToken: storage.getStorageItem(REFRESH_TOKEN_KEY),
+    accessToken: typeof accessToken === 'object' && accessToken !== undefined ? accessToken.token : undefined,
+    refreshToken: typeof refreshToken === 'object' && refreshToken !== undefined ? refreshToken.token : undefined,
     isAccTokExist: storage.isItemExist(ACCESS_TOKEN_KEY),
     isRefTokExist: storage.isItemExist(REFRESH_TOKEN_KEY),
     isTokenExpired: storage.isTokenExpired(),

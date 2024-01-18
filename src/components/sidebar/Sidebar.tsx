@@ -50,10 +50,8 @@ const Sidebar: FC = () => {
   ];
 
   const logout = () => {
-    if(isRefTokExist) {
-      const token: string | undefined = typeof refreshToken === 'object' && refreshToken !== undefined ? refreshToken.token : undefined;
-
-      dispatch(signOut({ token: token as string }, LOGOUT_URL));
+    if(isRefTokExist && refreshToken) {
+      dispatch(signOut({ token: refreshToken }, LOGOUT_URL));
       navigate(`/`)
     } else {
       setModalVisibility(true);

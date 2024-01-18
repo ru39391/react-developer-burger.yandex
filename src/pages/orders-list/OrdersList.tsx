@@ -69,10 +69,8 @@ const OrdersList: FC = () => {
   }
 
   const getCurrentToken = useCallback(() => {
-    if(isRefTokExist) {
-      const token: string | undefined = typeof refreshToken === 'object' && refreshToken !== undefined ? refreshToken.token : undefined;
-
-      dispatch(getAccessToken({ token: token as string }, TOKEN_URL));
+    if(isRefTokExist && refreshToken) {
+      dispatch(getAccessToken({ token: refreshToken }, TOKEN_URL));
     } else {
       setSocketMess(FEED_ERROR_MSG);
       setModalVisibility(true);
@@ -82,12 +80,10 @@ const OrdersList: FC = () => {
   ]);
 
   const getUserOrders = () => {
-    if(isAccTokExist) {
-      const jwt: string | undefined = typeof accessToken === 'object' && accessToken !== undefined ? accessToken.token : undefined;
-
+    if(isAccTokExist && accessToken) {
       isTokenExpired
         ? getCurrentToken()
-        : connect(jwt);
+        : connect(accessToken);
     } else {
       setSocketMess(FEED_ERROR_MSG);
       setModalVisibility(true);
