@@ -31,10 +31,10 @@ import type {
 const api: UserApi = new UserApi(AUTH_ALIAS);
 const passwordApi: UserApi = new UserApi(RESET_PASSWORD_ALIAS);
 
-const fetchData = (data: { values: TCustomData<string> }, alias: string = ''): TAppThunk<void> => async (dispatch: Dispatch) => {
+const handleUser = (data: { values: TCustomData<string> }, alias: string = ''): TAppThunk<void> => async (dispatch: Dispatch) => {
   dispatch(getUserRequest({}));
   try {
-    const res = await api.fetchData(data, alias);
+    const res = await api.handleUser(data, alias);
     if (res && res.success) {
       const { user, accessToken, refreshToken } = res;
       const data: TUser | TUserData = alias === LOGIN_URL
@@ -75,7 +75,7 @@ const updateData = (data: { values: TCustomData<string> }, alias: string = ''): 
       ? storage.getStorageItem(ACCESS_TOKEN_KEY)
       : undefined;
     const token: string | undefined = typeof accessToken === 'object' && accessToken !== undefined ? accessToken.token : undefined;
-    const res = await api.fetchData({ ...data, jwt: token }, alias);
+    const res = await api.handleUser({ ...data, jwt: token }, alias);
     if (res && res.success) {
       const { user } = res;
       dispatch(getUserSuccess({ data: { ...user } }));
@@ -119,7 +119,7 @@ const signOut = (data: TCustomData<string>, alias: string = ''): TAppThunk<void>
 
 export {
   signOut,
-  fetchData,
+  handleUser,
   updateData,
   recoverPassword,
   getAccessToken

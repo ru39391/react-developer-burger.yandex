@@ -9,7 +9,7 @@ import FormButton from '../../components/form-button/FormButton';
 import FormFooter from '../../components/form-footer/FormFooter';
 import Wrapper from '../../components/wrapper/Wrapper';
 
-import { fetchData } from '../../services/actions/user';
+import { handleUser } from '../../services/actions/user';
 
 import storage from '../../utils/storage';
 import {
@@ -78,7 +78,7 @@ const Login: FC = () => {
   };
 
   const handleSubmit = useCallback(() => {
-    dispatch(fetchData({ values }, LOGIN_URL));
+    dispatch(handleUser({ values }, LOGIN_URL));
   }, [
     values,
     dispatch

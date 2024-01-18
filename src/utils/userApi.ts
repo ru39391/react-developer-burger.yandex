@@ -1,6 +1,5 @@
-import { Component } from 'react';
+import BaseApi from './baseApi';
 import {
-  API_URL,
   USER_URL,
   RESPONSE_ERROR_MSG
 } from './constants';
@@ -11,39 +10,13 @@ import {
   TPasswordResponse
 } from '../types';
 
-class UserApi extends Component<{}> {
-  private _path: string;
-
-  constructor(path: string) {
-    super({});
-    this._path = `${API_URL}${path}/`;
-  }
-
-  private _setHeaders(jwt: string = ''): TCustomData<string> {
-    return jwt
-      ? {
-        'Content-Type': 'application/json',
-        'Authorization' : `Bearer ${jwt}`
-      }
-      : {
-        'Content-Type': 'application/json'
-      };
-  }
-
-  private _checkResponse(result: Response, resultAlert: string): Promise<any> {
-    if (result.ok) {
-      return result.json();
-    }
-
-    return Promise.reject(`${resultAlert}: ${result.status}`);
-  }
-
+class UserApi extends BaseApi {
   public getAccessToken(data: TCustomData<string>, alias: string = ''): Promise<TAuthResponse> {
     const params = {
       method: 'GET',
       headers: this._setHeaders(data.jwt),
     };
-    return fetch(`${this._path}${alias}`, data.jwt
+    return fetch(`${this._path}/${alias}`, data.jwt
       ? params
       : {
         ...params,
@@ -54,8 +27,8 @@ class UserApi extends Component<{}> {
       .then((res) => {return this._checkResponse(res, RESPONSE_ERROR_MSG)});
   }
 
-  public fetchData(data: { jwt?: string; values: TCustomData<string>; }, alias: string = ''): Promise<TAuthResponse> {
-    return fetch(`${this._path}${alias}`, {
+  public handleUser(data: { jwt?: string; values: TCustomData<string>; }, alias: string = ''): Promise<TAuthResponse> {
+    return fetch(`${this._path}/${alias}`, {
       method: alias === USER_URL ? 'PATCH' : 'POST',
       headers: this._setHeaders(data.jwt),
       body: JSON.stringify(data.values)
@@ -64,7 +37,7 @@ class UserApi extends Component<{}> {
   }
 
   public recoverPassword(data: TCustomData<string>, alias: string = ''): Promise<TPasswordResponse> {
-    return fetch(`${this._path}${alias}`, {
+    return fetch(`${this._path}/${alias}`, {
       method: 'POST',
       headers: this._setHeaders(),
       body: JSON.stringify(data)
