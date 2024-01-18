@@ -1,0 +1,25 @@
+.wrapper {
+  gap: 0 16px;
+  display: flex;
+  align-items: center;
+}
+
+.img {
+  width: 64px;
+  height: 64px;
+  flex: 0 0 64px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #801AB2;
+  background-color: #131316;
+}
+
+.title {
+  flex-grow: 1;
+}
+
+.aside {
+  gap: 0 8px;
+  display: flex;
+  align-items: center;
+}

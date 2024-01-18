@@ -1,11 +1,21 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
+import { useSelector, useDispatch } from '../../services/hooks';
+
+import { setItemDetails } from '../../services/slices/products-slice';
 import type { TRootState } from '../../services/store';
 
 const IngredientsList: FC = () => {
+  const dispatch = useDispatch();
   const { items } = useSelector((state: TRootState) => state.products);
+
+  useEffect(
+    () => {
+      dispatch(setItemDetails({ item: {} }));
+    },
+    []
+  );
 
   return (
     <>

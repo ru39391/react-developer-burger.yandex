@@ -1,11 +1,11 @@
 import React, { FC, ReactNode, FormEvent } from 'react';
-import { useSelector } from 'react-redux';
 import {
   Input,
   PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Form.module.css';
 
+import { useSelector } from '../../services/hooks';
 import type { TRootState } from '../../services/store';
 import type { TFieldsData } from '../../types';
 

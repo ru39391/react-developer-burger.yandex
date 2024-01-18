@@ -4,7 +4,6 @@ import {
   useLocation,
   useNavigate
 } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
 import useAuth from '../../hooks/useAuth';
 import useModal from '../../hooks/useModal';
@@ -14,6 +13,7 @@ import ModalContent from '../modal-content/ModalContent';
 
 import styles from './Sidebar.module.css';
 
+import { useDispatch } from '../../services/hooks';
 import { signOut } from '../../services/actions/user';
 
 import {
@@ -52,8 +52,8 @@ const Sidebar: FC = () => {
   const logout = () => {
     if(isRefTokExist) {
       const token: string | undefined = typeof refreshToken === 'object' && refreshToken !== undefined ? refreshToken.token : undefined;
-      //@ts-ignore
-      dispatch(signOut({ token }, LOGOUT_URL));
+
+      dispatch(signOut({ token: token as string }, LOGOUT_URL));
       navigate(`/`)
     } else {
       setModalVisibility(true);

@@ -1,5 +1,4 @@
 import React, {FC, useMemo, useCallback, useEffect, ChangeEvent } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 
 import useAuth from '../../hooks/useAuth';
 import useModal from '../../hooks/useModal';
@@ -21,6 +20,7 @@ import {
   PASSWORD_DEFAULT_VAL
 } from '../../utils/constants';
 
+import { useSelector, useDispatch } from '../../services/hooks';
 import type { TRootState } from '../../services/store';
 import type { TFieldsData } from '../../types';
 
@@ -82,8 +82,8 @@ const ProfileForm: FC = () => {
   const getCurrentToken = useCallback(() => {
     if(isRefTokExist) {
       const token: string | undefined = typeof refreshToken === 'object' && refreshToken !== undefined ? refreshToken.token : undefined;
-      //@ts-ignore
-      dispatch(getAccessToken({ token }, TOKEN_URL));
+
+      dispatch(getAccessToken({ token: token as string }, TOKEN_URL));
     } else {
       setModalVisibility(true);
     }
@@ -94,10 +94,10 @@ const ProfileForm: FC = () => {
   const getUserData = useCallback(() => {
     if(isAccTokExist) {
       const jwt: string | undefined = typeof accessToken === 'object' && accessToken !== undefined ? accessToken.token : undefined;
+
       isTokenExpired
         ? getCurrentToken()
-        //@ts-ignore
-        : dispatch(getAccessToken({ jwt }, USER_URL));
+        : dispatch(getAccessToken({ jwt: jwt as string }, USER_URL));
     } else {
       setModalVisibility(true);
     }
@@ -133,7 +133,6 @@ const ProfileForm: FC = () => {
       getCurrentToken();
     }
 
-    //@ts-ignore
     dispatch(updateData({ values: updatedValues }, USER_URL));
   }, [
     updatedValues,

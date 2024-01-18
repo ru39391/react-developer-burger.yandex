@@ -1,5 +1,4 @@
 import React, { FC, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 
 import useModal from '../../hooks/useModal';
 
@@ -7,6 +6,7 @@ import Card from '../card/Card';
 
 import styles from './ConstructorSection.module.css';
 
+import { useSelector } from '../../services/hooks';
 import type { TRootState } from '../../services/store';
 import type { TProduct } from '../../types';
 
