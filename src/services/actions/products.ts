@@ -1,23 +1,18 @@
 import { Dispatch } from 'redux';
-import {
-  INGREDIENTS_ALIAS,
-  RESPONSE_ERROR_MSG
-} from '../../utils/constants';
+import { RESPONSE_ERROR_MSG } from '../../utils/constants';
 import {
   getItemsRequest,
   getItemsSuccess,
   getItemsFailed,
   fetchItemSuccess
 } from '../slices/products-slice';
-import Api from '../../utils/api';
+import productApi from '../../utils/productApi';
 import type { TAppThunk } from '../../services/store';
-
-const api: Api = new Api(INGREDIENTS_ALIAS);
 
 const getItems = (): TAppThunk<void> => async (dispatch: Dispatch) => {
   dispatch(getItemsRequest({}))
   try {
-    const res = await api.getData();
+    const res = await productApi.getData();
     if (res && res.success) {
       dispatch(getItemsSuccess({ data: res.data }))
     } else {
@@ -31,7 +26,7 @@ const getItems = (): TAppThunk<void> => async (dispatch: Dispatch) => {
 const fetchItem = (id: string): TAppThunk<void> => async (dispatch: Dispatch) => {
   dispatch(getItemsRequest({}))
   try {
-    const res = await api.getData();
+    const res = await productApi.getData();
     if (res && res.success) {
       dispatch(fetchItemSuccess({ item: res.data.find(({ _id }) => _id === id) }))
     } else {

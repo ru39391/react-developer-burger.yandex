@@ -2,8 +2,6 @@ import { Dispatch } from 'redux';
 import {
   LOGIN_URL,
   RESET_URL,
-  AUTH_ALIAS,
-  RESET_PASSWORD_ALIAS,
   ACCESS_TOKEN_KEY,
   IS_LOGGED_KEY,
   IS_PASSWORD_REQ_SENT_KEY,
@@ -18,8 +16,8 @@ import {
   getFailed,
   resetUserData
 } from '../slices/user-slice';
-import UserApi from '../../utils/userApi';
 import storage from '../../utils/storage';
+import { userApi, passwordApi } from '../../utils/userApi';
 import type { TAppThunk } from '../../services/store';
 import type {
   TUser,
@@ -28,13 +26,10 @@ import type {
   TToken
 } from '../../types';
 
-const api: UserApi = new UserApi(AUTH_ALIAS);
-const passwordApi: UserApi = new UserApi(RESET_PASSWORD_ALIAS);
-
 const handleUser = (data: { values: TCustomData<string> }, alias: string = ''): TAppThunk<void> => async (dispatch: Dispatch) => {
   dispatch(getUserRequest({}));
   try {
-    const res = await api.handleUser(data, alias);
+    const res = await userApi.handleUser(data, alias);
     if (res && res.success) {
       const { user, accessToken, refreshToken } = res;
       const data: TUser | TUserData = alias === LOGIN_URL
@@ -42,7 +37,9 @@ const handleUser = (data: { values: TCustomData<string> }, alias: string = ''): 
         : { ...user };
 
       dispatch(getUserSuccess({ data }));
-      if(alias === LOGIN_URL && (accessToken && refreshToken)) storage.setCurrTokens({ accessToken, refreshToken });
+      if(alias === LOGIN_URL && (accessToken && refreshToken)) {
+        storage.setCurrTokens({ accessToken, refreshToken });
+      }
     } else {
       dispatch(getFailed({ errorMsg: RESPONSE_ERROR_MSG }));
     }
@@ -54,7 +51,7 @@ const handleUser = (data: { values: TCustomData<string> }, alias: string = ''): 
 const getAccessToken = (data: TCustomData<string>, alias: string = ''): TAppThunk<void> => async (dispatch: Dispatch) => {
   dispatch(getUserRequest({}));
   try {
-    const res = await api.getAccessToken(data, alias);
+    const res = await userApi.getAccessToken(data, alias);
     if (res && res.success) {
       const { user, accessToken, refreshToken } = res;
       accessToken && refreshToken
@@ -75,7 +72,7 @@ const updateData = (data: { values: TCustomData<string> }, alias: string = ''): 
       ? storage.getStorageItem(ACCESS_TOKEN_KEY)
       : undefined;
     const token: string | undefined = typeof accessToken === 'object' && accessToken !== undefined ? accessToken.token : undefined;
-    const res = await api.handleUser({ ...data, jwt: token }, alias);
+    const res = await userApi.handleUser({ ...data, jwt: token }, alias);
     if (res && res.success) {
       const { user } = res;
       dispatch(getUserSuccess({ data: { ...user } }));
@@ -104,7 +101,7 @@ const recoverPassword = (data: TCustomData<string>, alias: string = ''): TAppThu
 const signOut = (data: TCustomData<string>, alias: string = ''): TAppThunk<void> => async (dispatch: Dispatch) => {
   dispatch(getUserRequest({}));
   try {
-    const res = await api.getAccessToken(data, alias);
+    const res = await userApi.getAccessToken(data, alias);
     if (res && res.success) {
       storage.clearStorage();
       [IS_LOGGED_KEY, IS_PASSWORD_REQ_SENT_KEY].forEach(item => storage.removeStorageItem(item));

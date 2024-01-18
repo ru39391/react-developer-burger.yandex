@@ -1,9 +1,10 @@
 import BaseApi from './baseApi';
 import {
+  AUTH_ALIAS,
+  RESET_PASSWORD_ALIAS,
   USER_URL,
   RESPONSE_ERROR_MSG
 } from './constants';
-
 import {
   TCustomData,
   TAuthResponse,
@@ -46,4 +47,10 @@ class UserApi extends BaseApi {
   }
 }
 
-export default UserApi;
+const userApi: UserApi = new UserApi(AUTH_ALIAS);
+const passwordApi: UserApi = new UserApi(RESET_PASSWORD_ALIAS);
+
+export {
+  userApi,
+  passwordApi
+};
