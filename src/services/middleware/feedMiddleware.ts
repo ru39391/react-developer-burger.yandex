@@ -50,6 +50,10 @@ const feedMiddleware = (): Middleware => {
         };
       }
 
+      if (socket && disconnect.match(action)) {
+        //socket.close();
+      }
+
       next(action);
     };
   }) as Middleware;

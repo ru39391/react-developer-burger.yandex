@@ -4,7 +4,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 
 import styles from './OrderCard.module.css';
 
-import { FEED_URL, PROFILE_URL, ORDERS_URL, ORDER_STATES } from '../../utils/constants';
+import { FEED_URL, PROFILE_URL, ORDER_STATES } from '../../utils/constants';
 import useOrderData from '../../hooks/useOrderData';
 
 interface IOrderCard {

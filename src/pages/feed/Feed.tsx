@@ -40,7 +40,9 @@ const Feed: FC = () => {
     return () => {
       dispatch(disconnect({}));
     }
-  }, []);
+  }, [
+    dispatch
+  ]);
 
   useEffect(() => {
     setModalVisibility(Boolean(errorMsg));

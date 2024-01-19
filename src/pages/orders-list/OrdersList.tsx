@@ -1,78 +1,50 @@
 import React, {
   FC,
-  useState,
   useEffect,
   useCallback
 } from 'react';
 
 import useAuth from '../../hooks/useAuth';
-import useFeed from '../../hooks/useFeed';
 import useModal from '../../hooks/useModal';
-import useSocket from '../../hooks/useSocket';
 
 import Modal from '../../components/modal/Modal';
 import ModalContent from '../../components/modal-content/ModalContent';
 import Preloader from '../../components/preloader/Preloader';
 import FeedList from '../../components/feed-list/FeedList';
 
-import { useDispatch } from '../../services/hooks';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { getAccessToken } from '../../services/actions/user';
+import { getFeedRequest, disconnect } from '../../services/slices/feed-slice';
+
+import type { TRootState } from '../../services/store';
 
 import {
-  TOKEN_URL,
   WS_FEED_URL,
-  FEED_ERROR_MSG
+  TOKEN_URL,
+  TOKEN_ERROR_MSG
 } from '../../utils/constants';
 
 const OrdersList: FC = () => {
   const dispatch = useDispatch();
-  const [socketMess, setSocketMess] = useState<string>('');
-  const { isModalVisible, setModalVisibility } = useModal();
+  const {
+    feedSucceed,
+    feedFailed,
+    feedOrders,
+    errorMsg
+  } = useSelector((state: TRootState) => state.feed);
   const {
     accessToken,
     refreshToken,
-    isRefTokExist,
     isAccTokExist,
+    isRefTokExist,
     isTokenExpired
   } = useAuth();
-  const {
-    isSucceed,
-    isFailed,
-    feedOrders,
-    handleFeed,
-  } = useFeed();
-  const {
-    socketRef,
-    connect
-  } = useSocket(WS_FEED_URL, {
-    onMessage: (event: MessageEvent) => handleFeed(JSON.parse(event.data)),
-    onConnect: () => open(),
-    onError: () => close(),
-    onDisconnect: (event: CloseEvent) => disconnect(event)
-  });
-
-  const open = () => {
-    setSocketMess('');
-    setModalVisibility(false);
-  }
-
-  const close = () => {
-    setSocketMess(FEED_ERROR_MSG);
-    setModalVisibility(true);
-  }
-
-  const disconnect = (event: CloseEvent) => {
-    setSocketMess(event.wasClean
-      ? `Соединение успешно закрыто (код ${event.code}), причина: ${event.reason}`
-      : `Соединение закрыто с кодом ${event.code}`);
-    setModalVisibility(true);
-  }
+  const { isModalVisible, setModalVisibility } = useModal();
 
   const getCurrentToken = useCallback(() => {
     if(isRefTokExist && refreshToken) {
       dispatch(getAccessToken({ token: refreshToken }, TOKEN_URL));
     } else {
-      setSocketMess(FEED_ERROR_MSG);
       setModalVisibility(true);
     }
   }, [
@@ -83,25 +55,34 @@ const OrdersList: FC = () => {
     if(isAccTokExist && accessToken) {
       isTokenExpired
         ? getCurrentToken()
-        : connect(accessToken);
+        : dispatch(getFeedRequest({ url: `${WS_FEED_URL}?token=${accessToken}` }));
     } else {
-      setSocketMess(FEED_ERROR_MSG);
       setModalVisibility(true);
     }
   };
 
   useEffect(() => {
-      getUserOrders();
-    },
-    [socketRef]
-  );
+    getUserOrders();
+
+    return () => {
+      dispatch(disconnect({}));
+    }
+  }, [
+    dispatch
+  ]);
+
+  useEffect(() => {
+    setModalVisibility(Boolean(errorMsg));
+  }, [
+    errorMsg
+  ]);
 
   return (
     <>
-      {isSucceed ? <FeedList orders={feedOrders} /> : <Preloader />}
-      {(isModalVisible || isFailed) && (
-        <Modal isModalOpen={isModalVisible || isFailed} closeModal={() => setModalVisibility(false)}>
-          <ModalContent children={socketMess} />
+      {feedSucceed ? <FeedList orders={feedOrders} /> : <Preloader />}
+      {(isModalVisible || feedFailed) && (
+        <Modal isModalOpen={isModalVisible || feedFailed} closeModal={() => setModalVisibility(false)}>
+          <ModalContent children={errorMsg || TOKEN_ERROR_MSG} />
         </Modal>
       )}
     </>
