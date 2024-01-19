@@ -27,7 +27,10 @@ const initialState: TFeedState = {
   feedRequest: false,
   feedSucceed: false,
   feedFailed: false,
-  totalData: {},
+  totalData: {
+    total: '0',
+    totalToday: '0'
+  },
   feedOrders: [],
   feedOrdersDone: [],
   feedOrdersPending: [],
@@ -67,10 +70,12 @@ const feedSlice = createSlice({
 
       return {
         ...state,
-        totalData: {
-          total: total ? total.toString() : '',
-          totalToday: totalToday ? totalToday.toString() : ''
-        },
+        totalData: total && totalToday
+          ? {
+              total: total.toString(),
+              totalToday: totalToday.toString()
+            }
+          : {...initialState.totalData},
         feedOrders: [...orders].map(item => ({...item, updatedAt: formatDate(item.updatedAt)})),
         feedOrdersDone: filterOrders([...orders], DONE_STATE),
         feedOrdersPending: filterOrders([...orders], PENDING_STATE),
@@ -78,10 +83,7 @@ const feedSlice = createSlice({
       };
     },
     disconnect: (state, action: TFeedAction) => ({
-      ...state,
-      feedRequest: false,
-      feedSucceed: true,
-      feedFailed: false,
+      ...initialState,
       errorMsg: action.payload.errorMsg || ''
     }),
   }
