@@ -31,7 +31,7 @@ const useOrderData = (): IOrderDataHook => {
         caption: item ? item.name : '',
         price: item ? item.price : 0,
         img: item ? item.image_mobile : '',
-        counter: arr.filter(product => product ? product._id === item._id : []).length,
+        counter: item ? arr.filter(product => product ? product._id === item._id : []).length : [],
         hidden: arr.length > 6 ? arr.length - 6 : 0
       }
     ));
