@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 import type { TUserData, TUser } from '../../types';
 
-type TUserAction = {
+export type TUserAction = {
   payload: {
     data?: TUser | TUserData
     name?: string;
