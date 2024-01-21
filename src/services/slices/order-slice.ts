@@ -12,7 +12,7 @@ import type {
   TDraggableItem
 } from '../../types';
 
-type TOrderAction = {
+export type TOrderAction = {
   payload: {
     index?: number;
     data?: TOrder;
