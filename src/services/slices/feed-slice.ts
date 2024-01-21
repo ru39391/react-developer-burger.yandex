@@ -4,7 +4,7 @@ import type { TCustomData, TFeedOrder, TFeedData } from '../../types';
 import formatDate from '../../utils/dateFormatter';
 import { DONE_STATE, PENDING_STATE } from '../../utils/constants';
 
-type TFeedAction = {
+export type TFeedAction = {
   payload: {
     url?: string;
     data?: TFeedData;
