@@ -1,7 +1,7 @@
 import { AnyAction } from '@reduxjs/toolkit';
 
 import type { Middleware, MiddlewareAPI } from 'redux'
-import type { TRootState, TAppDispatch } from '../store';
+import type { TRootState, TThunkDispatch } from '../store';
 import type { TFeedData } from '../../types';
 
 import {
@@ -14,7 +14,7 @@ import {
 import { FEED_ERROR_MSG } from '../../utils/constants';
 
 const feedMiddleware = (): Middleware => {
-  return ((store: MiddlewareAPI<TAppDispatch, TRootState>) => {
+  return ((store: MiddlewareAPI<TThunkDispatch, TRootState>) => {
     let socket: WebSocket | null = null;
 
     return (next) => (action: AnyAction) => {

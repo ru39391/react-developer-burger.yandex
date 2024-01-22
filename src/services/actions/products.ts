@@ -1,4 +1,3 @@
-import { Dispatch } from 'redux';
 import { RESPONSE_ERROR_MSG } from '../../utils/constants';
 import {
   getItemsRequest,
@@ -7,9 +6,9 @@ import {
   fetchItemSuccess
 } from '../slices/products-slice';
 import productApi from '../../utils/productApi';
-import type { TAppThunk } from '../../services/store';
+import type { TAppThunk, TAppDispatch } from '../../services/store';
 
-const getItems = (): TAppThunk<void> => async (dispatch: Dispatch) => {
+const getItems = (): TAppThunk<void> => async (dispatch: TAppDispatch) => {
   dispatch(getItemsRequest({}))
   try {
     const res = await productApi.getData();
@@ -23,7 +22,7 @@ const getItems = (): TAppThunk<void> => async (dispatch: Dispatch) => {
   }
 };
 
-const fetchItem = (id: string): TAppThunk<void> => async (dispatch: Dispatch) => {
+const fetchItem = (id: string): TAppThunk<void> => async (dispatch: TAppDispatch) => {
   dispatch(getItemsRequest({}))
   try {
     const res = await productApi.getData();

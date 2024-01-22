@@ -15,7 +15,8 @@ const store = configureStore({
 });
 
 export type TRootState = ReturnType<typeof store.getState>;
-export type TAppDispatch = ThunkDispatch<TRootState, void, AnyAction>;
+export type TAppDispatch = typeof store.dispatch;
+export type TThunkDispatch = ThunkDispatch<TRootState, void, AnyAction>;
 export type TAppThunk<TReturnType = void> = ThunkAction<
   TReturnType,
   TRootState,

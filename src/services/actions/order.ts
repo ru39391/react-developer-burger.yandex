@@ -1,4 +1,3 @@
-import { Dispatch } from 'redux';
 import { ACTION_ERROR_MSG } from '../../utils/constants';
 import {
   getOrderRequest,
@@ -6,9 +5,9 @@ import {
   getOrderFailed
 } from '../slices/order-slice';
 import orderApi from '../../utils/orderApi';
-import type { TAppThunk } from '../../services/store';
+import type { TAppThunk, TAppDispatch } from '../../services/store';
 
-const checkout = (jwt: string, arr: string[]): TAppThunk<void> => async (dispatch: Dispatch) => {
+const checkout = (jwt: string, arr: string[]): TAppThunk<void> => async (dispatch: TAppDispatch) => {
   dispatch(getOrderRequest({}))
   try {
     const res = await orderApi.checkout(jwt, arr);

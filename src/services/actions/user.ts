@@ -1,4 +1,3 @@
-import { Dispatch } from 'redux';
 import {
   LOGIN_URL,
   RESET_URL,
@@ -17,14 +16,14 @@ import {
 } from '../slices/user-slice';
 import storage from '../../utils/storage';
 import { userApi, passwordApi } from '../../utils/userApi';
-import type { TAppThunk } from '../../services/store';
+import type { TAppThunk, TAppDispatch } from '../../services/store';
 import type {
   TUser,
   TUserData,
   TCustomData
 } from '../../types';
 
-const handleUser = (data: { values: TCustomData<string> }, alias: string = ''): TAppThunk<void> => async (dispatch: Dispatch) => {
+const handleUser = (data: { values: TCustomData<string> }, alias: string = ''): TAppThunk<void> => async (dispatch: TAppDispatch) => {
   dispatch(getUserRequest({}));
   try {
     const res = await userApi.handleUser(data, alias);
@@ -46,7 +45,7 @@ const handleUser = (data: { values: TCustomData<string> }, alias: string = ''): 
   }
 };
 
-const getAccessToken = (data: TCustomData<string>, alias: string = ''): TAppThunk<void> => async (dispatch: Dispatch) => {
+const getAccessToken = (data: TCustomData<string>, alias: string = ''): TAppThunk<void> => async (dispatch: TAppDispatch) => {
   dispatch(getUserRequest({}));
   try {
     const res = await userApi.getAccessToken(data, alias);
@@ -63,7 +62,7 @@ const getAccessToken = (data: TCustomData<string>, alias: string = ''): TAppThun
   }
 };
 
-const updateData = (data: { values: TCustomData<string> }, jwt: string, alias: string = ''): TAppThunk<void> => async (dispatch: Dispatch) => {
+const updateData = (data: { values: TCustomData<string> }, jwt: string, alias: string = ''): TAppThunk<void> => async (dispatch: TAppDispatch) => {
   dispatch(getUserRequest({}));
   try {
     const res = await userApi.handleUser({ ...data, jwt }, alias);
@@ -78,7 +77,7 @@ const updateData = (data: { values: TCustomData<string> }, jwt: string, alias: s
   }
 };
 
-const recoverPassword = (data: TCustomData<string>, alias: string = ''): TAppThunk<void> => async (dispatch: Dispatch) => {
+const recoverPassword = (data: TCustomData<string>, alias: string = ''): TAppThunk<void> => async (dispatch: TAppDispatch) => {
   dispatch(getUserRequest({}));
   try {
     const res = await passwordApi.recoverPassword(data, alias);
@@ -92,7 +91,7 @@ const recoverPassword = (data: TCustomData<string>, alias: string = ''): TAppThu
   }
 };
 
-const signOut = (data: TCustomData<string>, alias: string = ''): TAppThunk<void> => async (dispatch: Dispatch) => {
+const signOut = (data: TCustomData<string>, alias: string = ''): TAppThunk<void> => async (dispatch: TAppDispatch) => {
   dispatch(getUserRequest({}));
   try {
     const res = await userApi.getAccessToken(data, alias);
