@@ -4,11 +4,10 @@ import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from '../../services/hooks';
 
 import { setItemDetails } from '../../services/slices/products-slice';
-import type { TRootState } from '../../services/store';
 
 const IngredientsList: FC = () => {
   const dispatch = useDispatch();
-  const { items } = useSelector((state: TRootState) => state.products);
+  const { items } = useSelector(state => state.products);
 
   useEffect(
     () => {

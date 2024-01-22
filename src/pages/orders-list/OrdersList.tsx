@@ -16,8 +16,6 @@ import { useSelector, useDispatch } from '../../services/hooks';
 import { getAccessToken } from '../../services/actions/user';
 import { getFeedRequest, disconnect } from '../../services/slices/feed-slice';
 
-import type { TRootState } from '../../services/store';
-
 import {
   WS_FEED_URL,
   TOKEN_URL,
@@ -31,7 +29,7 @@ const OrdersList: FC = () => {
     feedFailed,
     feedOrders,
     errorMsg
-  } = useSelector((state: TRootState) => state.feed);
+  } = useSelector(state => state.feed);
   const {
     accessToken,
     refreshToken,

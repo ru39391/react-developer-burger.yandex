@@ -31,7 +31,6 @@ import Wrapper from './components/wrapper/Wrapper';
 
 import { useSelector, useDispatch } from './services/hooks';
 import { getItems } from './services/actions/products';
-import type { TRootState } from './services/store';
 
 import {
   FEED_URL,
@@ -48,7 +47,7 @@ const App: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const ingredients = useSelector((state: TRootState) => state.products.items);
+  const ingredients = useSelector(state => state.products.items);
   const layout = location.state && location.state.layout;
   const path = location.state && location.state.path ? location.state.path : `/`;
 

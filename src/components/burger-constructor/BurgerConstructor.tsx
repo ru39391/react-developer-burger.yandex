@@ -31,7 +31,6 @@ import {
 } from '../../services/slices/order-slice';
 
 import { useSelector, useDispatch } from '../../services/hooks';
-import type { TRootState } from '../../services/store';
 import type { TProductData, TDraggableData, TDraggableItem } from '../../types';
 
 const BurgerConstructor: FC = () => {
@@ -42,7 +41,7 @@ const BurgerConstructor: FC = () => {
     mainItems: ingredients,
     orderList,
     summ
-  } = useSelector((state: TRootState) => state.order);
+  } = useSelector(state => state.order);
   const { isLogged, accessToken } = useAuth();
   const {
     isModalVisible,

@@ -22,7 +22,6 @@ import {
 } from '../../utils/constants';
 
 import { useSelector } from '../../services/hooks';
-import type { TRootState } from '../../services/store';
 import type { TProduct } from '../../types';
 
 type TTabItem = {
@@ -35,7 +34,7 @@ type TTabItem = {
 
 const BurgerIngredients: FC = () => {
   const [current, setCurrent] = useState<string>(BUN_PRODUCT_NAME);
-  const ingredients = useSelector((state: TRootState) => state.products.items);
+  const ingredients = useSelector(state => state.products.items);
 
   const filterByType = (params: string[], arr: TProduct[]): TProduct[][] => params.map(item => arr.filter(({ type }) => type === item));
 

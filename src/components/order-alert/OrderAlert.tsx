@@ -5,14 +5,13 @@ import CheckoutImg from '../../images/checkout.png';
 import styles from './OrderAlert.module.css';
 
 import { useSelector } from '../../services/hooks';
-import type { TRootState } from '../../services/store';
 
 const OrderAlert: FC = () => {
   const {
     orderRequest: isLoading,
     order: { id, name },
     errorMsg
-  } = useSelector((state: TRootState) => state.order);
+  } = useSelector(state => state.order);
   const caption = typeof name === 'string' ? name : '';
 
   return (

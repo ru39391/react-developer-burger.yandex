@@ -10,7 +10,6 @@ import useModal from '../../hooks/useModal';
 
 import { useSelector, useDispatch } from '../../services/hooks';
 import { getFeedRequest, disconnect } from '../../services/slices/feed-slice';
-import type { TRootState } from '../../services/store';
 
 import styles from '../../components/wrapper/Wrapper.module.css';
 
@@ -31,7 +30,7 @@ const Feed: FC = () => {
     feedOrdersDone,
     feedOrdersPending,
     errorMsg
-  } = useSelector((state: TRootState) => state.feed);
+  } = useSelector(state => state.feed);
   const { isModalVisible, setModalVisibility } = useModal();
 
   useEffect(() => {

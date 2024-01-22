@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import { useSelector } from '../services/hooks';
-import type { TRootState } from '../services/store';
 
 import type { TProductDefault, TProductData } from '../types';
 
@@ -22,7 +21,7 @@ const useOrderData = (): IOrderDataHook => {
   const [summ, setSumm] = useState<string>('');
   const [orderProducts, setOrderProducts] = useState<TProductDefault[]>([]);
 
-  const ingredients = useSelector((state: TRootState) => state.products.items);
+  const ingredients = useSelector(state => state.products.items);
 
   const handleProductsList = (products: string[]): TProductsList => {
     const productsArr: TProductData[] = products.map(item => ingredients.find(({ _id }) => _id === item) as TProductData);

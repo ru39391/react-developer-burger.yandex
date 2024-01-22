@@ -4,7 +4,6 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './FormButton.module.css';
 
 import { useSelector } from '../../services/hooks';
-import type { TRootState } from '../../services/store';
 
 interface IFormButton {
   isBtnGroup?: boolean;
@@ -21,7 +20,7 @@ const FormButton: FC<IFormButton> = ({
   btnCaption,
   btnCaptionOptional
 }) => {
-  const { userRequest } = useSelector((state: TRootState) => state.user);
+  const { userRequest } = useSelector(state => state.user);
 
   return (
     <div className={isBtnGroup ? styles.wrapper : 'mb-20'}>

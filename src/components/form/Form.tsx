@@ -6,7 +6,6 @@ import {
 import styles from './Form.module.css';
 
 import { useSelector } from '../../services/hooks';
-import type { TRootState } from '../../services/store';
 import type { TFieldsData } from '../../types';
 
 interface IForm {
@@ -24,7 +23,7 @@ const Form: FC<IForm> = ({
   children,
   classNameMod
 }) => {
-  const { isFailed, errorMsg } = useSelector((state: TRootState) => state.user);
+  const { isFailed, errorMsg } = useSelector(state => state.user);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

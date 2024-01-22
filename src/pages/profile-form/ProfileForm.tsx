@@ -21,12 +21,11 @@ import {
 } from '../../utils/constants';
 
 import { useSelector, useDispatch } from '../../services/hooks';
-import type { TRootState } from '../../services/store';
 import type { TFieldsData } from '../../types';
 
 const ProfileForm: FC = () => {
   const dispatch = useDispatch();
-  const { name, email } = useSelector((state: TRootState) => state.user);
+  const { name, email } = useSelector(state => state.user);
   const { isModalVisible, setModalVisibility } = useModal();
   const {
     accessToken,
