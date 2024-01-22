@@ -25,7 +25,7 @@ const FormButton: FC<IFormButton> = ({
 
   return (
     <div className={isBtnGroup ? styles.wrapper : 'mb-20'}>
-      <Button htmlType="submit" type="primary" size="medium" disabled={isBtnDisabled || userRequest}>{btnCaption}</Button>
+      <Button htmlType="submit" type="primary" size="medium" disabled={isBtnDisabled || userRequest} data-ref="submit-btn">{btnCaption}</Button>
       {isBtnGroup && <Button htmlType="button" type="primary" size="medium" disabled={isBtnDisabled || userRequest} onClick={handleBtn}>{btnCaptionOptional}</Button>}
     </div>
   )

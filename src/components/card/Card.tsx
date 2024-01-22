@@ -90,7 +90,7 @@ const Card: FC<ICardProps> = ({
   }, [orderList]);
 
   return (
-    <div className={`${styles.item} ${isClassMod && styles.item_dragged}`} ref={cardRef} onClick={handleCardData}>
+    <div className={`${styles.item} ${isClassMod && styles.item_dragged}`} data-ref="card" ref={cardRef} onClick={handleCardData}>
       {Boolean(counter) && <Counter count={counter} size="small" />}
       <img src={thumbnail} alt={name} />
       <div className={`${styles.meta} text text_type_digits-default`}>

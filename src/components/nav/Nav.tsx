@@ -39,7 +39,7 @@ const Nav: FC = () => {
         title,
         icon,
       }, index) => (
-        <NavLink key={index} to={`/${url}`} className={`${styles.link} text text_color_inactive pt-4 pb-4 pl-5 pr-5`} style={({ isActive }: { isActive: boolean }) => ({ color: isActive ? '#fff' : '#8585AD' })}>
+        <NavLink key={index} to={`/${url}`} className={`${styles.link} text text_color_inactive pt-4 pb-4 pl-5 pr-5`} data-ref={url ? `${url}-link` : 'main-link'} style={({ isActive }: { isActive: boolean }) => ({ color: isActive ? '#fff' : '#8585AD' })}>
           {icon}
           {title}
         </NavLink>

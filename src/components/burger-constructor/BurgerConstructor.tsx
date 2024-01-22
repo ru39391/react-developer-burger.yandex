@@ -115,7 +115,7 @@ const BurgerConstructor: FC = () => {
 
   return (
     <>
-      <div className={`${styles.wrapper} ${isHover && styles.wrapper_hovered}`} ref={wrapperRef}>
+      <div className={`${styles.wrapper} ${isHover && styles.wrapper_hovered}`} data-ref="constructor" ref={wrapperRef}>
         {buns[0] && <Ingredient
           pos={TOP_KEY}
           text={buns[0].name}
@@ -155,7 +155,7 @@ const BurgerConstructor: FC = () => {
               {summ}
               <CurrencyIcon type="primary" />
             </div>
-            <Button htmlType="button" type="primary" size="large" onClick={checkoutCart}>Оформить заказ</Button>
+            <Button htmlType="button" type="primary" size="large" data-ref="checkout-btn" onClick={checkoutCart}>Оформить заказ</Button>
           </div>
         )}
       </div>

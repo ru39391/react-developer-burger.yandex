@@ -74,7 +74,7 @@ const Sidebar: FC = () => {
             {title}
           </NavLink>
         ))}
-        <button className={`${styles.link} text text_type_main-medium text_color_inactive pt-4 pb-4`} type="button" onClick={logout}>{EXIT_NAV_TITLE}</button>
+        <button className={`${styles.link} text text_type_main-medium text_color_inactive pt-4 pb-4`} type="button" data-ref="logout-btn" onClick={logout}>{EXIT_NAV_TITLE}</button>
       </nav>
       <footer className={`${styles.footer} text text_type_main-default text_color_inactive`}>В этом разделе вы можете изменить свои персональные данные</footer>
       {isModalVisible && (

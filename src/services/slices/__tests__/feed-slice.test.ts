@@ -42,7 +42,7 @@ const feedOrderData: TFeedOrder = {
   number: 32368
 };
 
-describe('user reducer', () => {
+describe('feed reducer', () => {
   test('Should return the initial state', () => {
     const action: { type: string | undefined } & TFeedAction = {
       type: undefined,

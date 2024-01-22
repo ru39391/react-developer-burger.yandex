@@ -11,7 +11,11 @@ import {
 import type { TUserData } from '../../../types';
 import type { TUserState, TUserAction } from '../user-slice';
 
-import { RESPONSE_ERROR_MSG } from '../../../utils/constants';
+import {
+  TEST_USER_NAME,
+  TEST_USER_EMAIL,
+  RESPONSE_ERROR_MSG
+} from '../../../utils/constants';
 
 const initialState: TUserState = {
   name: '',
@@ -48,8 +52,8 @@ describe('user reducer', () => {
 
   it('Should handle getUserSuccess', () => {
     const data: TUserData = {
-      name: 'Олег',
-      email: 'user@mail.com',
+      name: TEST_USER_NAME,
+      email: TEST_USER_EMAIL
     };
     const expectedState: TUserState = {
       ...initialState,

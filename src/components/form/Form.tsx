@@ -41,10 +41,12 @@ const Form: FC<IForm> = ({
             item.name === 'password'
             ? <PasswordInput
               key={index}
+              data-ref={`${item.name}-input`}
               {...item}
             />
             : <Input
               key={index}
+              data-ref={`${item.name}-input`}
               {...item}
             />
           ))}
