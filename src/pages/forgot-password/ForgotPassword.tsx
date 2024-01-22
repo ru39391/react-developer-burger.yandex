@@ -22,13 +22,12 @@ import {
 } from '../../utils/constants';
 
 import { useSelector, useDispatch } from '../../services/hooks';
-import type { TRootState } from '../../services/store';
 import type { TFieldsData } from '../../types';
 
 const ForgotPassword: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isRecoverySucceed } = useSelector((state: TRootState) => state.user);
+  const { isRecoverySucceed } = useSelector(state => state.user);
   const {
     values,
     validValues,

@@ -7,7 +7,6 @@ import Card from '../card/Card';
 import styles from './ConstructorSection.module.css';
 
 import { useSelector } from '../../services/hooks';
-import type { TRootState } from '../../services/store';
 import type { TProduct } from '../../types';
 
 interface IConstructorSection {
@@ -15,7 +14,7 @@ interface IConstructorSection {
 };
 
 const ConstructorSection: FC<IConstructorSection> = ({ data }) => {
-  const { item: cardDetails } = useSelector((state: TRootState) => state.products);
+  const { item: cardDetails } = useSelector(state => state.products);
   const { setModalVisibility } = useModal();
 
   useEffect(

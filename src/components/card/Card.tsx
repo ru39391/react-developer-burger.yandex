@@ -20,7 +20,6 @@ import { INGREDIENTS_URL, ID_KEY } from '../../utils/constants';
 import { setItemDetails } from '../../services/slices/products-slice';
 
 import { useSelector, useDispatch } from '../../services/hooks';
-import type { TRootState } from '../../services/store';
 import type { TProduct } from '../../types';
 
 interface ICardProps {
@@ -43,7 +42,7 @@ const Card: FC<ICardProps> = ({
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { orderList } = useSelector((state: TRootState) => state.order);
+  const { orderList } = useSelector(state => state.order);
   const [counter, setCounter] = useState<number>(0);
   const { handleProdData } = useProdData();
 
@@ -90,7 +89,7 @@ const Card: FC<ICardProps> = ({
   }, [orderList]);
 
   return (
-    <div className={`${styles.item} ${isClassMod && styles.item_dragged}`} ref={cardRef} onClick={handleCardData}>
+    <div className={`${styles.item} ${isClassMod && styles.item_dragged}`} data-ref="card" ref={cardRef} onClick={handleCardData}>
       {Boolean(counter) && <Counter count={counter} size="small" />}
       <img src={thumbnail} alt={name} />
       <div className={`${styles.meta} text text_type_digits-default`}>

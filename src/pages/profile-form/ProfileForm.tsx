@@ -21,12 +21,11 @@ import {
 } from '../../utils/constants';
 
 import { useSelector, useDispatch } from '../../services/hooks';
-import type { TRootState } from '../../services/store';
 import type { TFieldsData } from '../../types';
 
 const ProfileForm: FC = () => {
   const dispatch = useDispatch();
-  const { name, email } = useSelector((state: TRootState) => state.user);
+  const { name, email } = useSelector(state => state.user);
   const { isModalVisible, setModalVisibility } = useModal();
   const {
     accessToken,
@@ -80,10 +79,8 @@ const ProfileForm: FC = () => {
   ];
 
   const getCurrentToken = useCallback(() => {
-    if(isRefTokExist) {
-      const token: string | undefined = typeof refreshToken === 'object' && refreshToken !== undefined ? refreshToken.token : undefined;
-
-      dispatch(getAccessToken({ token: token as string }, TOKEN_URL));
+    if(isRefTokExist && refreshToken) {
+      dispatch(getAccessToken({ token: refreshToken }, TOKEN_URL));
     } else {
       setModalVisibility(true);
     }
@@ -92,12 +89,10 @@ const ProfileForm: FC = () => {
   ]);
 
   const getUserData = useCallback(() => {
-    if(isAccTokExist) {
-      const jwt: string | undefined = typeof accessToken === 'object' && accessToken !== undefined ? accessToken.token : undefined;
-
+    if(isAccTokExist && accessToken) {
       isTokenExpired
         ? getCurrentToken()
-        : dispatch(getAccessToken({ jwt: jwt as string }, USER_URL));
+        : dispatch(getAccessToken({ jwt: accessToken }, USER_URL));
     } else {
       setModalVisibility(true);
     }
@@ -133,7 +128,7 @@ const ProfileForm: FC = () => {
       getCurrentToken();
     }
 
-    dispatch(updateData({ values: updatedValues }, USER_URL));
+    dispatch(updateData({ values: updatedValues }, accessToken as string, USER_URL));
   }, [
     updatedValues,
     dispatch

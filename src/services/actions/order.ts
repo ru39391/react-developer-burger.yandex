@@ -1,25 +1,16 @@
-import { Dispatch } from 'redux';
-import {
-  ORDERS_ALIAS,
-  ACTION_ERROR_MSG
-} from '../../utils/constants';
+import { ACTION_ERROR_MSG } from '../../utils/constants';
 import {
   getOrderRequest,
   getOrderSuccess,
   getOrderFailed
 } from '../slices/order-slice';
-import Api from '../../utils/api';
-import useAuth from '../../hooks/useAuth';
-import type { TAppThunk } from '../../services/store';
+import orderApi from '../../utils/orderApi';
+import type { TAppThunk, TAppDispatch } from '../../services/store';
 
-const api: Api = new Api(ORDERS_ALIAS);
-
-const checkout = (arr: string[]): TAppThunk<void> => async (dispatch: Dispatch) => {
+const checkout = (jwt: string, arr: string[]): TAppThunk<void> => async (dispatch: TAppDispatch) => {
   dispatch(getOrderRequest({}))
   try {
-    const { accessToken } = useAuth();
-    const jwt: string | undefined = typeof accessToken === 'object' && accessToken !== undefined ? accessToken.token : undefined;
-    const res = await api.checkout(jwt as string, arr);
+    const res = await orderApi.checkout(jwt, arr);
     if (res && res.success) {
       const { name, order }: { name: string; order: { number: number; }; } = res;
       dispatch(getOrderSuccess({ data: { name, id: order.number } }))

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import useFeed from './useFeed';
 import useOrderData from './useOrderData';
 import orderApi from '../utils/orderApi';
+import formatDate from '../utils/dateFormatter';
 
 import type { TFeedOrder, TProductDefault } from '../types';
 
@@ -20,14 +20,14 @@ const useOrderDetails = (): IOrderDetailsHook => {
   const [currentOrder, setCurrentOrder] = useState<TFeedOrder | null>(null);
   const [orderProducts, setOrderProducts] = useState<TProductDefault[]>([]);
 
-  const { handleFeed } = useFeed();
   const { handleProductsList } = useOrderData();
 
   const fetchOrderDetails = async (id: string) => {
     try {
       const data = await orderApi.getOrderData(id);
-      const isSucceed = data.success && data.orders.length;
-      const [orderData] = handleFeed(data);
+      const { success, orders } = data;
+      const isSucceed = success && orders.length;
+      const [orderData] = [...orders].map(item => ({...item, updatedAt: formatDate(item.updatedAt)}));
       const { totalSumm, products } = isSucceed ? handleProductsList(orderData.ingredients) : { totalSumm: 0, products: [] };
 
       if(isSucceed) {

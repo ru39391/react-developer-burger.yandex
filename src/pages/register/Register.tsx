@@ -12,7 +12,7 @@ import Wrapper from '../../components/wrapper/Wrapper';
 import Modal from '../../components/modal/Modal';
 import ModalContent from '../../components/modal-content/ModalContent';
 
-import { fetchData } from '../../services/actions/user';
+import { handleUser } from '../../services/actions/user';
 
 import {
   REGISTER_TITLE,
@@ -24,12 +24,11 @@ import {
 } from '../../utils/constants';
 
 import { useSelector, useDispatch } from '../../services/hooks';
-import type { TRootState } from '../../services/store';
 import type { TFieldsData } from '../../types';
 
 const Register: FC = () => {
   const dispatch = useDispatch();
-  const { isRegistered } = useSelector((state: TRootState) => state.user);
+  const { isRegistered } = useSelector(state => state.user);
   const {
     isModalVisible,
     setModalVisibility
@@ -88,7 +87,7 @@ const Register: FC = () => {
   };
 
   const handleSubmit = useCallback(() => {
-    dispatch(fetchData({ values }, REGISTER_URL));
+    dispatch(handleUser({ values }, REGISTER_URL));
   }, [
     values,
     dispatch

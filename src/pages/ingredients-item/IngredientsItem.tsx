@@ -8,12 +8,11 @@ import IngredientDetails from '../../components/ingredient-details/IngredientDet
 import { fetchItem } from '../../services/actions/products';
 
 import { useSelector, useDispatch } from '../../services/hooks';
-import type { TRootState } from '../../services/store';
 
 const IngredientsItem: FC = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { item } = useSelector((state: TRootState) => state.products);
+  const { item } = useSelector(state => state.products);
   const { handleProdData } = useProdData();
 
   useEffect(

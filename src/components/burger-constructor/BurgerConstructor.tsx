@@ -31,7 +31,6 @@ import {
 } from '../../services/slices/order-slice';
 
 import { useSelector, useDispatch } from '../../services/hooks';
-import type { TRootState } from '../../services/store';
 import type { TProductData, TDraggableData, TDraggableItem } from '../../types';
 
 const BurgerConstructor: FC = () => {
@@ -42,8 +41,8 @@ const BurgerConstructor: FC = () => {
     mainItems: ingredients,
     orderList,
     summ
-  } = useSelector((state: TRootState) => state.order);
-  const { isLogged } = useAuth();
+  } = useSelector(state => state.order);
+  const { isLogged, accessToken } = useAuth();
   const {
     isModalVisible,
     setModalVisibility
@@ -83,7 +82,7 @@ const BurgerConstructor: FC = () => {
     () => {
       if(isLogged) {
         setModalVisibility(true);
-        dispatch(checkout(orderList));
+        dispatch(checkout(accessToken as string, orderList));
       } else {
         navigate(`/${LOGIN_URL}`, { replace: false });
       }
@@ -115,7 +114,7 @@ const BurgerConstructor: FC = () => {
 
   return (
     <>
-      <div className={`${styles.wrapper} ${isHover && styles.wrapper_hovered}`} ref={wrapperRef}>
+      <div className={`${styles.wrapper} ${isHover && styles.wrapper_hovered}`} data-ref="constructor" ref={wrapperRef}>
         {buns[0] && <Ingredient
           pos={TOP_KEY}
           text={buns[0].name}
@@ -155,7 +154,7 @@ const BurgerConstructor: FC = () => {
               {summ}
               <CurrencyIcon type="primary" />
             </div>
-            <Button htmlType="button" type="primary" size="large" onClick={checkoutCart}>Оформить заказ</Button>
+            <Button htmlType="button" type="primary" size="large" data-ref="checkout-btn" onClick={checkoutCart}>Оформить заказ</Button>
           </div>
         )}
       </div>

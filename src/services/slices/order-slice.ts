@@ -12,7 +12,7 @@ import type {
   TDraggableItem
 } from '../../types';
 
-type TOrderAction = {
+export type TOrderAction = {
   payload: {
     index?: number;
     data?: TOrder;
@@ -130,3 +130,6 @@ export const {
   updateOrderList,
   setOrderData
 } = orderSlice.actions;
+export {
+  initialState
+};

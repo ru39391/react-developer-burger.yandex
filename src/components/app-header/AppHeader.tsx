@@ -18,8 +18,8 @@ const AppHeader: FC = () => {
     <header className={`${styles.wrapper} text text_type_main-default p-4 mb-10`}>
       <div className={styles.container}>
         <Nav />
-        <Logo />
-        <NavLink to={`/${PROFILE_URL}`} className={`${navStyles.link} text text_color_inactive pt-4 pb-4 pl-5 pr-5`} style={({ isActive }: { isActive: boolean }) => ({ color: isActive ? '#fff' : '#8585AD' })}>
+        <NavLink to='/'><Logo /></NavLink>
+        <NavLink to={`/${PROFILE_URL}`} className={`${navStyles.link} text text_color_inactive pt-4 pb-4 pl-5 pr-5`} data-ref={`${PROFILE_URL}-link`} style={({ isActive }: { isActive: boolean }) => ({ color: isActive ? '#fff' : '#8585AD' })}>
           <ProfileIcon type="primary" />
           {PROFILE_TITLE}
         </NavLink>

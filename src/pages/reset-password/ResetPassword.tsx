@@ -23,13 +23,12 @@ import {
 } from '../../utils/constants';
 
 import { useSelector, useDispatch } from '../../services/hooks';
-import type { TRootState } from '../../services/store';
 import type { TFieldsData } from '../../types';
 
 const ResetPassword: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isResetSucceed } = useSelector((state: TRootState) => state.user);
+  const { isResetSucceed } = useSelector(state => state.user);
   const { isModalVisible, setModalVisibility } = useModal();
   const {
     values,

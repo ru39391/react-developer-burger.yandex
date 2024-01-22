@@ -9,7 +9,7 @@ import FormButton from '../../components/form-button/FormButton';
 import FormFooter from '../../components/form-footer/FormFooter';
 import Wrapper from '../../components/wrapper/Wrapper';
 
-import { fetchData } from '../../services/actions/user';
+import { handleUser } from '../../services/actions/user';
 
 import storage from '../../utils/storage';
 import {
@@ -23,7 +23,6 @@ import {
 } from '../../utils/constants';
 
 import { useSelector, useDispatch } from '../../services/hooks';
-import type { TRootState } from '../../services/store';
 import type { TFieldsData, TLocState } from '../../types';
 
 const Login: FC = () => {
@@ -31,7 +30,7 @@ const Login: FC = () => {
   const prevUrl = typeof state === 'object' && state !== null ? state.prevUrl : null;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLogged } = useSelector((state: TRootState) => state.user);
+  const { isLogged } = useSelector(state => state.user);
   const {
     values,
     validValues,
@@ -78,7 +77,7 @@ const Login: FC = () => {
   };
 
   const handleSubmit = useCallback(() => {
-    dispatch(fetchData({ values }, LOGIN_URL));
+    dispatch(handleUser({ values }, LOGIN_URL));
   }, [
     values,
     dispatch

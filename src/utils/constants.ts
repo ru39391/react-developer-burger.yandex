@@ -41,8 +41,8 @@ const TOKEN_URL = 'token';
 const LOGOUT_URL = 'logout';
 const RESET_URL = 'reset';
 
-const WS_FEED_URL = 'wss://norma.nomoreparties.space/orders';
 const API_URL = 'https://norma.nomoreparties.space/api/';
+const WS_FEED_URL = 'wss://norma.nomoreparties.space/orders';
 const INGREDIENTS_ALIAS = 'ingredients';
 const ORDERS_ALIAS = 'orders';
 const AUTH_ALIAS = 'auth';
@@ -89,6 +89,10 @@ const ORDER_STATES: TCustomData<string> = {
   [CREATED_STATE]: 'Создан',
   [PENDING_STATE]: 'Готовится'
 };
+
+const TEST_USER_NAME = 'Арсений';
+const TEST_USER_EMAIL = 'test01test@test.com';
+const TEST_USER_PWD = '12345678';
 
 export {
   DEFAULT_DOC_TITLE,
@@ -173,5 +177,9 @@ export {
   DONE_STATE,
   CREATED_STATE,
   PENDING_STATE,
-  ORDER_STATES
+  ORDER_STATES,
+
+  TEST_USER_NAME,
+  TEST_USER_EMAIL,
+  TEST_USER_PWD
 };

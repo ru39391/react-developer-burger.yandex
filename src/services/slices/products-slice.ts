@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 import type { TProductDefault, TProduct } from '../../types';
 
-type TProductsAction = {
+export type TProductsAction = {
   payload: {
     data?: TProduct[];
     item?: TProduct | TProductDefault;
@@ -74,3 +74,6 @@ export const {
   getItemsFailed,
   setItemDetails
 } = productsSlice.actions;
+export {
+  initialState
+};

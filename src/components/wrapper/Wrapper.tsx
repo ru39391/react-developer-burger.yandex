@@ -4,7 +4,6 @@ import Preloader from '../preloader/Preloader';
 import styles from './Wrapper.module.css';
 
 import { useSelector } from '../../services/hooks';
-import type { TRootState } from '../../services/store';
 
 interface IWrapperProps {
   title?: string;
@@ -22,7 +21,7 @@ const Wrapper: FC<IWrapperProps> = ({
   const {
     itemsRequest: isLoading,
     errorMsg
-  } = useSelector((state: TRootState) => state.products);
+  } = useSelector(state => state.products);
 
   return (
     <main className={`${styles.section} ${isFormHolder && `mt-30`} ${isGrid && `mt-20`}`}>
