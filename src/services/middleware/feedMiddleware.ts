@@ -2,23 +2,24 @@ import { AnyAction } from '@reduxjs/toolkit';
 
 import type { Middleware, MiddlewareAPI } from 'redux'
 import type { TRootState, TThunkDispatch } from '../store';
+import type { TFeedActions } from '../slices';
 import type { TFeedData } from '../../types';
 
-import {
-  getFeedRequest,
-  getFeedSuccess,
-  getFeedFailed,
-  fetchFeedData,
-  disconnect
-} from '../slices/feed-slice';
 import { FEED_ERROR_MSG } from '../../utils/constants';
 
-const feedMiddleware = (): Middleware => {
+const feedMiddleware = (actions: TFeedActions): Middleware => {
   return ((store: MiddlewareAPI<TThunkDispatch, TRootState>) => {
     let socket: WebSocket | null = null;
 
     return (next) => (action: AnyAction) => {
       const { dispatch } = store;
+      const {
+        getFeedRequest,
+        getFeedSuccess,
+        getFeedFailed,
+        fetchFeedData,
+        disconnect
+      } = actions;
 
       if (getFeedRequest.match(action)) {
         const { url } = action.payload;

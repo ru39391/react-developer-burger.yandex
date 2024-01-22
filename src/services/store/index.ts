@@ -6,12 +6,13 @@ import {
   Action
 } from '@reduxjs/toolkit';
 import reducer from '../slices';
-import type { TAppActions } from '../slices';
+import { TAppActions } from '../slices';
+import { feedActions } from '../slices/feed-slice';
 import feedMiddleware from '../middleware/feedMiddleware';
 
 const store = configureStore({
   reducer,
-  middleware: [thunk, feedMiddleware()],
+  middleware: [thunk, feedMiddleware(feedActions)],
 });
 
 export type TRootState = ReturnType<typeof store.getState>;
