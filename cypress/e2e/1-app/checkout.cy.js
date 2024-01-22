@@ -5,7 +5,6 @@ import {
   PROFILE_URL,
   AUTH_ALIAS,
   ORDERS_ALIAS,
-  LOCAL_SITE_URL,
   INGREDIENTS_URL,
   TEST_USER_EMAIL,
   TEST_USER_PWD
@@ -13,7 +12,7 @@ import {
 
 describe('checkout', () => {
   before(() => {
-    cy.visit(LOCAL_SITE_URL);
+    cy.visit(Cypress.config().baseUrl);
     cy.intercept(`${API_URL}${ORDERS_ALIAS}`).as('ordersInterception');
     cy.intercept(`${API_URL}${INGREDIENTS_URL}`).as('productsInterception');
     cy.intercept(`${API_URL}${AUTH_ALIAS}/${LOGIN_URL}`).as('loginInterception');
@@ -32,7 +31,7 @@ describe('checkout', () => {
         cy.get('@logoutBtn').click();
       })
       .then(() => {
-        cy.url().should('eq', LOCAL_SITE_URL);
+        cy.url().should('eq', Cypress.config().baseUrl);
       });
 
     cy.wait('@logoutInterception')
@@ -79,7 +78,7 @@ describe('checkout', () => {
       .its('response.statusCode')
       .should('eq', 200)
       .then(() => {
-        cy.url().should('eq', LOCAL_SITE_URL)
+        cy.url().should('eq', Cypress.config().baseUrl)
           .then(() => {
             cy.get('@checkoutBtn').click();
           });

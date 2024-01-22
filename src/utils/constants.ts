@@ -41,7 +41,6 @@ const TOKEN_URL = 'token';
 const LOGOUT_URL = 'logout';
 const RESET_URL = 'reset';
 
-const LOCAL_SITE_URL = 'http://localhost:3000/';
 const API_URL = 'https://norma.nomoreparties.space/api/';
 const WS_FEED_URL = 'wss://norma.nomoreparties.space/orders';
 const INGREDIENTS_ALIAS = 'ingredients';
@@ -142,7 +141,6 @@ export {
   LOGOUT_URL,
   RESET_URL,
 
-  LOCAL_SITE_URL,
   FEED_URL,
   API_URL,
   INGREDIENTS_ALIAS,
