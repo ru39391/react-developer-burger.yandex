@@ -8,24 +8,14 @@ import {
   addBunItem,
   removeItem,
   updateOrderList,
-  setOrderData
+  setOrderData,
+  initialState
 } from '../order-slice';
 
 import type { TOrderData, TProductData } from '../../../types';
 import type { TOrderState, TOrderAction } from '../order-slice';
 
 import { RESPONSE_ERROR_MSG, ID_KEY, PRICE_KEY } from '../../../utils/constants';
-
-const initialState: TOrderState = {
-  bunItems: [...Array(2)],
-  mainItems: [],
-  order: {},
-  orderList: [],
-  orderRequest: false,
-  orderFailed: false,
-  summ: 0,
-  errorMsg: '',
-};
 
 const orderData: TOrderData = {
   id: 32338,

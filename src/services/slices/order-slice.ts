@@ -130,3 +130,6 @@ export const {
   updateOrderList,
   setOrderData
 } = orderSlice.actions;
+export {
+  initialState
+};

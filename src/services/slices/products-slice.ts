@@ -74,3 +74,6 @@ export const {
   getItemsFailed,
   setItemDetails
 } = productsSlice.actions;
+export {
+  initialState
+};

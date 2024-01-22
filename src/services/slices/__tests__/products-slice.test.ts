@@ -4,21 +4,14 @@ import {
   getItemsSuccess,
   fetchItemSuccess,
   getItemsFailed,
-  setItemDetails
+  setItemDetails,
+  initialState
 } from '../products-slice';
 
 import type { TProductData } from '../../../types';
 import type { TProductsState, TProductsAction } from '../products-slice';
 
 import { RESPONSE_ERROR_MSG, PRICE_KEY } from '../../../utils/constants';
-
-const initialState: TProductsState = {
-  items: [],
-  itemsRequest: false,
-  itemsFailed: false,
-  item: {},
-  errorMsg: '',
-};
 
 const productData: TProductData = {
   _id: '60666c42cc7b410027a1a9b1',

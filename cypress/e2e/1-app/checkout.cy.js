@@ -39,7 +39,7 @@ describe('checkout', () => {
       .its('response.statusCode')
       .should('eq', 200)
       .then(() => {
-        cy.log('test was completed successfully');
+        cy.log('This test was completed successfully');
       });
   });
 

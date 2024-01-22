@@ -100,3 +100,6 @@ export const {
   fetchFeedData,
   disconnect
 } = feedSlice.actions;
+export {
+  initialState
+};

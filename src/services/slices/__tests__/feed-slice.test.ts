@@ -4,7 +4,8 @@ import {
   getFeedSuccess,
   getFeedFailed,
   fetchFeedData,
-  disconnect
+  disconnect,
+  initialState
 } from '../feed-slice';
 
 import type { TFeedData, TFeedOrder } from '../../../types';
@@ -12,20 +13,6 @@ import type { TFeedState, TFeedAction } from '../feed-slice';
 
 import formatDate from '../../../utils/dateFormatter';
 import { FEED_ERROR_MSG } from '../../../utils/constants';
-
-const initialState: TFeedState = {
-  feedRequest: false,
-  feedSucceed: false,
-  feedFailed: false,
-  totalData: {
-    total: '0',
-    totalToday: '0'
-  },
-  feedOrders: [],
-  feedOrdersDone: [],
-  feedOrdersPending: [],
-  errorMsg: ''
-};
 
 const feedOrderData: TFeedOrder = {
   _id: '65ad739e87899c001b82a9a1',

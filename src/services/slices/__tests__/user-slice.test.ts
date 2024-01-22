@@ -5,7 +5,8 @@ import {
   getRecoverySuccess,
   getResetSuccess,
   getFailed,
-  resetUserData
+  resetUserData,
+  initialState
 } from '../user-slice';
 
 import type { TUserData } from '../../../types';
@@ -16,18 +17,6 @@ import {
   TEST_USER_EMAIL,
   RESPONSE_ERROR_MSG
 } from '../../../utils/constants';
-
-const initialState: TUserState = {
-  name: '',
-  email: '',
-  isLogged: false,
-  isFailed: false,
-  isRegistered: false,
-  isRecoverySucceed: false,
-  isResetSucceed: false,
-  userRequest: false,
-  errorMsg: '',
-};
 
 describe('user reducer', () => {
   test('Should return the initial state', () => {
